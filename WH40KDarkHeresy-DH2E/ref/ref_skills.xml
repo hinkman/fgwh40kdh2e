@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referenceskill">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_skill_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_skill_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_skill_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceskill</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_skill_stats">
+		<script>
+			function onInit()
+				local aLabel = {};
+
+				table.insert(aLabel, ability.getValue());
+
+				type_label.setValue("(" .. attribute.getValue() .. ") [" .. table.concat(aLabel, "; ") .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="ability" />
+			<hs name="attribute" />
+			
+			<label name="type_label">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left />
+					<right />
+				</anchored>
+				<font>reference-b-large</font>
+			</label>
+
+			<ft_columnh name="text" />
+		</sheetdata>
+	</windowclass>
+</root>

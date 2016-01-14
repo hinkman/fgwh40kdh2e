@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_xp">
+		<script>
+			function onInit()
+				if super and super.onInit then
+					super.onInit();
+				end
+				if User.isHost() then
+					--[[ GM view, include GM notes ]]
+					gmnotesframe.setVisible(true);
+					playernotesframe.setAnchoredHeight(285);
+				else
+					--[[ Player view, exclude GM notes ]]
+					gmnotesframe.setVisible(false);
+					playernotesframe.setAnchoredHeight(565);
+				end
+			end
+		</script>
+		<sheetdata>
+			<!-- XP & XP Spent -->
+			<frame_char name="xpframe">
+				<anchored>
+					<left offset="15" />
+					<top />
+					<bottom />
+					<right anchor="center" offset="-3" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="xpframe" />
+				<static>EXPERIENCE POINTS</static>
+			</label_frametop>
+			
+			<label name="totalxpamount_label">
+				<anchored to="xpframe" position="insidetopleft" offset="55,35" />
+				<static>Total XP Amount:</static>
+			</label>
+			<simplenumber name="totalxpamount">
+				<anchored to="xpframe" position="insidetopleft" offset="165,38" width="60" height="15" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<script>
+					function onValueChanged()
+						window.xpspent.recalc();
+					end
+				</script>
+			</simplenumber>
+			
+			<label name="totalxpspent_label">
+				<anchored to="xpframe" position="insidetopleft" offset="65,55" />
+				<static>Total XP Spent:</static>
+			</label>
+			<simplenumber name="totalxpspent" source="xp.totalspent">
+				<anchored to="xpframe" position="insidetopleft" offset="165,58" width="60" height="15" />
+				<readonly />
+				<nodrag />
+			</simplenumber>
+			
+			<label name="xplefttospend_label">
+				<anchored to="xpframe" position="insidetopleft" offset="53,75" />
+				<static>XP Left to Spend:</static>
+			</label>
+			<simplenumber name="xplefttospend">
+				<anchored to="xpframe" position="insidetopleft" offset="165,78" width="60" height="15" />
+				<readonly />
+				<nodrag />
+			</simplenumber>
+			
+			<label name="name_label">
+				<anchored to="xpframe" position="insidetopleft" offset="17,110" />
+				<static>Improvement</static>
+			</label>
+			<label name="pointsspent_label">
+				<anchored to="xpframe" position="insidetopleft" offset="231,110" />
+				<static>Cost</static>
+			</label>
+			
+			<list_text name="xpspent">
+				<anchored to="xpframe">
+					<top offset="130" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.xpspent</datasource>
+				<class>xpspent_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+					function onListRearranged(listchanged)
+						recalc();
+					end
+					function recalc()
+						local nTotalPoints = 0;
+						local nTotalLeftToSpend = 0;
+						for i, w in ipairs(getWindows())do
+							xp_points = w.pointsspent.getValue();
+							nTotalPoints = nTotalPoints + xp_points;
+						end
+						window.getDatabaseNode().getChild("xp.totalspent").setValue(nTotalPoints);
+						nTotalLeftToSpend = window.totalxpamount.getValue() - nTotalPoints;
+						window.xplefttospend.setValue(nTotalLeftToSpend);
+					end
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="xpspent" />
+				<target>xpspent</target>
+			</scrollbar>
+			<button_iedit name="xpspent_iedit">
+				<anchored to="xpspent" position="aboveleft" offset="0,20" />
+				<target>xpspent</target>
+			</button_iedit>
+			<button_iadd name="xpspent_iadd">
+				<anchored to="xpspent_iedit" position="righthigh" offset="2,0" />
+				<target>xpspent</target>
+			</button_iadd>
+			
+			<!-- Player Notes -->
+			<frame_char name="playernotesframe">
+				<anchored>
+					<left anchor="center" offset="-3" />
+					<top />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="playernotesframe" />
+				<static>CHARACTER NOTES</static>
+			</label_frametop>
+			<stringu name="playernotes">
+				<anchored to="playernotesframe">
+					<top offset="30" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+				<multilinespacing>17</multilinespacing>
+			</stringu>
+			<scrollbar>
+				<anchored to="playernotesframe" />
+				<target>playernotesframe</target>
+			</scrollbar>
+			
+			<!-- GM Notes -->
+			<frame_char name="gmnotesframe">
+				<anchored>
+					<left anchor="center" offset="-3" />
+					<top anchor="center" offset="2" />
+					<bottom />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="gmnotesframe" />
+				<static>GM NOTES</static>
+			</label_frametop>
+			<stringu name="gmnotes">
+				<anchored to="gmnotesframe">
+					<top offset="30" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+				<multilinespacing>17</multilinespacing>
+			</stringu>
+			<scrollbar>
+				<anchored to="gmnotesframe" />
+				<target>gmnotesframe</target>
+			</scrollbar>
+			
+		</sheetdata>
+	</windowclass>
+	
+	<!-- XP Spent List Template -->
+	<windowclass name="xpspent_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+
+			<number_charinv name="pointsspent">
+				<anchored width="35" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget prev="name" />
+				<script>
+					function onValueChanged()
+						window.windowlist.recalc();
+					end
+				</script>
+			</number_charinv>
+			
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-15" />
+				</anchored>
+				<tabtarget next="pointsspent" />
+				<multilinespacing>17</multilinespacing>
+			</string_textlistitem>
+			
+		</sheetdata>
+	</windowclass>
+	
+</root>

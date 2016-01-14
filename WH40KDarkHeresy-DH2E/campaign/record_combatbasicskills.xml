@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="combatbasicskills">
+        <frame>utilitybox</frame>
+		<placement>
+			<size width="330" height="190" />
+		</placement>
+        <sizelimits>
+            <maximum width="330" height="190" />
+            <minimum width="250" height="85" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+		<playercontrol />
+
+		<sheetdata>
+            <resize_utilitybox />
+            <close_utilitybox />
+			
+			<!-- Basic Skills -->
+			<frame_char name="basicframe">
+				<anchored position="insidetopleft" offset="15,15" height="160" width = "300" />
+			</frame_char>
+			
+            <label name="basicadv_label">
+				<anchored to="basicframe" position="insidetopleft" offset="24,7" />
+				<static>Basic Skill</static>
+			</label>
+            
+            <label name="basicadv_label">
+				<anchored to="basicframe" position="insidetopleft" offset="137,7" />
+				<static>Adv.</static>
+			</label>
+			<label name="basictotal_label">
+				<anchored to="basicframe" position="insidetopleft" offset="179,7" />
+				<static>Stat</static>
+			</label>
+            <label name="basicstat_label">
+				<anchored to="basicframe" position="insidetopleft" offset="240,7" />
+				<static>Total</static>
+			</label>
+			<list_text name="basicskills">
+				<anchored to="basicframe">
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.basicskills</datasource>
+				<class>skill_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referenceskills" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+									win.name.setTooltipText(DB.getValue(nodeSource, "basicoradvanced", "") .. " skill; " ..
+												DB.getValue(nodeSource, "attribute", ""));
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="basicskills" />
+				<target>basicskills</target>
+			</scrollbar>
+        </sheetdata>
+	</windowclass>
+	
+	<!-- Skills List Template -->
+	<windowclass name="skill_list">
+		<margins control="0,0,0,2" />
+        <script file="campaign/scripts/char_skill.lua" />
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+            
+            <button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_skill</class>
+			</linkfield>
+
+			<button_checkbox name="skilltrained">
+				<anchored height="12" width="12">
+					<top offset="3" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="0" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Trained Skill" />
+				<tooltip text="Trained Skill" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+            <basicnumber name="skill_total" source="skill_total">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+                <invisible />
+                <script>
+                    function getTotal()
+                        local nAB = tonumber(window.stat.getValue());
+                        local nAdv1 = window.skillAdv1.getValue();
+                        local nAdv2 = window.skillAdv2.getValue();
+                        local nAdv3 = window.skillAdv3.getValue();
+                        local nAdv4 = window.skillAdv4.getValue();
+                        local nTR = window.skilltrained.getValue();
+                        local nST = 0;
+                    
+                        if nAdv1  == 1 then
+                            nAdv1 = 10;
+                        else
+                            nAdv1 = 0;
+                        end
+                    
+                        if nAdv2  == 1 then
+                            nAdv2 = 10;
+                        else
+                            nAdv2 = 0;
+                        end
+                        if nAdv3  == 1 then
+                            nAdv3 = 10;
+                        else
+                            nAdv3 = 0;
+                        end
+                        if nAdv4  == 1 then
+                            nAdv4 = 10;
+                        else
+                            nAdv4 = 0;
+                        end
+                        
+                        if nTR == 1 then
+                            nST = nAB + nAdv1 + nAdv2 + nAdv3 + nAdv4;
+                        else
+                            nST = nAB - 20;
+                        end
+                        
+                        if nST &lt;= 0 then 
+                            nST = 1;
+                        end
+
+                        setValue(nST);
+                    end
+                </script>
+			</basicnumber>
+            <number_skillroll name="skillroll">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+				<skillname>name</skillname>
+				<skillt>skillroll</skillt>
+			</number_skillroll>
+            
+           <number_charskillfield_static name="stat">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<script>
+                    function update(statname)
+                        setValue(DB.getValue(window.getDatabaseNode(), "...abilities." .. statname, 0))
+                    end
+                    
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+		
+				</script>
+			</number_charskillfield_static>
+			<cycler_charskillability name="statname">
+				<anchored width="25" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script>
+					function onValueChanged()
+                        window.onStatUpdate();
+                    end
+
+				</script>
+			</cycler_charskillability>
+
+            <button_checkbox name="skillAdv4">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-8" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Mastered" />
+				<tooltip text="Mastered" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+            <button_checkbox name="skillAdv3">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Talented/Other" />
+				<tooltip text="Talented/Other" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>   
+			</button_checkbox>
+            <button_checkbox name="skillAdv2">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+20 Advancement" />
+				<tooltip text="+20 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+			<button_checkbox name="skillAdv1">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+10 Advancement" />
+				<tooltip text="+10 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+</root>

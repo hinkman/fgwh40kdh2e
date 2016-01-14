@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="combattracker_client">
+		<frame>ctbox</frame>
+		<placement>
+			<size width="563" height="200" />
+		</placement>
+		<sizelimits>
+			<minimum width="563" height="200" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+        <script>
+			function onInit()
+				OptionsManager.registerCallback("SHPH", updateHealthDisplay);
+				updateHealthDisplay();
+			end
+			
+			function onClose()
+				OptionsManager.unregisterCallback("SHPH", updateHealthDisplay);
+			end
+			
+			function updateHealthDisplay()
+				local bOption = not OptionsManager.isOption("SHPH", "off");
+				
+				label_twounds.setVisible(bOption);
+				label_damage.setVisible(bOption);
+				label_cwounds.setVisible(bOption);
+				label_fatigue.setVisible(bOption);
+
+				label_status.setVisible(not bOption);
+
+				for _,w in pairs(list.getWindows()) do
+					w.updateHealthDisplay();
+				end
+			end
+		</script>
+		<sheetdata>
+			<windowtitlebar>
+				<static>Combat Tracker</static>
+			</windowtitlebar>
+
+			<labelw>
+				<bounds>50,45,-356,20</bounds>
+				<static>Name</static>
+				<center />
+			</labelw>
+			<labelw name="label_init">
+				<anchored position="insidetopright" offset="287,45" width="50" />
+				<static>Init</static>
+				<tooltip text="Initiative" />
+				<center />
+			</labelw>
+			<labelw name="label_twounds">
+				<anchored position="insidetopright" offset="200,45" width="120" />
+				<static>Wounds</static>
+				<center />
+			</labelw>
+			<labelw name="label_damage">
+				<anchored position="insidetopright" offset="144,45" width="120" />
+				<static>Damage</static>
+				<center />
+			</labelw>
+			<labelw name="label_cwounds">
+				<anchored position="insidetopright" offset="89,45" width="120" />
+				<static>Critical</static>
+				<center />
+			</labelw>
+			<labelw name="label_fatigue">
+				<anchored position="insidetopright" offset="32,45" width="120" />
+				<static>Fatigue</static>
+				<center />
+			</labelw>
+            <labelw name="label_status">
+				<anchored position="insidetopright" offset="60,38" width="150" />
+				<static>Status</static>
+				<center />
+			</labelw>
+
+			<windowlist name="list">
+				<bounds>0,65,-20,-55</bounds>
+				<datasource>.list</datasource>
+				<class>client_ct_entry</class>
+				<script file="ct/scripts/clientct.lua" />
+			</windowlist>
+			<scrollbar_list />
+			
+			<buttoncontrol name="turn_complete">
+				<bounds>62,-45,33,26</bounds>
+				<icon normal="button_ctnextactor" pressed="button_ctnextactor_down" />
+				<tooltip text="Turn complete" />
+				<script>
+					function onButtonPress()
+						CombatManager.notifyEndTurn();
+					end
+				</script>
+			</buttoncontrol>
+			
+			<labelw name="roundcounterlabel">
+				<bounds>-158,-39,50,20</bounds>
+				<static>Round</static>
+			</labelw>
+			<simplenumber name="round">
+				<bounds>-108,-45,40,25</bounds>
+				<frame name="ct_groupbox" offset="3,3,3,3" />
+				<gmeditonly />
+			</simplenumber>
+
+			<resize_ctbox />
+			<close_ctbox />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="client_ct_entry">
+		<margins control="0,0,0,2" />
+		<frame>ctentrybox</frame>
+		<script file="ct/scripts/clientct_entry.lua" />
+		<sheetdata>
+			<hs name="tokenrefid" />
+			<hs name="tokenrefnode" />
+			<hn name="tokenvis" />
+			<hlink name="link" />
+
+			<genericcontrol name="active_spacer_top">
+				<anchored width="0" height="5">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_ctentry_client_active name="active">
+				<anchored width="33" height="40">
+					<top parent="active_spacer_top" anchor="bottom" />
+					<left />
+				</anchored>
+			</button_ctentry_client_active>
+			<token_ctentry_client name="token">
+				<anchored width="25" height="25">
+					<top parent="active_spacer_top" anchor="bottom" offset="7" />
+					<left offset="33" />
+				</anchored>
+			</token_ctentry_client>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top parent="active_spacer_top" anchor="bottom" offset="10" />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<button_ctentry_friendfoe name="friendfoe">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+			</button_ctentry_friendfoe>
+            <simplestring name="status">
+				<anchored to="rightanchor" width="150" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<center />
+				<static />
+				<invisible />
+			</simplestring>
+			
+			<number_ct_crosslink name="init">
+				<anchored width="35" height="20">
+					<top />
+					<right to="rightanchor" offset="-340" />
+				</anchored>
+				<invisible />
+			</number_ct_crosslink>
+
+			<number_ct_crosslink name="fatiguetaken">
+				<bounds>450,13,35,20</bounds>
+			</number_ct_crosslink>
+			
+			<number_ct_crosslink name="criticalwoundstaken">
+				<bounds>395,13,35,20</bounds>
+			</number_ct_crosslink>
+			
+			<number_ct_crosslink name="damagetaken">
+				<bounds>340,13,35,20</bounds>
+                <script>    
+                    function update()
+						window.onHealthChanged();
+					end
+                </script>
+			</number_ct_crosslink>
+			
+			<number_ct_crosslink name="totalwounds">
+				<bounds>285,13,35,20</bounds>
+				<readonly />
+			</number_ct_crosslink>
+			
+			<number_ct_crosslink name="initresult">
+				<bounds>230,13,35,20</bounds>
+				<hideonvalue>0</hideonvalue>
+				<tabtarget prev="level" />
+				<script>
+					function update()
+						window.windowlist.applySort(true);
+					end
+				</script>
+			</number_ct_crosslink>
+
+			<string_ctname name="name">
+				<bounds>65,15,150,20</bounds>
+				<tabtarget next="level" />
+			</string_ctname>
+
+			<!-- Quick labels -->
+            <string_ctentry_targets name="target_summary" />
+			<string_ctentry_effects name="effect_summary" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="name" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+
+			<genericcontrol name="active_spacer_bottom">
+				<anchored width="0" height="5">
+					<top parent="name" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+</root>

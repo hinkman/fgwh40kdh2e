@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="chat" merge="join">
+		<sheetdata>
+			<chatwindow name="chat">
+				<linkcolor>F7DC8C</linkcolor>
+				<droptypes>
+					<type merge="add">attack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">abilities</type>
+					<type merge="add">skill</type>
+				</droptypes>
+			</chatwindow>
+		</sheetdata>
+	</windowclass>
+    	
+    <windowclass name="modifierstack" merge="join">
+        <sheetdata>
+			<numbercontrol name="modifier">
+				<font>modcollector</font>
+			</numbercontrol>
+        </sheetdata>
+	</windowclass>
+
+	<windowclass name="dicetower" merge="join">
+		<sizelimits>
+			<minimum width="64" height="52" />
+		</sizelimits>
+		<sheetdata>
+			<genericcontrol name="base">
+				<bounds>0,0,64,52</bounds>
+				<droptypes>
+                    <type merge="add">attack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">abilities</type>
+					<type merge="add">skill</type>
+				</droptypes>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+</root>
+

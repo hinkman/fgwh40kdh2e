@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Character Homeworld table -->
+	<windowclass name="reference_homeworldtablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,125,20</bounds>
+			</string_list_link>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="reference_homeworldtablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.homeworld</datasource>
+				<class>reference_homeworldtablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_homeworldtablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="450" height="550" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			
+			<windowlist name="grouplist">
+				<bounds>35,60,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_homeworldtablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Skills table -->
+	<windowclass name="reference_skillstablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,220,20</bounds>
+			</string_list_link>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="reference_skillstablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.skills</datasource>
+				<class>reference_skillstablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_skillstablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="330" height="550" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			
+			<windowlist name="grouplist">
+				<bounds>35,60,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_skillstablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Insanity/Corruption/Mutations table -->
+	<windowclass name="reference_insanitytablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,220,20</bounds>
+			</string_list_link>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="reference_insanitytablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.insanitycorruptionmutations</datasource>
+				<class>reference_insanitytablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_insanitytablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="420" height="550" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			
+			<windowlist name="grouplist">
+				<bounds>35,60,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_insanitytablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Psychic Powers table -->
+	<windowclass name="reference_psychicpowerstablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,160,20</bounds>
+			</string_list_link>
+			<string_reftable name="focustime">
+				<bounds>200,2,100,20</bounds>
+				<center />
+			</string_reftable>
+			<number_reftable name="threshold">
+				<bounds>310,2,40,20</bounds>
+				<center />
+			</number_reftable>
+			<string_reftable name="range">
+				<bounds>360,2,100,20</bounds>
+				<center />
+			</string_reftable>
+			<string_reftable name="sustained">
+				<bounds>460,2,50,20</bounds>
+				<center />
+			</string_reftable>
+			<string_reftable name="overbleedyn">
+				<bounds>520,2,50,20</bounds>
+				<center />
+			</string_reftable>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_psychicpowerstablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.psychicpowers</datasource>
+				<class>reference_psychicpowerstablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_psychicpowerstablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="650" height="650" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			<label_reftable name="headername">
+				<bounds>30,55,180,20</bounds>
+				<static>Name</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headerfocustime">
+				<bounds>245,55,80,20</bounds>
+				<static>Focus Time</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headerthreshold">
+				<bounds>330,55,80,20</bounds>
+				<static>Threshold</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headerrange">
+				<bounds>385,55,120,20</bounds>
+				<static>Range</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headersustain">
+				<bounds>485,55,70,20</bounds>
+				<static>Sustain?</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headeroverbleed1">
+				<bounds>550,40,60,20</bounds>
+				<static>Over-</static>
+				<center />
+			</label_reftable>
+			<label_reftable name="headeroverbleed2">
+				<bounds>550,55,60,20</bounds>
+				<static>bleed?</static>
+				<center />
+			</label_reftable>
+
+			<windowlist name="grouplist">
+				<bounds>35,90,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_psychicpowerstablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Critical Damage Tables table -->
+	<windowclass name="reference_criticaldamagetablestablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,220,20</bounds>
+			</string_list_link>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="reference_criticaldamagetablestablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.criticaldamagetables</datasource>
+				<class>reference_criticaldamagetablestablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_criticaldamagetablestablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="420" height="550" />
+		</placement>
+		<sizelimits>
+			<dynamic resize="vertical" />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<sheetdata>
+			<windowtitlebar>
+				<field>description</field>
+			</windowtitlebar>
+
+			<genericcontrol name="headeranchor">
+				<bounds>65,45,0,0</bounds>
+			</genericcontrol>
+			
+			<windowlist name="grouplist">
+				<bounds>35,60,-40,-70</bounds>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<class>reference_criticaldamagetablestablegroup</class>
+				<datasource>.groups</datasource>
+			</windowlist>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<bounds>125,-45,-35,20</bounds>
+			</filter_reftable>
+			<button_expand>
+				<bounds>30,-45,20,20</bounds>
+			</button_expand>
+			<button_collapse>
+				<bounds>60,-45,20,20</bounds>
+			</button_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+	
+</root>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Common -->
+	<template name="label">
+		<stringcontrol>
+			<font>sheetlabel</font>
+			<nodrag />
+			<readonly />
+		</stringcontrol>
+	</template>
+    <template name="labelw">
+		<stringcontrol>
+			<font>sheetlabelw</font>
+			<nodrag />
+			<readonly />
+		</stringcontrol>
+	</template>
+
+	<!-- Buttons -->
+	<template name="button_text_sm">
+		<buttoncontrol>
+			<anchored height="20" />
+			<frame name="buttonup" offset="2,2,2,2" />
+			<stateframe>
+				<pressed name="buttondown" offset="2,2,2,2" nobaseframe="true" />
+			</stateframe>
+			<font>button-white</font>
+		</buttoncontrol>
+	</template>
+	<template name="button_text">
+		<buttoncontrol>
+			<frame name="buttonup2" offset="5,5,5,5" />
+			<stateframe>
+				<pressed name="buttondown2" offset="5,5,5,5" nobaseframe="true" />
+			</stateframe>
+			<font>button-white</font>
+		</buttoncontrol>
+	</template>
+	<template name="button_text_large">
+		<buttoncontrol>
+			<frame name="buttonup" offset="5,5,5,5" />
+			<stateframe>
+				<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+			</stateframe>
+			<font>button-white-large</font>
+		</buttoncontrol>
+	</template>
+    	<template name="button_stringcycler2">
+		<genericcontrol>
+			<frame name="fielddark" offset="7,5,7,5" hidereadonly = "true" />
+			<stateframe>
+				<hover name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+			</stateframe>
+			<script file="common/scripts/button_stringcycler.lua" />
+		</genericcontrol>
+	</template>
+
+	<!-- Toolbar -->
+	<framedef name="toolbar_back">
+		<bitmap file="graphics/toolbar/toolbar_back.png"/>
+		<middle rect="0,0,128,128" />
+	</framedef>
+
+	<!-- Lists -->
+	<template name="filter">
+		<stringcontrol>
+			<frame name="search" offset="28,5,5,5" />
+			<font>sheettext</font>
+			<selectioncolor>#FFD296</selectioncolor>
+			<script>
+				function onGainFocus()
+					setCursorPosition(#getValue()+1);
+					setSelectionPosition(1);
+				end
+				
+				function onLoseFocus()
+					setCursorPosition(1);
+					setSelectionPosition(1);
+				end
+				
+				function onValueChanged()
+					if isEmpty() then
+						setFrame("search", 28,5,5,5);
+					else
+						setFrame("search_active", 28,5,5,5);
+					end
+				end
+				
+				function onClickDown(button)
+					if button == 2 then
+						return true;
+					end
+				end
+				
+				function onClickRelease(button)
+					if button == 2 then
+						setValue("");
+						return true;
+					end
+				end
+			</script>
+		</stringcontrol>
+	</template>
+
+	<template name="categories">
+		<categoryselectioncontrol>
+			<anchored>
+				<top anchor="bottom" offset="-40" />
+				<left offset="24" />
+				<bottom offset="-1" />
+			</anchored>
+			<gmvisibleonly />
+		</categoryselectioncontrol>
+	</template>
+</root>

@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Generic Template -->
+	<windowclass name="referencegeneric">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="700" height="500" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_generic_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_generic_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_generic_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencegeneric</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_generic_stats">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Generic Small Template -->
+	<windowclass name="referencegenericsmall">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="300" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_genericsmall_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_genericsmall_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_genericsmall_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencegenericsmall</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_genericsmall_stats">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Character Homeworld -->
+	<windowclass name="referencehomeworld">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_homeworld_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_homeworld_info</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_homeworld_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencehomeworld</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_homeworld_info">
+		<script>
+			function onInit()
+				type_label.setValue("[Character Homeworld]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="class" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_homeworld" />
+			</label_column>
+			<string_column name="homeworld" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Traits -->
+	<windowclass name="referencetrait">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_trait_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_trait_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_trait_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencetrait</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_trait_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Trait]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="class" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Talents -->
+	<windowclass name="referencetalent">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_talent_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_talent_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_talent_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencetalent</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_talent_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Talent]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="class" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+		
+	<!-- Skills -->
+	<windowclass name="referenceskills">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_skills_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_skills_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_skills_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceskills</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_skills_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Skill; " .. basicoradvanced.getValue() .. "; " .. attribute.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="basicoradvanced" />
+			<hs name="attribute" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<label_column>
+				<static textres="ref_label_skill_categories" />
+			</label_column>
+			<string_column name="ability" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Mental Disorders -->
+	<windowclass name="referencementaldisorder">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_mentaldisorder_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_mentaldisorder_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_mentaldisorder_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencementaldisorder</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_mentaldisorder_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Mental Disorder]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Malignancies -->
+	<windowclass name="referencemalignancies">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_malignancies_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_malignancies_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_malignancies_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencemalignancies</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_malignancies_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Malignancy]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Mutations -->
+	<windowclass name="referencemutation">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_mutation_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_mutation_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_mutation_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencemutation</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_mutation_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Mutation; " .. type.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Psychic Powers -->
+	<windowclass name="referencepsychic">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_psychic_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_psychic_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_psychic_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencepsychic</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_psychic_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Psychic Power; " .. type.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+			
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_focustime" />
+			</label_column>
+			<string_column name="focustime" />
+			
+			<label_column_right>
+				<anchored to="focustime" />
+				<static textres="ref_label_threshold" />
+			</label_column_right>
+			<number_column_right name="threshold">
+				<anchored to="focustime" />
+			</number_column_right>
+			
+			<label_column>
+				<static textres="ref_label_range" />
+			</label_column>
+			<string_column name="range" />
+			
+			<label_column>
+				<static textres="ref_label_sustain" />
+			</label_column>
+			<string_column name="sustained" />
+			
+			<label_column>
+				<static textres="ref_label_overbleed" />
+			</label_column>
+			<string_column name="overbleed" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+</root>

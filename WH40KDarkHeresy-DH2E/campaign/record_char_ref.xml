@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_ref">
+		<sheetdata>
+			<frame_char name="refframe">
+				<anchored height="40">
+					<left offset="15" />
+					<top />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="refframe" />
+				<static>REFERENCE GUIDE</static>
+			</label_frametop>
+
+			<frame_char name="refframeleft">
+				<anchored>
+					<left offset="15" />
+					<top offset="40" />
+					<bottom />
+					<right anchor="center" offset="-3" />
+				</anchored>
+			</frame_char>
+			
+			<label_frametop>
+				<anchored to="refframeleft" />
+				<static>ACTIONS</static>
+			</label_frametop>
+			<label name="ref1_label">
+				<anchored to="refframeleft" position="insidetopleft" offset="20,30" width="120" height="14" />
+				<static>Aim +10</static>
+			</label>
+			<label name="ref1_actionlabel">
+				<anchored to="ref1_label" position="right" offset="30"  width="70" />
+				<static>Half Action</static>
+			</label>
+			<label name="ref2_label">
+				<anchored to="ref1_label" position="below" offset="0,5" height="14" />
+				<static>Aim +20</static>
+			</label>
+			<label name="ref2_actionlabel">
+				<anchored to="ref2_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref3_label">
+				<anchored to="ref2_label" position="below" offset="0,5"  height="14" />
+				<static>All Out Attack</static>
+			</label>
+			<label name="ref3_actionlabel">
+				<anchored to="ref3_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref4_label">
+				<anchored to="ref3_label" position="below" offset="0,5"  height="14" />
+				<static>Charge</static>
+			</label>
+			<label name="ref4_actionlabel">
+				<anchored to="ref4_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref5_label">
+				<anchored to="ref4_label" position="below" offset="0,5" height="14" />
+				<static>Defensive Stance</static>
+			</label>
+			<label name="ref5_actionlabel">
+				<anchored to="ref5_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref6_label">
+				<anchored to="ref5_label" position="below" offset="0,5"  height="14" />
+				<static>Delay</static>
+			</label>
+			<label name="ref6_actionlabel">
+				<anchored to="ref6_label" position="right" offset="30"  width="70" />
+				<static>Half Action</static>
+			</label>
+			<label name="ref7_label">
+				<anchored to="ref6_label" position="below" offset="0,5"  height="14" />
+				<static>Disengage</static>
+			</label>
+			<label name="ref7_actionlabel">
+				<anchored to="ref7_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref8_label">
+				<anchored to="ref7_label" position="below" offset="0,5"  height="14" />
+				<static>Dodge</static>
+			</label>
+			<label name="ref8_actionlabel">
+				<anchored to="ref8_label" position="right" offset="30"  width="70"  />
+				<static>Reaction</static>
+			</label>
+			<label name="ref9_label">
+				<anchored to="ref8_label" position="below" offset="0,5"  height="14" />
+				<static>Feint</static>
+			</label>
+			<label name="ref9_actionlabel">
+				<anchored to="ref9_label" position="right" offset="30"  width="70" />
+				<static>Half Action</static>
+			</label>
+			<label name="ref10_label">
+				<anchored to="ref9_label" position="below" offset="0,5"  height="14" />
+				<static>Full Auto Burst</static>
+			</label>
+			<label name="ref10_actionlabel">
+				<anchored to="ref10_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref11_label">
+				<anchored to="ref10_label" position="below" offset="0,5"  height="14" />
+				<static>Grapple</static>
+			</label>
+			<label name="ref11_actionlabel">
+				<anchored to="ref11_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref12_label">
+				<anchored to="ref11_label" position="below" offset="0,5"  height="14" />
+				<static>Guarded Attack</static>
+			</label>
+			<label name="ref12_actionlabel">
+				<anchored to="ref12_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref13_label">
+				<anchored to="ref12_label" position="below" offset="0,5"  height="14" />
+				<static>Jump/Leap</static>
+			</label>
+			<label name="ref13_actionlabel">
+				<anchored to="ref13_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref14_label">
+				<anchored to="ref13_label" position="below" offset="0,5"  height="14" />
+				<static>Knock-Down</static>
+			</label>
+			<label name="ref14_actionlabel">
+				<anchored to="ref14_label" position="right" offset="30"  width="70"  />
+				<static>Half Action</static>
+			</label>
+			<label name="ref15_label">
+				<anchored to="ref14_label" position="below" offset="0,5"  height="14" />
+				<static>Maneuver</static>
+			</label>
+			<label name="ref15_actionlabel">
+				<anchored to="ref15_label" position="right" offset="30"  width="70"  />
+				<static>Half Action</static>
+			</label>
+			<label name="ref16_label">
+				<anchored to="ref15_label" position="below" offset="0,5"  height="14" />
+				<static>Multiple Attacks</static>
+			</label>
+			<label name="ref16_actionlabel">
+				<anchored to="ref16_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref18_label">
+				<anchored to="ref16_label" position="below" offset="0,5"  height="14" />
+				<static>Parry</static>
+			</label>
+			<label name="ref18_actionlabel">
+				<anchored to="ref18_label" position="right" offset="30"  width="70"  />
+				<static>Reaction</static>
+			</label>
+			<label name="ref19_label">
+				<anchored to="ref18_label" position="below" offset="0,5"  height="14" />
+				<static>Ready</static>
+			</label>
+			<label name="ref19_actionlabel">
+				<anchored to="ref19_label" position="right" offset="30"  width="70" />
+				<static>Half Action</static>
+			</label>
+			<label name="ref20_label">
+				<anchored to="ref19_label" position="below" offset="0,5" height="14" />
+				<static>Run</static>
+			</label>
+			<label name="ref20_actionlabel">
+				<anchored to="ref20_label" position="right" offset="30"  width="70" />
+				<static>Full Action</static>
+			</label>
+			<label name="ref21_label">
+				<anchored to="ref20_label" position="below" offset="0,5"  height="14" />
+				<static>Semi-Auto Burst</static>
+			</label>
+			<label name="ref21_actionlabel">
+				<anchored to="ref21_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref22_label">
+				<anchored to="ref21_label" position="below" offset="0,5"  height="14" />
+				<static>Stand/Mount</static>
+			</label>
+			<label name="ref22_actionlabel">
+				<anchored to="ref22_label" position="right" offset="30"  width="70"  />
+				<static>Half Action</static>
+			</label>
+			<label name="ref23_label">
+				<anchored to="ref22_label" position="below" offset="0,5"  height="14" />
+				<static>Standard Attack</static>
+			</label>
+			<label name="ref23_actionlabel">
+				<anchored to="ref23_label" position="right" offset="30" width="70"  />
+				<static>Half Action</static>
+			</label>
+			<label name="ref24_label">
+				<anchored to="ref23_label" position="below" offset="0,5"  height="14" />
+				<static>Stun</static>
+			</label>
+			<label name="ref24_actionlabel">
+				<anchored to="ref24_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref25_label">
+				<anchored to="ref24_label" position="below" offset="0,5"  height="14" />
+				<static>Suppressing Fire</static>
+			</label>
+			<label name="ref25_actionlabel">
+				<anchored to="ref25_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>
+			<label name="ref26_label">
+				<anchored to="ref25_label" position="below" offset="0,5"  height="14" />
+				<static>Tactical Advance</static>
+			</label>
+			<label name="ref26_actionlabel">
+				<anchored to="ref26_label" position="right" offset="30"  width="70"  />
+				<static>Full Action</static>
+			</label>	
+
+
+			<frame_char name="refframeright">
+				<anchored height="150">
+					<left anchor="center" offset="-3" />
+					<top offset="40" />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="refframeright" />
+				<static>SCATTER DIAGRAM</static>
+			</label_frametop>
+			<genericcontrol>
+				<bounds>420,60,130,130</bounds>
+				<icon>misc_scatterdiagram</icon>
+			</genericcontrol>
+			
+			<!-- Player Reference Notes -->
+			<frame_char name="playerrefnotesframe">
+				<anchored>
+					<left anchor="center" offset="-3" />
+					<top offset="190" />
+					<bottom />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+			<label_frametop>
+				<anchored to="playerrefnotesframe" />
+				<static>OTHER REFERENCE NOTES</static>
+			</label_frametop>
+			<stringu name="playerrefnotes">
+				<anchored to="playerrefnotesframe">
+					<top offset="30" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+				<multilinespacing>17</multilinespacing>
+			</stringu>
+			<scrollbar>
+				<anchored to="playerrefnotesframe" />
+				<target>playerrefnotesframe</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+	
+</root>

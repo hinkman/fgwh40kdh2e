@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="windowtitlebar">
+		<genericcontrol>
+			<bounds>0,0,-1,30</bounds>
+			<frame name="windowtitle" />
+			<font>windowtitle</font>
+			<script>
+				widgetTitle = nil;
+				
+				function onInit()
+					widgetTitle = addTextWidget(font[1]);
+					
+					local sTitle = "";
+					if resource then
+						sTitle = Interface.getString(resource[1]);
+					elseif static then
+						sTitle = static[1];
+					elseif field then
+						local nodeTitle = window.getDatabaseNode().getChild(field[1]);
+						nodeTitle.onUpdate = onUpdate;
+						sTitle = nodeTitle.getValue();
+					end
+					
+					self.setValue(sTitle);
+
+					window.onSizeChanged = updatePosition;
+					self.updatePosition();
+				end
+				
+				function onUpdate()
+					if widgetTitle then
+						local nodeTitle = window.getDatabaseNode().getChild(field[1]);
+						self.setValue(nodeTitle.getValue())
+					end
+				end
+				
+				function setValue(sTitle)
+					if widgetTitle then
+						widgetTitle.setText(sTitle);
+						self.updatePosition();
+					end
+				end
+				
+				function updatePosition()
+					if widgetTitle then
+						local wTitle, hTitle = widgetTitle.getSize();
+						local wWindow, hWindow = window.getSize();
+						local wControl = wTitle + 40;
+						if (wControl > wWindow) then
+							wControl = wWindow;
+						end
+						setStaticBounds((wWindow - wControl) / 2, 0, wControl, 30);
+					end
+				end
+			</script>
+		</genericcontrol>
+	</template>
+
+	<template name="scrollbar">
+		<scrollbarcontrol>
+			<anchored position="right" offset="-4,-5" width="20" />
+			<frame name="scrollbar_base" offset="0,0,0,0" />
+			<normal name="scrollbutton_normal" />
+		</scrollbarcontrol>
+	</template>
+    
+    <template name="scrollbar2">
+		<scrollbarcontrol>
+			<anchored position="right" offset="-17,-5" width="20" />
+			<frame name="scrollbar_base" offset="0,12,0,12" />
+			<normal name="scrollbutton_normal" />
+		</scrollbarcontrol>
+	</template>
+	
+	<template name="resize_campaignlist_tables">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-12" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_calendar">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_campaignlistwithtabs">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_referencepage">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_referencelist">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_utilitybox">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_utilitybox2">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_utilitybox3">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_charselect">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_tokenbag">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_imagebox">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_storybox">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_charsheet">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_recordsheet">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_ctbox">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+	<template name="resize_partysheet">
+		<resize>
+			<anchored>
+				<right offset="-2" />
+				<bottom offset="-2" />
+			</anchored>
+		</resize>
+	</template>
+
+	<template name="close">
+		<buttoncontrol>
+			<anchored height="16" width="17">
+				<top />
+				<right />
+			</anchored>
+			<icon normal="button_close" pressed="button_close_down" hover="button_close_hover" />
+			<script>
+				function onButtonPress()
+					window.close();
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+    	<template name="close2">
+		<buttoncontrol>
+			<anchored height="15" width="16">
+				<top />
+				<right />
+			</anchored>
+			<icon normal="button_close" pressed="button_close_down" hover="button_close_hover" />
+			<script>
+				function onButtonPress()
+					window.close();
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+	<template name="close_campaignlist_tables">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_calendar">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_campaignlist">
+		<close>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close>
+	</template>
+	<template name="close_referencepage">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_referencelist">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_charselect">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_tokenbag">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_utilitybox">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_utilitybox2">
+		<close>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close>
+	</template>
+	<template name="close_utilitybox3">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_imagebox">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_storybox">
+		<close>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close>
+	</template>
+	<template name="close_charsheet">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_recordsheet">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_ctbox">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+	<template name="close_partysheet">
+		<close2>
+			<anchored>
+				<top offset="1" />
+				<right offset="-1" />
+			</anchored>
+		</close2>
+	</template>
+</root>

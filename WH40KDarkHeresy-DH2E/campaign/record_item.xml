@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="item" merge="join">
+		<sheetdata>
+			<subwindow_record name="main">
+				<script file="campaign/scripts/item_drop.lua" />
+			</subwindow_record>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="item_main">
+		<script file="campaign/scripts/item_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="nonid_name_label">
+				<static>Non-ID Name</static>
+			</label_column>
+			<string_columnh name="nonid_name" />
+			
+			<label_column name="nonid_notes_label">
+				<static>Non-ID Notes</static>
+			</label_column>
+			<string_columnh name="nonid_notes" />
+			
+			<line_column name="divider" />
+
+			<button_stringcycler name="type">
+				<anchored width="250">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="10" />
+				</anchored>
+				<parameters>
+					<defaultlabel>-</defaultlabel>
+					<labels>Ammunition|Armor|Clothes/Personal Item|Drug/Consumable|Melee Weapon|Ranged Weapon|Tool</labels>
+					<values>Ammunition|Armor|Clothes/Personal Item|Drug/Consumable|Melee Weapon|Ranged Weapon|Tool</values>
+				</parameters>
+				<font>windowtitle</font>
+				<script>
+					function onValueChanged()
+						window.update();
+					end
+				</script>
+			</button_stringcycler>
+			
+			<label_column name="subtype_label">
+				<static>Sub-Type</static>
+			</label_column>
+			<string_columnh name="subtype" />
+			
+			<label_column name="usedwith_label">
+				<static>Used With</static>
+			</label_column>
+			<string_columnh name="usedwith" />
+			
+			<label_column name="cost_label">
+				<static>Cost</static>
+			</label_column>
+			<string_columnh name="cost" />
+
+			<label_column name="availability_label">
+				<static>Availability</static>
+			</label_column>
+			<string_columnh name="availability" />
+			
+			<label_column name="weight_label">
+				<static>Weight</static>
+			</label_column>
+			<number_columnh name="weight" />
+			
+			<label_column name="protects_label">
+				<static>Protects</static>
+			</label_column>
+			<string_columnh name="protects" />
+			
+			<label_column name="ap_label">
+				<static>AP</static>
+			</label_column>
+			<number_columnh name="ap" />
+			
+			<label_column name="class_label">
+				<static>Class</static>
+			</label_column>
+			<string_columnh name="class" />
+			
+			<label_column name="damagedice_label">
+				<static>Damage</static>
+			</label_column>
+			<string_columnh name="damagedice" />
+            
+            <label_column name="damagebonus_label">
+				<static>Damage Bonus</static>
+			</label_column>
+			<string_columnh name="damagebonus" />
+			
+			<label_column name="damagetype_label">
+				<static>Damage Type</static>
+			</label_column>
+			<string_columnh name="damagetype" />
+			
+			<label_column name="pen_label">
+				<static>Penetration</static>
+			</label_column>
+			<string_columnh name="pen" />
+			
+			<label_column name="clipsize_label">
+				<static>Clip Size</static>
+			</label_column>
+			<string_columnh name="clipsize" />
+			
+			<label_column name="range_label">
+				<static>Range</static>
+			</label_column>
+			<string_columnh name="range" />
+			
+			<label_column name="reload_label">
+				<static>Reload</static>
+			</label_column>
+			<string_columnh name="reload" />
+			
+			<label_column name="rof_label">
+				<static>Rate of Fire</static>
+			</label_column>
+			<string_columnh name="rof" />
+			
+			<label_column name="special_label">
+				<static>Special</static>
+			</label_column>
+			<string_columnh name="special" />
+			
+			<line_column name="divider2" />
+
+			<ft_columnh name="description">
+				<gmeditonly />
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+</root>

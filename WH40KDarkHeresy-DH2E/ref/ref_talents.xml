@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencetalent">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_talent_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_talent_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_talent_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencetalent</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_talent_stats">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<ft_columnh name="benefit" />
+		</sheetdata>
+	</windowclass>
+</root>

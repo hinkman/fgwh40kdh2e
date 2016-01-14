@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+	<distance>
+		<base>1</base>
+		<diagmult>1.5</diagmult>
+		<suffix>m</suffix>
+	</distance>
+
+	<die name="dF" merge="delete" />
+
+	<customdie name="d5">
+		<model>d10</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				if result == 10 then
+					ChatManager.Message("Rightous fury!", true, ActorManager.getActor("pc", nodeChar));
+				end
+
+				return math.ceil(result/2);
+			end
+		</script>
+	</customdie>
+
+	<customdie name="d20">
+		<model>d20</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return result;
+			end
+		</script>
+	</customdie>
+	<customdie name="d12">
+		<model>d12</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return result;
+			end
+		</script>
+	</customdie>
+	<customdie name="d8">
+		<model>d8</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return result;
+			end
+		</script>
+	</customdie>
+	<customdie name="d6">
+		<model>d6</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return result;
+			end
+		</script>
+	</customdie>
+	<customdie name="d4">
+		<model>d4</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return result;
+			end
+		</script>
+	</customdie>
+	<customdie name="d3">
+		<model>d6</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return math.ceil(result/2);
+			end
+		</script>
+	</customdie>
+	<customdie name="d2">
+		<model>d6</model>
+		<menuicon>customdice</menuicon>
+		<script>
+			function onValue(result)
+				return math.ceil(result/3);
+			end
+		</script>
+	</customdie>
+</root>

@@ -1,0 +1,1643 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_main">
+		<sheetdata>
+			<!-- Overview -->
+			<frame_char name="overviewframe">
+				<bounds>15,0,-23,90</bounds>
+			</frame_char>
+
+			<string_labeled name="homeworldtype">
+				<anchored to="overviewframe" position="insidetopleft" offset="15,12" height="20" width="150" />
+				<label>homeworld type</label>
+			</string_labeled>
+			<string_labeled name="divination">
+				<anchored to="homeworldtype" position="right" offset="10,0" width="300" />
+				<label>divination</label>
+			</string_labeled>
+			<string_labeled name="eliteadvances">
+				<anchored to="divination" position="right" offset="10,0" width="120" />
+				<label>elite advances</label>
+			</string_labeled>
+
+			<string_labeled name="age">
+				<anchored to="overviewframe" position="insidetopleft" offset="15,45" height="20" width="30" />
+				<label>age</label>
+			</string_labeled>
+			<string_labeled name="gender">
+				<anchored to="age" position="right" offset="10,0" width="50" />
+				<label>gender</label>
+			</string_labeled>
+			<string_labeled name="build">
+				<anchored to="gender" position="right" offset="10,0" width="130" />
+				<label>build</label>
+			</string_labeled>
+			<string_labeled name="skincolor">
+				<anchored to="build" position="right" offset="10,0" width="80" />
+				<label>complexion</label>
+			</string_labeled>
+			<string_labeled name="haircolor">
+				<anchored to="skincolor" position="right" offset="10,0" width="80" />
+				<label>hair</label>
+			</string_labeled>
+			<string_labeled name="eyecolor">
+				<anchored to="haircolor" position="right" offset="10,0" width="80" />
+				<label>eye color</label>
+			</string_labeled>
+			<string_labeled name="handedness">
+				<anchored to="eyecolor" position="right" offset="10,0" width="80" />
+				<label>handedness</label>
+			</string_labeled>
+
+			<!-- Initiative and Fate Points -->
+			<frame_char name="initiativeframe">
+				<bounds>15,90,-23,60</bounds>
+			</frame_char>
+			<number_initiativeroll name="init_total">
+				<anchored to="initiativeframe" position="insidetopleft" offset="30,26" width="30" height="20" />
+			</number_initiativeroll>
+			<label_charfieldtop name="init_label">
+				<anchored to="init_total" />
+				<static>Initiative</static>
+			</label_charfieldtop>
+
+			<label name="init_equalsign_label">
+				<anchored to="init_total" position="right" offset="20,0" />
+				<static>=</static>
+			</label>
+
+			<simplenumber name="init_agbonus" source ="init_agbonus">
+				<anchored to="init_equalsign_label" position="right" offset="20,0" width="30" />
+                <frame name="fieldlight" offset="7,5,7,5" />
+				<nodrag />
+                <readonly />
+				<script>
+					function calc()
+						local abilityAg = window.getDatabaseNode().getChild("abilities.agility").getValue();
+						setValue(math.floor(abilityAg/10));
+					end
+				</script>
+			</simplenumber>
+			<label_charfieldtop name="init_agbonus_label">
+				<anchored to="init_agbonus" />
+				<static>Ag Bonus</static>
+			</label_charfieldtop>
+
+			<label name="init_plussign_label">
+				<anchored to="init_agbonus" position="right" offset="20,0" />
+				<static>+</static>
+			</label>
+
+			<basicnumber name="init_misc" source ="init_misc">
+				<anchored to="init_plussign_label" position="right" offset="20,0" width="30" />
+			</basicnumber>
+
+			<label_charfieldtop name="init_misc_label">
+				<anchored to="init_misc" />
+				<static>Misc. Mod</static>
+			</label_charfieldtop>
+
+			<label name="fatepoints_label">
+				<anchored to="initiativeframe" position="insidetopleft" offset="340,15" />
+				<static>Fate Points:</static>
+			</label>
+			<basicnumber name="maxfatepoints">
+				<anchored to="fatepoints_label" position="right" offset="10,0" width="30" />
+				<script>
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 30 then
+							setValue(30);
+						end
+					end
+				</script>
+			</basicnumber>
+			<genericcontrol name="fatepointcounter">
+				<anchored to="initiativeframe" position="insidetopleft" offset="455,15" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<script file="campaign/scripts/counter_fatepoints.lua" />
+			</genericcontrol>
+
+            <basicnumber name="ucstrength" source = "abilities.strmult">
+                <invisible/>
+				<anchored to="initiativeframe" position="insidetopleft" width = "15" height= "15" offset ="300,12"/>
+				<default>1</default>
+                <nodrag />
+                <script>
+					function onValueChanged()
+						window.strengthbonus.recalc();
+					end
+                </script>
+			</basicnumber>
+            <label name="ucstr_label">
+				<anchored to="ucstrength" position="left" offset="5,2" />
+				<static>UC Str:</static>
+                <invisible/>
+			</label>
+            <basicnumber name="uctoughness" source = "abilities.tnmult">
+                <invisible/>
+				<anchored to="ucstrength" position="below" height="15" offset ="0,6"/>
+                <default>1</default>
+				<nodrag />
+                <script>
+					function onValueChanged()
+						window.toughnessbonus.recalc();
+					end
+                </script>
+			</basicnumber>
+            <label name="uctn_label">
+                <invisible/>
+				<anchored to="uctoughness" position="left" offset="8,2" />
+				<static>UC Tn:</static>
+			</label>
+
+			<!-- abilities -->
+			<frame_char name="abilitiesframe">
+				<bounds>15,150,-23,70</bounds>
+			</frame_char>
+
+			<!-- Weapon Skill -->
+			<number_attributeroll name="weapon" source ="abilities.weapon">
+				<anchored to="abilitiesframe" position="insidetopleft" offset="25,25" width="30" height="20" />
+				<statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wslabel">
+				<anchored to="weapon" offset="0,2" />
+				<static>WS</static>
+				<tooltip text="Weapon Skill" />
+			</label_charfieldtop>
+			<buttonfield name="wsAdv1">
+				<anchored to="weapon" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="wsAdv2">
+				<anchored to="weapon" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="wsAdv3">
+				<anchored to="weapon" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="wsAdv4">
+				<anchored to="weapon" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="wsAdv5">
+				<anchored to="weapon" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Ballistic Skill -->
+			<number_attributeroll name="ballistic" source ="abilities.ballistic">
+				<anchored to="weapon" position="right" offset="30,0" width="30" />
+				<statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="bslabel">
+				<anchored to="ballistic" offset="0,2" />
+				<static>BS</static>
+				<tooltip text="Ballistic Skill" />
+			</label_charfieldtop>
+			<buttonfield name="bsAdv1">
+				<anchored to="ballistic" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="bsAdv2">
+				<anchored to="ballistic" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="bsAdv3">
+				<anchored to="ballistic" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="bsAdv4">
+				<anchored to="ballistic" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="bsAdv5">
+				<anchored to="ballistic" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Strength -->
+			<number_attributeroll name="strength" source="abilities.strength">
+				<anchored to="ballistic" position="right" offset="30,0" width="30" />
+				<statname>Strength</statname>
+				<stat>strength</stat>
+                <script>
+                function onValueChanged()
+						window.strengthbonus.recalc();
+                end
+                </script>
+            </number_attributeroll>
+			<label_charfieldtop name="slabel">
+				<anchored to="strength" offset="0,2" />
+				<static>S</static>
+				<tooltip text="Strength" />
+			</label_charfieldtop>
+			<buttonfield name="sAdv1">
+				<anchored to="strength" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="sAdv2">
+				<anchored to="strength" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="sAdv3">
+				<anchored to="strength" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="sAdv4">
+				<anchored to="strength" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="sAdv5">
+				<anchored to="strength" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+            <simplenumber name="strengthbonus" source = "abilities.strengthbonus">
+				<anchored to="strength" position="left" width = "10" offset ="6,0"/>
+                <statname>Strength Bonus</statname>
+				<stat>strengthbonus</stat>
+				<nodrag />
+                <readonly />
+                <invisible />
+                <script>
+                    function recalc()
+						local nStrb = window.getDatabaseNode().getChild("abilities.strength").getValue();
+						setValue(math.floor(nStrb/10));
+
+                        local nStrmult = window.getDatabaseNode().getChild("abilities.strmult").getValue();
+
+						local totalStrb = getValue() * nStrmult;
+
+						setValue(totalStrb);
+					end
+                </script>
+			</simplenumber>
+
+			<!-- Toughness -->
+			<number_attributeroll name="toughness" source="abilities.toughness">
+				<anchored to="strength" position="right" offset="30,0" width="30" />
+				<statname>Toughness</statname>
+				<stat>toughness</stat>
+                <script>
+                function onValueChanged()
+                    window.toughnessbonus.recalc();
+                end
+                </script>
+			</number_attributeroll>
+			<label_charfieldtop name="tlabel">
+				<anchored to="toughness" offset="0,2" />
+				<static>T</static>
+				<tooltip text="Toughness" />
+			</label_charfieldtop>
+			<buttonfield name="tAdv1">
+				<anchored to="toughness" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="tAdv2">
+				<anchored to="toughness" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="tAdv3">
+				<anchored to="toughness" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="tAdv4">
+				<anchored to="toughness" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="tAdv5">
+				<anchored to="toughness" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+            <simplenumber name="toughnessbonus" source = "abilities.toughnessbonus">
+				<anchored to="toughness" position="left" width = "10" offset ="6,0"/>
+                <statname>Toughness Bonus</statname>
+				<stat>toughnessbonus</stat>
+				<nodrag />
+                <readonly />
+                <invisible />
+                <script>
+					function recalc()
+						local nTnb = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+						setValue(math.floor(nTnb/10));
+
+                        local nTnmult = window.getDatabaseNode().getChild("abilities.tnmult").getValue();
+
+						local totalTnb = getValue() * nTnmult;
+
+						setValue(totalTnb);
+					end
+				</script>
+			</simplenumber>
+
+			<!-- Agility -->
+			<number_attributeroll name="agility" source="abilities.agility">
+				<anchored to="toughness" position="right" offset="30,0" width="30" />
+				<statname>Agility</statname>
+				<stat>agility</stat>
+                <script>
+                    function onValueChanged()
+						window.init_agbonus.calc();
+                    end
+                </script>
+			</number_attributeroll>
+			<label_charfieldtop name="aglabel">
+				<anchored to="agility" offset="0,2" />
+				<static>Ag</static>
+				<tooltip text="Agility" />
+			</label_charfieldtop>
+			<buttonfield name="agAdv1">
+				<anchored to="agility" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="agAdv2">
+				<anchored to="agility" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="agAdv3">
+				<anchored to="agility" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="agAdv4">
+				<anchored to="agility" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="agAdv5">
+				<anchored to="agility" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Intelligence -->
+			<number_attributeroll name="intelligence" source="abilities.intelligence">
+				<anchored to="agility" position="right" offset="30,0" width="30" />
+				<statname>Intelligence</statname>
+				<stat>intelligence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="intlabel">
+				<anchored to="intelligence" offset="0,2" />
+				<static>Int</static>
+				<tooltip text="Intelligence" />
+			</label_charfieldtop>
+			<buttonfield name="intAdv1">
+				<anchored to="intelligence" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="intAdv2">
+				<anchored to="intelligence" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="intAdv3">
+				<anchored to="intelligence" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="intAdv4">
+				<anchored to="intelligence" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="intAdv5">
+				<anchored to="intelligence" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Perception -->
+			<number_attributeroll name="perception" source="abilities.perception">
+				<anchored to="intelligence" position="right" offset="30,0" width="30" />
+				<statname>Perception</statname>
+				<stat>perception</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="perlabel">
+				<anchored to="perception" offset="0,2" />
+				<static>Per</static>
+				<tooltip text="Perception" />
+			</label_charfieldtop>
+			<buttonfield name="perAdv1">
+				<anchored to="perception" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="perAdv2">
+				<anchored to="perception" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="perAdv3">
+				<anchored to="perception" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="perAdv4">
+				<anchored to="perception" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="perAdv5">
+				<anchored to="perception" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Willpower -->
+			<number_attributeroll name="willpower" source="abilities.willpower">
+				<anchored to="perception" position="right" offset="30,0" width="30" />
+				<statname>Willpower</statname>
+				<stat>willpower</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wplabel">
+				<anchored to="willpower" offset="0,2" />
+				<static>WP</static>
+				<tooltip text="Will Power" />
+			</label_charfieldtop>
+			<buttonfield name="wpAdv1">
+				<anchored to="willpower" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="wpAdv2">
+				<anchored to="willpower" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="wpAdv3">
+				<anchored to="willpower" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="wpAdv4">
+				<anchored to="willpower" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="wpAdv5">
+				<anchored to="willpower" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Fellowship -->
+			<number_attributeroll name="fellowship" source="abilities.fellowship">
+				<anchored to="willpower" position="right" offset="30,0" width="30" />
+				<statname>Fellowship</statname>
+				<stat>fellowship</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="fellabel">
+				<anchored to="fellowship" offset="0,2" />
+				<static>Fel</static>
+				<tooltip text="Fellowship" />
+			</label_charfieldtop>
+			<buttonfield name="felAdv1">
+				<anchored to="fellowship" position="insidetopleft" offset="-9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Simple Advancement" />
+				<state icon="button_checkon" tooltip="Simple Advancement" />
+			</buttonfield>
+			<buttonfield name="felAdv2">
+				<anchored to="fellowship" position="insidetopleft" offset="0,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Intermediate Advancement" />
+				<state icon="button_checkon" tooltip="Intermediate Advancement" />
+			</buttonfield>
+			<buttonfield name="felAdv3">
+				<anchored to="fellowship" position="insidetopleft" offset="9,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Trained Advancement" />
+				<state icon="button_checkon" tooltip="Trained Advancement" />
+			</buttonfield>
+			<buttonfield name="felAdv4">
+				<anchored to="fellowship" position="insidetopleft" offset="18,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Proficient Advancement" />
+				<state icon="button_checkon" tooltip="Proficient Advancement" />
+			</buttonfield>
+			<buttonfield name="felAdv5">
+				<anchored to="fellowship" position="insidetopleft" offset="27,24" width="12" height="12" />
+				<state icon="button_checkoff" tooltip="Expert Advancement" />
+				<state icon="button_checkon" tooltip="Expert Advancement" />
+			</buttonfield>
+
+			<!-- Influence -->
+			<number_attributeroll name="influence" source="abilities.influence">
+				<anchored to="fellowship" position="right" offset="30,0" width="30" />
+				<statname>Influence</statname>
+				<stat>influence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="infllabel">
+				<anchored to="influence" offset="0,2" />
+				<static>Inf</static>
+				<tooltip text="Influence" />
+			</label_charfieldtop>
+
+            <simplenumber name="ammo" source = "abilities.ammo">
+				<anchored to="strength" position="left" width = "10" offset ="6,0"/>
+                <default>1</default>
+                <statname>Ammo</statname>
+				<stat>ammo</stat>
+				<nodrag />
+                <invisible />
+			</simplenumber>
+
+			<!-- Hit Location & Armor -->
+			<frame_char name="hitlocationframe">
+				<bounds>15,220,315,344</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="hitlocationframe" />
+				<static>HIT LOCATION &amp; ARMOR</static>
+			</label_frametop>
+			<genericcontrol name="icon_armordoll">
+				<anchored to="hitlocationframe" position="insidetopleft" offset="37,40" width="245" height="277" />
+				<icon>misc_armordoll</icon>
+			</genericcontrol>
+
+            <basicnumber name="cover" source="cover">
+				<anchored to="hitlocationframe" position="insidetopleft" offset="260,15" width="30" height="20" />
+			</basicnumber>
+			<label name="coverlabel">
+				<anchored to="cover" position="below" offset="1,1" />
+				<static>Cover</static>
+			</label>
+
+            <basicnumber name="headhitnumber" source="armor.head">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="101,36" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="rightarmhitnumber" source="armor.ra">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="17,80" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="leftarmhitnumber" source="armor.la">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="187,80" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="bodyhitnumber" source="armor.body">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="101,127" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="rightleghitnumber" source="armor.rl">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="42,214" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="leftleghitnumber" source="armor.ll">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="158,214" width="12" height="20" />
+			</basicnumber>
+
+			<stringcontrol name="headtotalarmorstring" source="armor.headtotalarmorstring">
+				<anchored to="headhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lHeadArmor = window.getDatabaseNode().getChild("armor.head").getValue();
+						local lHeadTotalArmor = 0;
+						lHeadTotalArmor = math.floor(lToughnessBonus) + tonumber(lHeadArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lHeadTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.head");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="rightarmtotalarmorstring" source="armor.rightarmtotalarmorstring">
+				<anchored to="rightarmhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lRightArmArmor = window.getDatabaseNode().getChild("armor.ra").getValue();
+						local lRightArmTotalArmor = 0;
+						lRightArmTotalArmor = math.floor(lToughnessBonus) + tonumber(lRightArmArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lRightArmTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.ra");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="leftarmtotalarmorstring" source="armor.leftarmtotalarmorstring">
+				<anchored to="leftarmhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lBodyArmor = window.getDatabaseNode().getChild("armor.la").getValue();
+						local lBodyTotalArmor = 0;
+						lBodyTotalArmor = math.floor(lToughnessBonus) + tonumber(lBodyArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lBodyTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.la");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="bodytotalarmorstring" source="armor.bodytotalarmorstring">
+				<anchored to="bodyhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lLeftArmArmor = window.getDatabaseNode().getChild("armor.body").getValue();
+						local lLeftArmTotalArmor = 0;
+						lLeftArmTotalArmor = math.floor(lToughnessBonus) + tonumber(lLeftArmArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lLeftArmTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.body");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="rightlegtotalarmorstring" source="armor.rightlegtotalarmorstring">
+				<anchored to="rightleghitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lRightLegArmor = window.getDatabaseNode().getChild("armor.rl").getValue();
+						local lRightLegTotalArmor = 0;
+						lRightLegTotalArmor = math.floor(lToughnessBonus) + tonumber(lRightLegArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lRightLegTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.rl");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<stringcontrol name="leftlegtotalarmorstring" source="armor.leftlegtotalarmorstring">
+				<anchored to="leftleghitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lLeftLegArmor = window.getDatabaseNode().getChild("armor.ll").getValue();
+						local lLeftLegTotalArmor = 0;
+						lLeftLegTotalArmor = math.floor(lToughnessBonus) + tonumber(lLeftLegArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lLeftLegTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.ll");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+
+			<string_labeled name="headarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="-20,10" width="88" height="20" />
+				<label>head armor</label>
+			</string_labeled>
+			<string_labeled name="leftarmarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="170,16" width="88" height="20" />
+				<label>left arm armor</label>
+			</string_labeled>
+			<string_labeled name="rightarmarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="-22,135" width="88" height="20" />
+				<label>right arm armor</label>
+			</string_labeled>
+			<string_labeled name="bodyarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="165,145" width="88" height="20" />
+				<label>body armor</label>
+			</string_labeled>
+			<string_labeled name="rightlegarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="-22,248" width="88" height="20" />
+				<label>right leg armor</label>
+			</string_labeled>
+			<string_labeled name="leftlegarmor">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="178,255" width="88" height="20" />
+				<label>left leg armor</label>
+			</string_labeled>
+
+
+
+			<!-- Wounds & Fatigue -->
+			<frame_char name="woundframe">
+				<bounds>330,220,-23,140</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="woundframe" />
+				<static>WOUNDS</static>
+			</label_frametop>
+
+			<label name="remaining_label">
+				<anchored to="woundframe" position="insidetopleft" offset="15,30" />
+				<static>Remaining</static>
+			</label>
+
+			<label name="critical_label">
+				<anchored to="remaining_label" position="right" offset="56,0" />
+				<static>Critical</static>
+			</label>
+
+			<label name="fatigue_label">
+				<anchored to="critical_label" position="right" offset="65,0" />
+				<static>Fatigue</static>
+			</label>
+
+			<label name="wounds_label">
+				<anchored to="remaining_label" position="below" offset="-6,-6" />
+				<static>Wounds</static>
+			</label>
+
+			<label name="cwounds_label">
+				<anchored to="wounds_label" position="right" offset="60,0" />
+				<static>Wounds</static>
+			</label>
+
+			<label name="fatiguemax">
+				<anchored to="cwounds_label" position="right" offset="53,0" />
+				<script>
+					function recalc()
+						local abilityTou = tostring(window.getDatabaseNode().
+									getChild("abilities.toughness").getValue());
+						setValue("(max = " .. tostring(math.floor(abilityTou/10)) .. ")");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</label>
+
+			<stringcontrol name="numberOfWounds_label">
+				<anchored>
+					<to>woundframe</to>
+					<position>insidetopleft</position>
+					<offset>15,65</offset>
+				</anchored>
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+
+			<stringcontrol name="woundsslashsymbol">
+				<anchored>
+					<to>woundframe</to>
+					<position>insidetopleft</position>
+					<offset>34,65</offset>
+				</anchored>
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalwounds" source="totalwounds">
+				<anchored to="woundsslashsymbol" position="right" offset="10,0" width="30" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 40 then
+							setValue(40);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfWounds_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="criticalwounds" source="attributes.critwounds">
+				<anchored to="totalwounds" position="right" offset="60,0" width="30"  />
+
+				<script>
+					function recalc()
+						local critValue = tonumber(getValue());
+						local abilityTou = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+						local maxWounds = window.maxwoundvalue.getValue();
+						local lightwoundedThreshold = math.floor(abilityTou/10)*2;
+						local currWounds = tonumber(window.numberOfWounds_label.getValue());
+						local currDamage = maxWounds - currWounds;
+
+						local healthState = "UNHARMED";
+						local label_fontcolor = "0000CC00";
+						if critValue > 0 then
+							healthState = "CRITICALLY DAMAGED";
+							label_fontcolor = "00980000";
+						elseif currDamage > lightwoundedThreshold then
+							healthState = "HEAVILY DAMAGED";
+							label_fontcolor = "00FF3300";
+						elseif currDamage > 0 then
+							healthState = "LIGHTLY DAMAGED";
+							label_fontcolor = "00FF9900";
+						end
+
+						window.healthstate_label.setValue(healthState);
+						window.healthstate_label.setColor(label_fontcolor);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="fatigue" source="fatigue">
+				<anchored to="criticalwounds" position="right" offset="74,0" width="30" />
+			</basicnumber>
+
+			<genericcontrol name="woundcounter">
+				<anchored to="woundframe" position="insidetopleft" offset="20,90" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>totalwounds</maxwounds>
+				<script file="campaign/scripts/counter_wounds.lua" />
+			</genericcontrol>
+
+			<label name="healthstate_label">
+				<anchored to="woundframe" position="insidetopleft" width="280" offset="15,110" />
+				<center />
+			</label>
+
+			<!-- Hidden control in order to make the health state work -->
+			<basicnumber name="maxwoundvalue">
+				<anchored to="woundframe" position="insidetopleft" width="10" offset="5,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local wds = window.getDatabaseNode().getChild("totalwounds").getValue();
+						setValue(wds);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("totalwounds");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+					end
+				</script>
+			</basicnumber>
+
+
+			<!-- Movement -->
+			<frame_char name="movementframe">
+				<bounds>330,360,-23,204</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="movementframe" />
+				<static>MOVEMENT</static>
+			</label_frametop>
+
+			<buttoncontrol>
+				<anchored to="movementframe" position="insidetopright" offset="10,10" width="15" height="15" />
+				<state icon="button_edit" tooltip="Override Calculated Values" />
+				<state icon="button_edit_down" tooltip="Exit Override" />
+				<script>
+					function onButtonPress()
+						if getValue() == 1 then
+							window.halfmoveoverride.setVisible(true);
+							window.fullmoveoverride.setVisible(true);
+							window.chargeoverride.setVisible(true);
+							window.runoverride.setVisible(true);
+							window.baseleapoverride.setVisible(true);
+							window.basejumpoverride.setVisible(true);
+							window.carrylimitoverride.setVisible(true);
+							window.liftlimitoverride.setVisible(true);
+							window.pushlimitoverride.setVisible(true);
+						else
+							window.halfmoveoverride.setVisible(false);
+							window.fullmoveoverride.setVisible(false);
+							window.chargeoverride.setVisible(false);
+							window.runoverride.setVisible(false);
+							window.baseleapoverride.setVisible(false);
+							window.basejumpoverride.setVisible(false);
+							window.carrylimitoverride.setVisible(false);
+							window.liftlimitoverride.setVisible(false);
+							window.pushlimitoverride.setVisible(false);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="halfm_label">
+				<anchored to="movementframe" position="insidetopleft" offset="24,33" />
+				<static>Half</static>
+			</label>
+			<label name="hmove_label">
+				<anchored to="movementframe" position="insidetopleft" offset="22,45" />
+				<static>Move</static>
+			</label>
+
+			<label name="fullm_label">
+				<anchored to="halfm_label" position="right" offset="35,0" />
+				<static>Full</static>
+			</label>
+			<label name="fmove_label">
+				<anchored to="hmove_label" position="right" offset="24,0" />
+				<static>Move</static>
+			</label>
+
+			<label name="charge_label">
+				<anchored to="fmove_label" position="right" offset="20,0" />
+				<static>Charge</static>
+			</label>
+
+			<label name="run_label">
+				<anchored to="charge_label" position="right" offset="25,0" width="30" />
+				<static>Run</static>
+			</label>
+
+			<basicnumber name="halfmove" source="attributes.halfmove">
+				<anchored to="movementframe" position="insidetopleft" offset="23,65" width="30" height="15" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityAgility = tostring(window.getDatabaseNode().getChild("abilities.agility").getValue());
+						setValue(math.floor(abilityAgility/10));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.agility");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<stringcontrol name="halfmovestring" source="attributes.halfmovestring">
+				<anchored to="hmove_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lHalfMove = tostring(window.getDatabaseNode().getChild("attributes.halfmove").getValue());
+						if window.halfmoveoverride.getValue() ~= 0 then
+							lHalfMove = window.halfmoveoverride.getValue();
+						end
+						setValue(tostring(lHalfMove) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="halfmoveoverride">
+				<anchored to="halfmovestring" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lHalfMove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						if getValue() ~= 0 then
+							lHalfMove = getValue();
+						end
+						window.halfmovestring.setValue(tostring(lHalfMove) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="fullmove" source="attributes.fullmove">
+				<anchored to="halfmove" position="right" offset="25,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*2);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<stringcontrol name="fullmovestring" source="attributes.fullmovestring">
+				<anchored to="fmove_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lFullMove = tostring(window.getDatabaseNode().getChild("attributes.fullmove").getValue());
+						if window.fullmoveoverride.getValue() ~= 0 then
+							lFullMove = window.fullmoveoverride.getValue();
+						end
+						setValue(tostring(lFullMove) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.fullmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="fullmoveoverride">
+				<anchored to="fullmovestring" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lFullMove = window.getDatabaseNode().getChild("attributes.fullmove").getValue();
+						if getValue() ~= 0 then
+							lFullMove = getValue();
+						end
+						window.fullmovestring.setValue(tostring(lFullMove) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="charge" source="attributes.charge">
+				<anchored to="fullmove" position="right" offset="25,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*3);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<stringcontrol name="chargestring" source="attributes.chargestring">
+				<anchored to="charge_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lCharge = tostring(window.getDatabaseNode().getChild("attributes.charge").getValue());
+						if window.chargeoverride.getValue() ~= 0 then
+							lCharge = window.chargeoverride.getValue();
+						end
+						setValue(tostring(lCharge) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.charge");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="chargeoverride">
+				<anchored to="chargestring" position="belowleft" offset="5,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lCharge = window.getDatabaseNode().getChild("attributes.charge").getValue();
+						if getValue() ~= 0 then
+							lCharge = getValue();
+						end
+						window.chargestring.setValue(tostring(lCharge) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="run" source="attributes.run">
+				<anchored to="charge" position="right" offset="25,0" width="30"  />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*6);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<stringcontrol name="runstring" source="attributes.runstring">
+				<anchored to="run_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lRun = tostring(window.getDatabaseNode().getChild("attributes.run").getValue());
+						if window.runoverride.getValue() ~= 0 then
+							lRun = window.runoverride.getValue();
+						end
+						setValue(tostring(lRun) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.run");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="runoverride">
+				<anchored to="runstring" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lRun = window.getDatabaseNode().getChild("attributes.run").getValue();
+						if getValue() ~= 0 then
+							lRun = getValue();
+						end
+						window.runstring.setValue(tostring(lRun) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<label name="baseleap_label">
+				<anchored to="movementframe" position="insidetopleft" offset="20,105" />
+				<static>Base Leap:</static>
+			</label>
+
+			<stringcontrol name="baseleap">
+				<anchored to="baseleap_label" position="right" offset="5,0" />
+				<readonly />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseLeap = math.floor(abilityStr/10);
+						if window.baseleapoverride.getValue() ~= 0 then
+							lBaseLeap = window.baseleapoverride.getValue();
+						end
+						setValue(tostring(lBaseLeap) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="baseleapoverride">
+				<anchored to="baseleap" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseLeap = math.floor(abilityStr/10);
+						if getValue() ~= 0 then
+							lBaseLeap = getValue();
+						end
+						window.baseleap.setValue(tostring(lBaseLeap) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<label name="basejump_label">
+				<anchored to="baseleap" position="right" offset="18,0" />
+				<static>Base Jump:</static>
+			</label>
+
+			<stringcontrol name="basejump">
+				<anchored to="basejump_label" position="right" offset="5,0" />
+				<readonly />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseJump = math.floor(abilityStr/10)*20;
+						if window.basejumpoverride.getValue() ~= 0 then
+							lBaseJump = window.basejumpoverride.getValue();
+						end
+						setValue(tostring(lBaseJump) .. " cm");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="basejumpoverride">
+				<anchored to="basejump" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseJump = math.floor(abilityStr/10)*20;
+						if getValue() ~= 0 then
+							lBaseJump = getValue();
+						end
+						window.basejump.setValue(tostring(lBaseJump) .. " cm");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="carrylimit" source="attributes.carrylimit">
+				<anchored to="movementframe" position="insidetopleft" offset="50,165" width="30" height="15" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local abilityTou = tostring(window.getDatabaseNode().getChild("abilities.toughness").getValue());
+						local abilityCombined = math.floor(abilityStr/10) + math.floor(abilityTou/10);
+						local outputCarryWeight = 0;
+
+						if abilityCombined == 0 then outputCarryWeight = 0.0;
+						elseif abilityCombined == 1 then outputCarryWeight = 2.25;
+						elseif abilityCombined == 2 then outputCarryWeight = 4.5;
+						elseif abilityCombined == 3 then outputCarryWeight = 9;
+						elseif abilityCombined == 4 then outputCarryWeight = 18;
+						elseif abilityCombined == 5 then outputCarryWeight = 27;
+						elseif abilityCombined == 6 then outputCarryWeight = 36;
+						elseif abilityCombined == 7 then outputCarryWeight = 45;
+						elseif abilityCombined == 8 then outputCarryWeight = 56;
+						elseif abilityCombined == 9 then outputCarryWeight = 67;
+						elseif abilityCombined == 10 then outputCarryWeight = 78;
+						elseif abilityCombined == 11 then outputCarryWeight = 90;
+						elseif abilityCombined == 12 then outputCarryWeight = 112;
+						elseif abilityCombined == 13 then outputCarryWeight = 225;
+						elseif abilityCombined == 14 then outputCarryWeight = 337;
+						elseif abilityCombined == 15 then outputCarryWeight = 450;
+						elseif abilityCombined == 16 then outputCarryWeight = 675;
+						elseif abilityCombined == 17 then outputCarryWeight = 900;
+						elseif abilityCombined == 18 then outputCarryWeight = 1350;
+						elseif abilityCombined == 19 then outputCarryWeight = 1800;
+						else outputCarryWeight = 2250;
+						end
+
+						setValue(outputCarryWeight);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						local defnode2 = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode or defnode2 then
+							defnode.onUpdate = recalc;
+							defnode2.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="liftlimit" source="attributes.liftlimit">
+				<anchored to="carrylimit" position="right" offset="30,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<invisible />
+				<nodrag />
+				<script>
+					function recalc()
+						local carryValue = window.getDatabaseNode().getChild("attributes.carrylimit").getValue();
+						local strValue = window.getDatabaseNode().getChild("abilities.strength").getValue();
+						local touValue = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+
+						local liftValue = carryValue*2;
+						local strtouValue = strValue + touValue;
+
+						if strtouValue == 0 then liftValue = 0.0;
+						elseif carryValue == 67 then liftValue = 135;
+						elseif carryValue == 78 then liftValue = 157;
+						elseif carryValue == 112 then liftValue = 225;
+						elseif carryValue == 337 then liftValue = 675;
+						end
+
+						setValue(liftValue);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						local defnode2 = window.getDatabaseNode().getChild("abilities.toughness");
+						local defnode3 = window.getDatabaseNode().getChild("attributes.carrylimit");
+						if defnode or defnode2 or defnode3 then
+							defnode.onUpdate = recalc;
+							defnode2.onUpdate = recalc;
+							defnode3.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<basicnumber name="pushlimit" source="attributes.pushlimit">
+				<anchored to="liftlimit" position="right" offset="30,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local liftValue = window.getDatabaseNode().getChild("attributes.liftlimit").getValue();
+
+						local pushValue = liftValue*2;
+
+						if liftValue == 112 then pushValue = 225;
+						elseif carryValue == 157 then pushValue = 315;
+						end
+
+						setValue(pushValue);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.liftlimit");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+
+			<label name="carrylimit_label">
+				<anchored to="movementframe" position="insidetopleft" offset="15,145" width="64" />
+				<static>Carry Limit:</static>
+			</label>
+			<stringcontrol name="carrylimitstring">
+				<anchored to="carrylimit_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lCarryLimit = tostring(window.getDatabaseNode().getChild("attributes.carrylimit").getValue());
+						if window.carrylimitoverride.getValue() ~= 0 then
+							lCarryLimit = window.carrylimitoverride.getValue();
+						end
+						setValue(tostring(lCarryLimit) .. " kg");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.carrylimit");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="carrylimitoverride">
+				<anchored to="carrylimitstring" position="belowleft" offset="20,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lCarryLimit = window.getDatabaseNode().getChild("attributes.carrylimit").getValue();
+						if getValue() ~= 0 then
+							lCarryLimit = getValue();
+						end
+						window.carrylimitstring.setValue(tostring(lCarryLimit) .. " kg");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<label name="liftlimit_label">
+				<anchored to="carrylimit_label" position="right" offset="18,0" width="55" />
+				<static>Lift Limit:</static>
+			</label>
+			<stringcontrol name="liftlimitstring">
+				<anchored to="liftlimit_label" position="below" offset="0,0" />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lLiftLimit = tostring(window.getDatabaseNode().getChild("attributes.liftlimit").getValue());
+						if window.liftlimitoverride.getValue() ~= 0 then
+							lLiftLimit = window.liftlimitoverride.getValue();
+						end
+						setValue(tostring(lLiftLimit) .. " kg");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.liftlimit");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="liftlimitoverride">
+				<anchored to="liftlimitstring" position="belowleft" offset="15,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lLiftLimit = window.getDatabaseNode().getChild("attributes.liftlimit").getValue();
+						if getValue() ~= 0 then
+							lLiftLimit = getValue();
+						end
+						window.liftlimitstring.setValue(tostring(lLiftLimit) .. " kg");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+
+			<label name="pushlimit_label">
+				<anchored to="liftlimit_label" position="right" offset="18,0" width="65" />
+				<static>Push Limit:</static>
+			</label>
+			<stringcontrol name="pushlimitstring">
+				<anchored to="pushlimit_label" position="below" offset="0,0" />
+				<readonly />
+				<center />
+				<script>
+					function recalc()
+						local lPushLimit = tostring(window.getDatabaseNode().getChild("attributes.pushlimit").getValue());
+						if window.pushlimitoverride.getValue() ~= 0 then
+							lPushLimit = window.pushlimitoverride.getValue();
+						end
+						setValue(tostring(lPushLimit) .. " kg");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.pushlimit");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="pushlimitoverride">
+				<anchored to="pushlimitstring" position="belowleft" offset="20,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lPushLimit = window.getDatabaseNode().getChild("attributes.pushlimit").getValue();
+						if getValue() ~= 0 then
+							lPushLimit = getValue();
+						end
+						window.pushlimitstring.setValue(tostring(lPushLimit) .. " kg");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+		</sheetdata>
+	</windowclass>
+</root>

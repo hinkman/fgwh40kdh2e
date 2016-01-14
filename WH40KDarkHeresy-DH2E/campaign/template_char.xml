@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="label_charfieldtop">
+		<stringcontrol>
+			<anchored position="above" offset="15,2" />
+			<font>sheetlabel</font>
+			<center />
+		</stringcontrol>
+	</template>
+	
+	<template name="number_charabilitymax">
+		<basicnumber>
+			<default>10</default>
+			<script>
+				local nLast;
+				function onInit()
+					nLast = getValue();
+				end
+				function onValueChanged()
+					if window[target[1]].getValue() == nLast then
+						window[target[1]].setValue(getValue());
+					end
+					nLast = getValue();
+				end
+			</script>
+		</basicnumber>
+	</template>
+	<template name="number_charabilitypool">
+		<number_dropadd>
+			<font>char_pool</font>
+			<default>10</default>
+		</number_dropadd>
+	</template>
+	
+	<template name="number_attributeroll">
+		<simplenumber>
+			<frame name="fielddark" offset="7,5,7,5" />
+			<rollable />
+            <script file="campaign/scripts/char_abilityroll.lua" />
+		</simplenumber>
+	</template>
+    
+    <template name="number_meleeattackroll">
+		<number_chartotalmod>
+            <modifiersize>mini</modifiersize>
+            <modifierfield>attack_meleetemp</modifierfield>
+            <source><name>attack_meleetotal</name><op>+</op></source>
+			<rollable />
+            <script file="campaign/scripts/char_attackroll.lua" />
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+            </script>
+		</number_chartotalmod>
+	</template>
+    
+    <template name="number_rangedattackroll">
+		<number_chartotalmod>
+            <modifiersize>mini</modifiersize>
+            <modifierfield>attack_rangedtemp</modifierfield>
+            <source><name>attack_rangedtotal</name><op>+</op></source>
+			<rollable />
+            <script file="campaign/scripts/char_attackroll.lua" />
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+            </script>
+		</number_chartotalmod>
+	</template>
+    
+    <template name="number_skillroll">
+		<number_chartotalmod>
+            <modifiersize>mini</modifiersize>
+            <modifierfield>skill_temp</modifierfield>
+            <source><name>skill_total</name><op>+</op></source>
+			<rollable />
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+                
+                function action(draginfo)
+					local nodeWin = window.getDatabaseNode();
+					if nodeWin then
+						local rActor = ActorManager.getActor("pc", nodeWin.getChild("..."));
+						ActionSkill.performSRoll(draginfo, rActor, nodeWin);
+                    end
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)	
+					return action();
+				end
+            </script>
+		</number_chartotalmod>
+	</template>
+    
+    <template name="number_parryroll">
+		<number_chartotalmod>
+            <modifiersize>mini</modifiersize>
+            <modifierfield>skill_temp</modifierfield>
+            <source><name>skill_total</name><op>+</op></source>
+			<rollable />
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+                
+                function action(draginfo)
+					local nodeWin = window.getDatabaseNode();
+					if nodeWin then
+						local rActor = ActorManager.getActor("pc", nodeWin.getChild("..."));
+						ActionSkill.performPRoll(draginfo, rActor, nodeWin);
+                    end
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)	
+					return action();
+				end
+            </script>
+		</number_chartotalmod>
+	</template>
+
+	<template name="number_chartotal">
+		<number_modifier>
+			<frame name="fieldlight" offset="7,5,7,5" />
+            <showemptywidget />
+		</number_modifier>
+	</template>
+    
+    <template name="number_chartotalmod">
+		<number_modifier>
+			<frame name="fielddark" offset="7,5,7,5" />
+		</number_modifier>
+	</template>
+	
+	<template name="number_initiativeroll">
+		<number_chartotalmod>
+			<rollable />
+			<displaysign />
+            <modifiersize>mini</modifiersize>
+            <modifierfield>init_temp</modifierfield>
+            <source><name>init_agbonus</name><op>+</op></source>
+            <source><name>init_misc</name><op>+</op></source>
+            <stat>agility</stat>
+            <misc>init_misc</misc>
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+
+				function action(draginfo)
+                    local nodeChar = window.getDatabaseNode();
+					local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+					ActionInit.performRoll(draginfo, rActor, false, window[stat[1]].getValue(), window[misc[1]].getValue(), DB.getValue(nodeChar, ".init_temp", 0), "agility");
+				end
+				
+				function onDoubleClick()
+					action();
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</number_chartotalmod>
+	</template>
+    
+    <template name="number_shipinitiativeroll">
+		<number_chartotalmod>
+			<rollable />
+			<displaysign />
+            <modifiersize>mini</modifiersize>
+            <modifierfield>init_shiptemp</modifierfield>
+            <source><name>init_shipvabonus</name><op>+</op></source>
+            <source><name>init_shipmisc</name><op>+</op></source>
+            <stat>vehicleagility</stat>
+            <misc>init_shipmisc</misc>
+            <script>
+                function sourceupdate()
+                    if self.onSourceUpdate() then
+                        self.onSourceUpdate();
+                    end
+                end
+
+                function onSourceUpdate()
+                    setValue(calculateSources());
+                end
+
+				function action(draginfo)
+                    local nodeChar = window.getDatabaseNode();
+					local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+					ActionInit.performRoll(draginfo, rActor, false, window[stat[1]].getValue(), window[misc[1]].getValue(), DB.getValue(nodeChar, ".init_shiptemp", 0), "vehicleagility");
+				end
+				
+				function onDoubleClick()
+					action();
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</number_chartotalmod>
+	</template>
+	
+	<template name="button_psypowerroll">
+		<button_roll>
+			<anchored width="20" />
+			<script>
+				function action(draginfo)
+					local node = window.getDatabaseNode();
+					local sDesc = "[PSY POWER CHECK]";
+					local dice = {};
+					local iCount = 0;
+					local nWPBonus = window[wpbonus[1]].getValue();
+					
+					do
+						while (iCount &lt; window[modifier[1]].getValue()) do
+							table.insert(dice, "d10");
+							iCount = iCount + 1;
+						end
+					end
+					
+					local nModStackMod = 0;
+					if not ModifierStack.isEmpty() then
+						local sStackDesc, nStackMod = ModifierStack.getStack(true);
+						sDesc = sDesc .. " [Mod: " .. sStackDesc .. "]";
+						nModStackMod = nStackMod;
+					end
+					
+					local rActor = ActorManager.getActor("pc", window.getDatabaseNode());
+					
+					local rRoll = { sType = "psypowerroll", sDesc = sDesc, aDice = dice, nMod = nWPBonus + nModStackMod };
+					ActionsManager.performAction(draginfo, rActor, rRoll);
+				end
+				
+				function onButtonPress()
+					action();
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+    </template>
+    
+	<template name="button_charmini">
+		<windowreferencecontrol>
+			<icon normal="button_minisheet" pressed="button_minisheet_down" />
+			<class>combatsheet</class>
+			<tooltip text="Combat Sheet" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then 
+                        activate();
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+    <template name="button_combatweapon">
+		<windowreferencecontrol>
+			<icon normal="button_minisheet" pressed="button_minisheet_down" />
+			<class>combatweapons</class>
+			<tooltip text="Weapon Sheet" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then 
+                        activate();
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+    <template name="button_combatbasicskills">
+		<windowreferencecontrol>
+			<icon normal="button_minisheet" pressed="button_minisheet_down" />
+			<class>combatbasicskills</class>
+			<tooltip text="Basic Skill Sheet" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then 
+                        activate();
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+    <template name="button_combatadvskills">
+		<windowreferencecontrol>
+			<icon normal="button_minisheet" pressed="button_minisheet_down" />
+			<class>combatadvskills</class>
+			<tooltip text="Adv. Skill Sheet" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then 
+                        activate();
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+    
+	<template name="list_charskill">
+		<list_text>
+			<datasource>.skilllist</datasource>
+			<class>char_skill</class>
+			<columns width="225" filldown="true" />
+			<sortby><control>label</control></sortby>
+			<newfocus>label</newfocus>
+			<script>
+				function onDrop(x, y, draginfo)
+					local sDragType = draginfo.getType();
+					if sDragType == "number" then
+						local w = addEntry(true);
+						if w then
+							w.label.setValue(draginfo.getDescription());
+							w.bonus.setValue(draginfo.getNumberData());
+						end
+						return true;
+					elseif sDragType == "dice" then
+						local aDropDice = draginfo.getDieList();
+						local w = getWindowAt(x,y);
+						if w then
+							for _,vDie in ipairs(aDropDice) do
+								w.dice.addDie(vDie.type);
+							end
+						else
+							w = addEntry(true);
+							if w then
+								w.label.setValue(draginfo.getDescription());
+								w.bonus.setValue(draginfo.getNumberData());
+								for _,vDie in ipairs(aDropDice) do
+									w.dice.addDie(vDie.type);
+								end
+							end
+						end
+						return true;
+					end
+				end
+			</script>
+		</list_text>
+	</template>
+    
+    <template name="cycler_charskillability">
+		<button_stringcycler>
+			<parameters>
+				<labelsres>ws|bs|str|tn|ag|int|per|wp|fel</labelsres>
+				<values>weapon|ballistic|strength|toughness|agility|intelligence|perception|willpower|fellowship</values>
+			</parameters>
+		</button_stringcycler>
+	</template>
+    <template name="cycler_hitlocation">
+		<button_stringcycler2>
+			<parameters>
+                <defaultlabel>Set</defaultlabel>
+				<labels>Head|R Arm|L Arm|Body|R Leg|L Leg</labels>
+				<values>HD|RA|LA|BD|RL|LL</values>
+			</parameters>
+		</button_stringcycler2>
+	</template>
+	<template name="number_charskillfield_static">
+		<simplenumber>
+			<nodrag />
+			<displaysign />
+			<disabled />
+		</simplenumber>
+	</template>
+</root>

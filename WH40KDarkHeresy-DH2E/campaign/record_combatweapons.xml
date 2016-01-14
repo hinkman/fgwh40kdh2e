@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="combatweapons">
+        <frame>utilitybox</frame>
+		<placement>
+			<size width="475" height="190" />
+		</placement>
+        <sizelimits>
+            <maximum width="475" height="190" />
+            <minimum width="250" height="190" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+		<playercontrol />
+
+		<sheetdata>
+            <resize_utilitybox />
+            <close_utilitybox />
+            
+            
+            <!--Weapons-->
+            <frame_char name="combatweaponframe">
+				<bounds>15,15,445,165</bounds>
+			</frame_char>
+			<label name="combatweaponname_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="16,10" />
+				<static>Weapon</static>
+			</label>
+			<label name="combatweapondamage_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="120,10" />
+				<static>Damage</static>
+			</label>
+            <label name="combatweaponpen_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="178,10" />
+				<static>Pen</static>
+			</label>
+			<label name="combatweaponclass_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="211,10" />
+				<static>Class</static>
+			</label>
+			<label name="combatweaponrof_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="257,10" />
+				<static>RoF</static>
+			</label>
+			<label name="combatweaponrange_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="295,10" />
+				<static>Rng</static>
+			</label>
+			<label name="combatweaponreload_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="329,10" />
+				<static>Reload</static>
+			</label>
+			<label name="combatweaponclip_label">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="376,10" />
+				<static>Clip</static>
+			</label>
+
+			<list_text name="combatweapon">
+				<anchored to="combatweaponframe" position="insidetopleft" offset="10,30" width="425" height="120" />
+				<datasource>.weaponlist</datasource>
+				<class>combat_weapon</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						local sDropClass, sDropNodeName = draginfo.getShortcutData();
+						if draginfo.isType("shortcut") then
+							if StringManager.contains({"item","referencerangedweapons", "referencemeleeweapons"}, sDropClass) or 
+								draginfo.getShortcutData() == "referencerangedweapons" or
+								draginfo.getShortcutData() == "referencemeleeweapons" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.damagedice.setValue(DB.getValue(nodeSource, "damagedice", ""));
+									win.damagetype.setValue(DB.getValue(nodeSource, "damagetype", ""));
+									win.damagebonus.setValue(DB.getValue(nodeSource, "damagebonus", ""));
+									if draginfo.getShortcutData() == "referencerangedweapons" then
+									
+										win.rof.setValue(DB.getValue(nodeSource, "rof", ""));
+										win.reload.setValue(DB.getValue(nodeSource, "reload", ""));
+										win.clipsize.setValue(DB.getValue(nodeSource, "clipsize", ""));
+									end
+									
+									win.range.setValue(DB.getValue(nodeSource, "range", ""));
+									win.pen.setValue(DB.getValue(nodeSource, "pen", ""));
+									win.class.setValue(DB.getValue(nodeSource, "class", ""));
+									win.special.setValue(DB.getValue(nodeSource, "special", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="combatweapon" />
+				<target>combatweapon</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Weapons List Template -->
+	<windowclass name="combat_weapon">
+		<margins control="0,0,0,2" />
+        <script file="campaign/scripts/weapon_utility.lua" />
+        <script>
+            function onInit()
+                getDatabaseNode().onDelete = onDelete;
+            end
+            function onDelete(node)
+                ItemManager.onCharRemoveEvent(node);
+            end
+        </script>
+        <sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<string_textlistitem name="name">
+				<anchored width="88" height="15">
+					<top offset="4" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="6" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+			</string_textlistitem>
+			
+            <string_textlistitem name="damagedice" source="damagedice">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="name" anchor="right" relation="relative" offset="12" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+				<rollable />
+                <script>
+                function onInit()
+                    showDieGraphic();
+                end
+					
+                function onValueChanged()
+                    showDieGraphic();
+                end
+					
+                function showDieGraphic()
+                    if StringManager.isDiceString(getValue()) then
+                        w = addBitmapWidget("field_rollable");
+                        w.setPosition("bottomleft", -2, -3);
+                            setHoverCursor("hand");
+                    else
+                            setHoverCursor("pointer");
+                    end
+                end
+
+                function onMenuSelection(selection)
+                    if selection == 4 then
+                    reset();
+                    end
+                end
+
+                function action(draginfo)
+                    local rActor, rDamage = CharManager.getWeaponDamageRollStructures(window.getDatabaseNode());
+                  
+                ActionDamage.performRoll(draginfo, rActor, rDamage);
+                    return true;
+                end
+
+                function onDragStart(button, x, y, draginfo)
+                    return action(draginfo);
+                end
+
+                function onDoubleClick(x,y)
+                    return action();
+                end		
+                </script>
+			</string_textlistitem>
+            
+            <string_textlistitem  name="damagebonus" source="damagebonus">
+				<anchored width="10" height="15">
+					<top offset="4" />
+					<left parent="damagedice" anchor="right" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem >
+			
+			<string_textlistitem name="damagetype" source="damagetype">
+				<anchored width="10" height="15">
+					<top offset="4" />
+					<left parent="damagebonus" anchor="right" relation="relative" offset="4" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <string_textlistitem name="pen">
+				<anchored width="20" height="15">
+					<top offset="4" />
+					<left parent="damagetype" anchor="right"  offset="4" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="class" source="class">
+				<anchored width="40" height="15">
+					<top offset="4" />
+					<left parent="pen" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+                <script>
+					function onValueChanged(values)
+                        window.location.addLocation(values);
+                        window.update();
+                    end
+				</script>
+			</string_textlistitem>
+			
+			<string_textlistitem name="rof">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="class" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="range">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="rof" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="reload">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="range" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<number_charinv name="clipsize">
+				<anchored width="22" height="15">
+					<top offset="4" />
+					<left parent="reload" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 50 then
+							setValue(50);
+						end
+					end
+				</script>
+			</number_charinv>
+			<linkfield name="shortcut">
+				<anchored width="15" height="15">
+					<top offset="4" />
+                    <right parent="rightanchor" anchor="left" relation="relative" offset="-1" />
+				</anchored>
+				<readonly />
+				<class>ref_weapon</class>
+			</linkfield>
+			
+            <label name="attack_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,25" />
+				<static>->> Atk:</static>
+			</label>
+            
+            <label name="melee_label">
+				<anchored to="attack_label" position="right" relation="relative" offset="5,0"/>
+				<static>WS:</static>
+			</label>
+            <basicnumber name="meleeattack">
+                <anchored to="melee_label" position="right" relation="relative" offset="6,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setWS();
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+            </basicnumber>
+            <basicnumber name="attack_meleetotal" source="attack_meleetotal">
+                <anchored to="melee_label" position="right" relation="relative" offset="9,0" width="25" />
+                <nodrag />
+                <script>
+                function sVal()
+					local nCurrentScore = window.meleeattack.getValue();
+                    local B = window.bestcheck.getValue();
+                    local G = window.goodcheck.getValue();
+                    local P = window.poorcheck.getValue();
+                        
+                        if B == 1 and G == 0 and P == 0 then
+                            setValue(nCurrentScore + 10);
+                        elseif B == 0 and G == 1 and P == 0 then
+                            setValue(nCurrentScore + 5);
+                        elseif B == 0 and G == 0 and P == 1 then
+                            setValue(nCurrentScore - 10);
+                        else
+                            setValue(nCurrentScore);
+                        end
+                end
+                
+                function onValueChanged()
+                    window.meleeattack.onInit();
+                end
+                </script>
+            </basicnumber>
+            <number_meleeattackroll name="meleeattackroll" source="attack.weapon">
+                <anchored to="melee_label" position="right" relation="relative" offset="9,0" width="25" />
+                <nodrag />
+                <statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+            </number_meleeattackroll>
+            
+            <label name="range_label">
+				<anchored to="attack_label" position="right" relation="relative" offset="5,0"/>
+				<static>BS:</static>
+			</label>
+            <basicnumber name="rangedattack" >
+                <anchored to="range_label" position="right" relation="relative" offset="6,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setBS();
+                    window.attack_rangedtotal.sVal();
+                end
+                </script>
+            </basicnumber>
+            <basicnumber name="attack_rangedtotal" source="attack_rangedtotal">
+               <anchored to="range_label" position="right" relation="relative" offset="9,0" width="25" />
+               <nodrag/>
+                <statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+                <script>
+                function sVal()
+					local nCurrentScore = window.rangedattack.getValue();
+                        
+                        if window.sights.getValue() == 1 then
+                            setValue(nCurrentScore + 10);
+                        else
+                            setValue(nCurrentScore);
+                        end
+                end
+                
+                function onValueChanged()
+                    window.rangedattack.onInit();
+                end
+                </script>
+            </basicnumber>
+            <number_rangedattackroll name="rangedattackroll" source="attack.ballistic">
+               <anchored to="range_label" position="right" relation="relative" offset="9,0" width="25" />
+               <rollable />
+               <nodrag/>
+                <statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+            </number_rangedattackroll>
+            
+            <label name="location_label">
+                <anchored to="leftanchor" position="insidetopleft" offset="130,25" />
+				<static>->> H. Loc:</static>
+			</label>
+            <simplestring name="location" source ="location">
+                <anchored to="location_label" position="right" relation="relative" offset="5,0" />
+                <nodrag />
+                <invisible />
+                <script>
+                function addLocation(values)
+                    local sLocation = tostring(window.locationcheck.getValue(values));
+                    
+                    if sLocation == "Head" then
+                        setValue("HD");
+                  
+                    elseif sLocation == "R Arm" then
+                        setValue("RA");
+                 
+                    elseif sLocation == "L Arm" then
+                        setValue("LA");
+                 
+                    elseif sLocation == "Body" then
+                        setValue("BD");
+                  
+                    elseif sLocation == "R Leg" then
+                        setValue("RL");
+                   
+                    elseif sLocation == "L Leg" then
+                        setValue("LL");
+                  
+                    else 
+                        setValue("NA");
+                    end
+                end
+                </script>
+            </simplestring>
+            <cycler_hitlocation name="locationcheck">
+                <anchored to="location_label" position="right" width="38" relation="relative" offset="8,0" />
+                <script>
+					function onValueChanged(values)
+                        window.location.addLocation(values);
+                    end
+				</script>
+			</cycler_hitlocation>
+            <label name="l_cover">
+				<anchored to="locationcheck" position="right" relation="relative" offset="12,0" />
+				<static>->> Cover</static>
+			</label>
+            <button_checkbox name="cover">
+                <anchored to="l_cover" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Cover" />
+				<tooltip text="Cover" />
+			</button_checkbox>
+            
+            <label name="parry_label">
+				<anchored to="cover" position="right" relation="relative" offset="10,0" width="30"/>
+				<static>Parry:</static>
+			</label>
+            <number_parryroll name="parryroll">
+                <anchored to="parry_label" position="right" relation="relative" offset="11,0" width="25" />
+                <rollable />
+                <nodrag />
+            </number_parryroll>
+            <basicnumber name="skill_total" source="skill_total">
+               <anchored to="parry_label" position="right" relation="relative" offset="11,0" width="25" />
+                <rollable />
+                <nodrag />
+                <invisible />
+                <script>
+                function sVal()
+					local nCurrentScore = window.weaponlistparry.getValue();
+                    local B = window.balancedcheck.getValue();
+                    local uB = window.unbalanced.getValue();
+                        
+                        if uB == 1 and B == 0 then
+                            setValue(nCurrentScore - 10);
+                        elseif B == 1 and uB == 0 then
+                            setValue(nCurrentScore + 10);
+                        else 
+                            setValue(nCurrentScore);
+                        end
+                end
+                function onValueChanged()
+                    window.weaponlistparry.onInit();
+                end
+                </script>
+            </basicnumber>
+            
+            <basicnumber name="weaponlistparry">
+               <anchored to="parryroll" position="right" relation="relative" offset="15,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setPR();
+                    window.skill_total.sVal();
+                end
+                </script>
+            </basicnumber>
+
+            <label name="tearing_label">
+                <anchored to="leftanchor" position="insidetopleft" offset="7,47" />
+				<static>Tearing</static>
+			</label>
+            <button_checkbox name="tearing">
+                <anchored to="tearing_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Tearing" />
+				<tooltip text="Tearing" />
+			</button_checkbox>
+            
+            <label name="felling_label">
+                <anchored to="tearing" position="right" relation="relative" offset="12,0" />
+				<static>Felling:</static>
+			</label>
+			
+            <string_textlistitem name="felling">
+				<anchored to="felling_label" position="right" relation="relative" offset="5,0" width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <center />
+                <default>0</default>
+			</string_textlistitem>
+			
+			<label name="proven_label">
+                <anchored to="felling" position="right" relation="relative" offset="12,0" />
+				<static>Proven:</static>
+			</label>
+			
+			<string_textlistitem name="proven">
+				<anchored to="proven_label" position="right" relation="relative" offset="5,0" width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <center />
+                <default>0</default>
+			</string_textlistitem>
+            
+            <label name="force_label">
+				<anchored to="proven" position="right" relation="relative" offset="12,0" />
+				<static>Force</static>
+			</label>
+            <button_checkbox name="forcecheck">
+                <anchored to="force_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Force Weapon" />
+				<tooltip text="Force Weapon" />
+			</button_checkbox> 
+            <string_textlistitem name="force">
+                <anchored to="forcecheck" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <tooltip text="Add Psy Value Here" />
+				<center />
+                <default>0</default>
+			</string_textlistitem>
+
+            <label name="l_fireselector">
+				<anchored to="leftanchor" position="insidetopleft" offset="220,47" />
+				<static></static>
+			</label>
+            <label name="l_ammoone">
+				<anchored to="l_fireselector" position="right" relation="relative" offset="0,0" />
+				<static>FS 1:</static>
+			</label>
+            <button_checkbox name="ammoone">
+                <anchored to="l_ammoone" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Ammo 1" />
+				<tooltip text="Ammo 1" />
+			</button_checkbox>
+            <string_textlistitem name="ammoonedam">
+                <anchored to="ammoone" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammoonepen">
+                <anchored to="ammoonedam" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammoonedmgtype">
+                <anchored to="ammoonepen" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <label name="l_ammotwo">
+				<anchored to="ammoonedmgtype" position="right" relation="relative" offset="8,0" />
+				<static>FS 2:</static>
+			</label>
+            <button_checkbox name="ammotwo">
+                <anchored to="l_ammotwo" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Ammo 2" />
+				<tooltip text="Ammo 2" />
+			</button_checkbox>
+            <string_textlistitem name="ammotwodam">
+                <anchored to="ammotwo" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammotwopen">
+                <anchored to="ammotwodam" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammotwodmgtype">
+                <anchored to="ammotwopen" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <label name="balanced_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="290,47" />
+				<static>Bal</static>
+			</label>
+            <button_checkbox name="balancedcheck">
+                <anchored to="balanced_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Balanced" />
+				<tooltip text="Balanced" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.sVal();
+                    end
+                </script>
+			</button_checkbox> 
+             <label name="unbalanced_label">
+				<anchored to="balancedcheck" position="right" relation="relative" offset="8,0" />
+				<static>Unbal</static>
+			</label>
+            <button_checkbox name="unbalanced">
+                <anchored to="unbalanced_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Unbalanced" />
+				<tooltip text="Unbalanced" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.sVal();
+                    end
+                </script>
+			</button_checkbox>
+            
+            <label name="other_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,65" width="35"/>
+				<static>Mods:</static>
+			</label>
+            <label name="primitive_label">
+				<anchored to="other_label" position="right" relation="relative" offset="8,0" />
+				<static>Prim</static>
+			</label>
+            <button_checkbox name="primitive">
+                <anchored to="primitive_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Primitive" />
+				<tooltip text="Primitive" />
+			</button_checkbox>
+ 
+            <label name="holy_label">
+				<anchored to="primitive" position="right" relation="relative" offset="8,0" />
+				<static>Holy</static>
+			</label>
+            <button_checkbox name="holy">
+                <anchored to="holy_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Holy Damage" />
+				<tooltip text="Holy Damage" />
+			</button_checkbox>
+             <label name="sanc_label">
+				<anchored to="holy" position="right" relation="relative" offset="8,0" />
+				<static>Sanc</static>
+			</label>
+            <button_checkbox name="sanc">
+                <anchored to="sanc_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Sanctified Damage" />
+				<tooltip text="Sanctified Damage" />
+			</button_checkbox>  
+            <label name="mightyshot_label">
+				<anchored to="primitive" position="right" relation="relative" offset="8,0" />
+				<static>Mighty Shot</static>
+			</label>
+            <button_checkbox name="mightyshot">
+                <anchored to="mightyshot_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Mighty Shot" />
+				<tooltip text="Mighty Shot" />
+			</button_checkbox>
+            <label name="sights_label">
+				<anchored to="mightyshot" position="right" relation="relative" offset="8,0" />
+				<static>Sights</static>
+			</label>
+            <button_checkbox name="sights">
+                <anchored to="sights_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Gear:Sights" />
+				<tooltip text="Gear:Sights" />
+                <script>
+                function onValueChanged()
+                    window.attack_rangedtotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="crushingblow_label">
+				<anchored to="sanc" position="right" relation="relative" offset="8,0" />
+				<static>Crushing Blow</static>
+			</label>
+            <button_checkbox name="crushingblow">
+                <anchored to="crushingblow_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Crushing Blow" />
+				<tooltip text="Crushing Blow" />
+			</button_checkbox> 
+             
+            <label name="mono_label">
+				<anchored to="crushingblow" position="right" relation="relative" offset="8,0" />
+				<static>Mono</static>
+			</label>
+            <button_checkbox name="mono">
+                <anchored to="mono_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Mono Upgrade" />
+				<tooltip text="Mono Upgrade" />
+			</button_checkbox>             
+         
+            <label name="quality_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,85" />
+				<static>Quality:</static>
+			</label>
+            <label name="best_label">
+				<anchored to="quality_label" position="right" relation="relative" offset="8,0" />
+				<static>Best</static>
+			</label>
+            <button_checkbox name="bestcheck">
+                <anchored to="best_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Best Quality" />
+				<tooltip text="Best Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="good_label">
+				<anchored to="bestcheck" position="right" relation="relative" offset="8,0" />
+				<static>Good</static>
+			</label>
+            <button_checkbox name="goodcheck">
+                <anchored to="good_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Good Quality" />
+				<tooltip text="Good Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="poor_label">
+				<anchored to="goodcheck" position="right" relation="relative" offset="8,0" />
+				<static>Poor</static>
+			</label>
+            <button_checkbox name="poorcheck">
+                <anchored to="poor_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Poor Quality" />
+				<tooltip text="Poor Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            
+            <label name="special_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="207,85" />
+				<static>Special:</static>
+			</label>
+			
+			<string_textlistitem name="special" source="special">
+				<anchored to="special_label" position="right" relation="relative" offset="5,0" width="136" />
+				<backcolor>F2F2F2</backcolor>
+			</string_textlistitem>
+            
+            <genericcontrol name="ammocounter">
+				<anchored to="leftanchor" position="insidetopleft" offset="8,100" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>clipsize</maxwounds>
+				<script file="campaign/scripts/counter_ammo.lua" />
+			</genericcontrol>
+
+			<label name="divider_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="185,115" />
+				<static>*****</static>
+			</label>
+			
+		</sheetdata>
+	</windowclass>
+</root>

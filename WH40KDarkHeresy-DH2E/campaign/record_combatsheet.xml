@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="combatsheet">
+        <frame>utilitybox</frame>
+		<placement>
+			<size width="500" height="190" />
+		</placement>
+<!--        <sizelimits>
+            <maximum width="500" height="190" />
+            <minimum width="250" height="85" />
+			<dynamic />
+		</sizelimits>-->
+		<softclose />
+		<nodelete />
+		<playercontrol />
+
+		<sheetdata>
+<!--            <resize_utilitybox /> -->
+            <close_utilitybox />
+            
+            <!-- abilities -->
+			<frame_char name="attributeframe">
+				<bounds>15,15,-15,60</bounds>
+			</frame_char>
+        			<!-- Weapon Skill -->
+			<number_attributeroll name="weapon" source ="abilities.weapon">
+				<anchored to="attributeframe" position="insidetopleft" offset="20,25" width="25" height="20" />
+				<statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+			</number_attributeroll>
+			<label_fieldtop name="wslabel">
+				<anchored to="weapon" offset="0,2" />
+				<static>WS</static>
+				<tooltip text="Weapon Skill" />
+			</label_fieldtop>
+			<!-- Ballistic Skill -->
+			<number_attributeroll name="ballistic" source ="abilities.ballistic">
+				<anchored to="weapon" position="right" offset="20,0" width="25" />
+				<statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+			</number_attributeroll>
+			<label_fieldtop name="bslabel">
+				<anchored to="ballistic" offset="0,2" />
+				<static>BS</static>
+				<tooltip text="Ballistic Skill" />
+			</label_fieldtop>			
+			<!-- Strength -->
+			<number_attributeroll name="strength" source="abilities.strength">
+				<anchored to="ballistic" position="right" offset="20,0" width="25" />
+				<statname>Strength</statname>
+				<stat>strength</stat>
+			</number_attributeroll>
+			<label_fieldtop name="slabel">
+				<anchored to="strength" offset="0,2" />
+				<static>S</static>
+				<tooltip text="Strength" />
+			</label_fieldtop>
+			<!-- Toughness -->
+			<number_attributeroll name="toughness" source="abilities.toughness">
+				<anchored to="strength" position="right" offset="20,0" width="25" />
+				<statname>Toughness</statname>
+				<stat>toughness</stat>
+			</number_attributeroll>
+			<label_fieldtop name="tlabel">
+				<anchored to="toughness" offset="0,2" />
+				<static>T</static>
+				<tooltip text="Toughness" />
+			</label_fieldtop>			
+			<!-- Agility -->
+			<number_attributeroll name="agility" source="abilities.agility">
+				<anchored to="toughness" position="right" offset="20,0" width="25" />
+				<statname>Agility</statname>
+				<stat>agility</stat>
+			</number_attributeroll>
+			<label_fieldtop name="aglabel">
+				<anchored to="agility" offset="0,2" />
+				<static>Ag</static>
+				<tooltip text="Agility" />
+			</label_fieldtop>			
+			<!-- Intelligence -->
+			<number_attributeroll name="intelligence" source="abilities.intelligence">
+				<anchored to="agility" position="right" offset="20,0" width="25" />
+				<statname>Intelligence</statname>
+				<stat>intelligence</stat>
+			</number_attributeroll>
+			<label_fieldtop name="intlabel">
+				<anchored to="intelligence" offset="0,2" />
+				<static>Int</static>
+				<tooltip text="Intelligence" />
+			</label_fieldtop>
+			<!-- Perception -->
+			<number_attributeroll name="perception" source="abilities.perception">
+				<anchored to="intelligence" position="right" offset="20,0" width="25" />
+				<statname>Perception</statname>
+				<stat>perception</stat>
+			</number_attributeroll>
+			<label_fieldtop name="perlabel">
+				<anchored to="perception" offset="0,2" />
+				<static>Per</static>
+				<tooltip text="Perception" />
+			</label_fieldtop>
+			<!-- Willpower -->
+			<number_attributeroll name="willpower" source="abilities.willpower">
+				<anchored to="perception" position="right" offset="20,0" width="25" />
+				<statname>Willpower</statname>
+				<stat>willpower</stat>
+			</number_attributeroll>
+			<label_fieldtop name="wplabel">
+				<anchored to="willpower" offset="0,2" />
+				<static>WP</static>
+				<tooltip text="Will Power" />
+			</label_fieldtop>
+			<!-- Fellowship -->
+			<number_attributeroll name="fellowship" source="abilities.fellowship">
+				<anchored to="willpower" position="right" offset="20,0" width="25" />
+				<statname>Fellowship</statname>
+				<stat>fellowship</stat>
+			</number_attributeroll>
+			<label_fieldtop name="fellabel">
+				<anchored to="fellowship" offset="0,2" />
+				<static>Fel</static>
+				<tooltip text="Fellowship" />
+			</label_fieldtop>
+
+			<number_attributeroll name="influence" source="abilities.influence">
+				<anchored to="fellowship" position="right" offset="20,0" width="25" />
+				<statname>Influence</statname>
+				<stat>influence</stat>
+			</number_attributeroll>
+			<label_fieldtop name="inflabel">
+				<anchored to="influence" offset="0,2" />
+				<static>Inf</static>
+				<tooltip text="Influence" />
+			</label_fieldtop>
+			
+        <!-- Initiative and Fate Points -->
+			<frame_char name="initiativeframe">
+				<bounds>15,75,-15,80</bounds>
+			</frame_char>
+			<number_initiativeroll name="init_total" source="init_total">
+				<anchored to="initiativeframe" position="insidetopleft" offset="20,26" width="25" height="20" />	
+			</number_initiativeroll>
+            <label_fieldtop name="init_label">
+				<anchored to="init_total" position="above" offset="0,2" />
+				<static>Init</static>
+			</label_fieldtop>
+			<simplenumber name="init_agbonus" source = "init_agbonus">
+				<anchored to="init_total" position="right" offset="20,0" width="25" />
+				<nodrag />
+                <invisible />
+			</simplenumber>
+            <label_fieldtop name="init_agbonus_label">
+				<anchored to="init_agbonus" position="above" offset="0,2" />
+				<static>Ag</static>
+			</label_fieldtop>
+			<basicnumber name="init_misc" source="init_misc">
+				<anchored to="init_total" position="right" offset="10,0" width="25" />
+			</basicnumber>
+            <label_fieldtop name="init_misc_label">
+				<anchored to="init_misc" position="above" offset="0,2" />
+				<static>Misc</static>
+			</label_fieldtop>
+
+			<basicnumber name="maxfatepoints">
+				<anchored to="init_misc" position="right" offset="20,0" width="25" />
+				<script>
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 30 then
+							setValue(30);
+						end
+					end
+				</script>
+			</basicnumber>
+            <label_fieldtop name="fate_label">
+				<anchored to="maxfatepoints" position="above" offset="0,2" />
+				<static>Fate</static>
+			</label_fieldtop>
+            
+            <basicnumber name="cover" source ="cover">
+				<anchored to="maxfatepoints" position="right" offset="35,0" width="25" />
+			</basicnumber>
+            <label_fieldtop name="cover_label">
+				<anchored to="cover" position="above" offset="6,2" />
+				<static>Cover</static>
+			</label_fieldtop>
+			
+			<genericcontrol name="fatepointcounter">
+				<anchored to="initiativeframe" position="insidetopleft" offset="95,50"  />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+                    <maximum>5</maximum>
+				</stateicons>
+				<script file="campaign/scripts/counter_fatepoints.lua" />
+			</genericcontrol>
+
+			<stringcontrol name="numberOfWounds_label">
+                <anchored to="cover" position="right" offset="35,0" width="25" />
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+			
+			<stringcontrol name="woundsslashsymbol">
+                <anchored to="numberOfWounds_label" position="right" offset="0,0" width="15" />
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalwounds" source="totalwounds">
+				<anchored to="woundsslashsymbol" position="right" offset="2,0" width="25" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 40 then
+							setValue(40);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfWounds_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+            <label_fieldtop name="wound_label">
+				<anchored to="initiativeframe" position="insidetopleft" offset="230,9" />
+				<static>Wounds</static>
+			</label_fieldtop>
+			
+			<basicnumber name="criticalwounds" source="attributes.critwounds">
+				<anchored to="totalwounds" position="right" offset="20,0" width="25"  />
+				<script>
+					function recalc()
+						local critValue = tonumber(getValue());
+						local abilityTou = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+						local maxWounds = window.maxwoundvalue.getValue();
+						local lightwoundedThreshold = math.floor(abilityTou/10)*2;
+						local currWounds = tonumber(window.numberOfWounds_label.getValue());
+						local currDamage = maxWounds - currWounds;
+						
+						local healthState = "UNHARMED";
+						local label_fontcolor = "0000CC00";
+						if critValue > 0 then 
+							healthState = "CRITICALLY DAMAGED";
+							label_fontcolor = "00980000";
+						elseif currDamage > lightwoundedThreshold then 
+							healthState = "HEAVILY DAMAGED";
+							label_fontcolor = "00FF3300";
+						elseif currDamage > 0 then 
+							healthState = "LIGHTLY DAMAGED";
+							label_fontcolor = "00FF9900";
+						end
+
+						window.healthstate_label.setValue(healthState);
+						window.healthstate_label.setColor(label_fontcolor);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+            <label_fieldtop name="crit_label">
+				<anchored to="criticalwounds" position="above" offset="0,2" />
+				<static>Crit</static>
+			</label_fieldtop>
+			
+			<basicnumber name="fatigue" source="fatigue">
+				<anchored to="criticalwounds" position="right" offset="20,0" width="25" />
+			</basicnumber>
+            <label_fieldtop name="fatigue_label">
+				<anchored to="fatigue" position="above" offset="0,2" />
+				<static>Ftg</static>
+			</label_fieldtop>
+			
+			<genericcontrol name="woundcounter" source="woundcount">
+				<anchored to="initiativeframe" position="insidetopleft" offset="210,50" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>totalwounds</maxwounds>
+				<script file="campaign/scripts/counter_wounds.lua" />
+			</genericcontrol>
+
+            
+            <label name="healthstate_label">
+				<anchored to="initiativeframe" position="insidebottom" offset="205,-20" />
+				<center />
+			</label>
+			
+			<!-- Hidden control in order to make the health state work -->
+			<basicnumber name="maxwoundvalue">
+				<anchored to="initiativeframe" position="insidetopleft" width="10" offset="5,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local wds = window.getDatabaseNode().getChild("totalwounds").getValue();
+						setValue(wds);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("totalwounds");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+					end
+				</script>
+			</basicnumber>
+            			
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<font name="char_pool">
+		<ttf file="graphics/fonts/Rokkitt-Bold.ttf" name="Rokkitt" size="30" />
+		<color value="#660000" />
+	</font>
+	<font name="smalltext">
+		<fgffile name="graphics/fonts/verdana_regular_8.fgf" />
+		<color value="#000000" />
+	</font>
+    <font name="sheetlabelw">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+
+	<!-- Override CoreRPG ruleset graphics -->
+
+	<!-- Dice fonts - REQUIRED -->
+	<font name="dieresult">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#ffffff" />
+	</font>
+	
+    <!-- Custom fonts - REQUIRED -->
+    <font name="chatfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+	<font name="emotefont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#F7DC8C" />
+	</font>
+	<font name="narratorfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+	<font name="systemfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#E0EFE0" />
+	</font>
+    <font name="reportfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFA800" />
+	</font>
+	<font name="msgfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+	<font name="oocfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#D0D0D0" />
+	</font>
+	
+	<!-- Custom fonts -->
+	<font name="chatnpcfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+    <font name="chatgmfont">
+		<fgffile name="graphics/fonts/verdana_bold_italic_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+	<font name="whisperfont">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#F7B2F0" />
+	</font>
+
+	<!-- Modifier stack -->
+	<font name="modcollector">
+		<fgffile name="graphics/fonts/diemod.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+	<font name="modcollectorlabel">
+		<fgffile name="graphics/fonts/modcollectorlabel.fgf" />
+		<color value="#FF0000" />
+	</font>
+
+	<!-- Windows -->
+	<font name="windowtitle">
+		<ttf file="graphics/fonts/AlegreyaSansSC-Bold.ttf" name="Alegreya Sans SC" size="24" />
+		<color value="#000000" />
+	</font>
+
+	<!-- Misc -->
+	<font name="list-empty">
+		<fgffile name="graphics/fonts/verdana_italic_8.fgf" />
+		<color value="#FFFFFF" />
+	</font>
+
+	<!-- Inne dodane przez Radka -->
+	
+	<font name="reference-r">
+		<fgffile name="graphics/fonts/verdana_regular_8.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="reference-i">
+		<fgffile name="graphics/fonts/verdana_italic_8.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="reference-b">
+		<fgffile name="graphics/fonts/verdana_bold_8.fgf" />
+		<color value="#000000" />
+	</font>
+	<font name="reference-bi">
+		<fgffile name="graphics/fonts/verdana_bold_italic_8.fgf" />
+		<color value="#000000" />
+	</font>
+
+</root>

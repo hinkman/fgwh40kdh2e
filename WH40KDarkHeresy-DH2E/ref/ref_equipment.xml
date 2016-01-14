@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Ranged Weapons -->
+	<windowclass name="referencerangedweapons">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_rangedweapons_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_rangedweapons_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_rangedweapons_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencerangedweapons</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_rangedweapons_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. class.getValue() .. "]");
+				
+				if rof.getValue() == "" then
+					roflabel.setVisible(false);
+					rof.setVisible(false);
+				end
+				if clipsize.getValue() == "" then
+					cliplabel.setVisible(false);
+					clipsize.setVisible(false);
+				end
+				if reload.getValue() == "" then
+					reloadlabel.setVisible(false);
+					reload.setVisible(false);
+				end
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="class" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+			</number_column_right>
+			<label_column>
+				<static textres="ref_label_range" />
+			</label_column>
+			<string_column name="range" />
+			<label_column name="roflabel">
+				<static textres="ref_label_rof" />
+			</label_column>
+			<string_column name="rof" />
+			<label_column>
+				<static textres="ref_label_damagedice" />
+			</label_column>
+			<string_column name="damagedice" />
+            
+            <label_column>
+                <static textres="ref_label_damagebonus" />
+			</label_column>
+            <string_column name="damagebonus" />
+			
+			<label_column_right name="damagetypelabel">
+				<anchored to="damagedice" />
+				<static textres="ref_label_damagetype" />
+			</label_column_right>
+			
+			<basicstring name="damagetype">
+				<anchored to="damagetypelabel" position="right" offset="5" />
+			</basicstring>
+
+			<label_column>
+				<static textres="ref_label_pen" />
+			</label_column>
+			<string_column name="pen" />
+            
+			<label_column name="cliplabel">
+				<static textres="ref_label_clip" />
+			</label_column>
+			<string_column name="clipsize" />
+			<label_column name="reloadlabel">
+				<static textres="ref_label_reload" />
+			</label_column>
+			<string_column name="reload" />
+
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column_left name="availability" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Melee Weapons -->
+	<windowclass name="referencemeleeweapons">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_meleeweapons_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_meleeweapons_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_meleeweapons_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencemeleeweapons</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_meleeweapons_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. class.getValue() .. "]");
+				
+				if range.getValue() == "" then
+					rangelabel.setVisible(false);
+					range.setVisible(false);
+				end
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="class" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+			</number_column_right>
+			<label_column name="rangelabel">
+				<static textres="ref_label_range" />
+			</label_column>
+			<string_column name="range" />
+			
+            <label_column>
+				<static textres="ref_label_damagedice" />
+			</label_column>
+           <string_column name="damagedice" />
+           
+            <label_column>
+                <static textres="ref_label_damagebonus" />
+			</label_column>
+            <string_column name="damagebonus" />
+			
+			<label_column_right name="damagetypelabel">
+				<anchored to="damagedice" />
+				<static textres="ref_label_damagetype" />
+			</label_column_right>
+			
+			<basicstring name="damagetype">
+				<anchored to="damagetypelabel" position="right" offset="5" />
+			</basicstring>
+
+			<label_column>
+				<static textres="ref_label_pen" />
+			</label_column>
+			<string_column name="pen" />
+
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column_left name="availability" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Armor -->
+	<windowclass name="referencearmor">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_armor_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_armor_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_armor_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencearmor</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_armor_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. subtype.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+			</number_column_right>
+			
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column_left name="availability" />
+			
+			<label_column>
+				<static textres="ref_label_ap" />
+			</label_column>
+			<number_column name="ap" />
+			
+			<label_column>
+				<static textres="ref_label_protects" />
+			</label_column>
+			<string_column name="protects" />
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Equipment -->
+	<windowclass name="referenceequipment">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="250" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_equipment_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_equipment_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_equipment_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceequipment</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_equipment_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Gear; " .. type.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column>
+				<static textres="ref_label_weight" />
+			</label_column>
+			<number_column name="weight" />
+			
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column name="availability" />
+			
+			<line_column name="line_desc" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Ammo -->
+	<windowclass name="referenceammo">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="250" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_ammo_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_ammo_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_ammo_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceammo</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_ammo_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Gear; Ammunition]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column>
+				<static textres="ref_label_weight" />
+			</label_column>
+			<number_column name="weight" />
+			
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column name="availability" />
+			
+			<label_column>
+				<static textres="ref_label_usedwith" />
+			</label_column>
+			<string_column name="usedwith" />
+			
+			<line_column name="line_desc" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Cybernetics -->
+	<windowclass name="referencecybernetics">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="250" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_cybernetics_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_cybernetics_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_cybernetics_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencecybernetics</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_cybernetics_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Cybernetics]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column>
+				<static textres="ref_label_weight" />
+			</label_column>
+			<number_column name="weight" />
+			
+			<line_column name="line_desc" />
+			
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column name="availability" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Weapon Upgrades -->
+	<windowclass name="referenceweaponupgrade">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="250" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_weaponupgrade_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_weaponupgrade_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_weaponupgrade_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceweaponupgrade</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_weaponupgrade_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[Gear; Weapon Upgrade]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column name="cost" />
+			
+			<label_column>
+				<static textres="ref_label_weight" />
+			</label_column>
+			<number_column name="weight" />
+			
+			<label_column>
+				<static textres="ref_label_availability" />
+			</label_column>
+			<string_column name="availability" />
+			
+			<label_column>
+				<static textres="ref_label_upgrades" />
+			</label_column>
+			<string_column name="upgrades" />
+			
+			<line_column name="line_desc" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+</root>

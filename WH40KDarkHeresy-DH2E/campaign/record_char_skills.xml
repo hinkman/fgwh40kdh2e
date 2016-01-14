@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_skills">
+		<sheetdata>	
+
+            
+			<!-- Attributes -->
+			<frame_char name="attributeframe">
+				<anchored height="60">
+					<left offset="15" />
+					<top offset="3"/>
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+            
+            			<!-- Weapon Skill -->
+			<number_attributeroll name="weapon" source ="abilities.weapon">
+				<anchored to="attributeframe" position="insidetopleft" offset="25,25" width="30" height="20" />
+				<statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wslabel">
+				<anchored to="weapon" offset="0,2" />
+				<static>WS</static>
+				<tooltip text="Weapon Skill" />
+			</label_charfieldtop>
+			
+			<!-- Ballistic Skill -->
+			<number_attributeroll name="ballistic" source ="abilities.ballistic">
+				<anchored to="weapon" position="right" offset="30,0" width="30" />
+				<statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="bslabel">
+				<anchored to="ballistic" offset="0,2" />
+				<static>BS</static>
+				<tooltip text="Ballistic Skill" />
+			</label_charfieldtop>
+			
+			<!-- Strength -->
+			<number_attributeroll name="strength" source="abilities.strength">
+				<anchored to="ballistic" position="right" offset="30,0" width="30" />
+				<statname>Strength</statname>
+				<stat>strength</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="slabel">
+				<anchored to="strength" offset="0,2" />
+				<static>S</static>
+				<tooltip text="Strength" />
+			</label_charfieldtop>
+			
+			<!-- Toughness -->
+			<number_attributeroll name="toughness" source="abilities.toughness">
+				<anchored to="strength" position="right" offset="30,0" width="30" />
+				<statname>Toughness</statname>
+				<stat>toughness</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="tlabel">
+				<anchored to="toughness" offset="0,2" />
+				<static>T</static>
+				<tooltip text="Toughness" />
+			</label_charfieldtop>
+			
+			<!-- Agility -->
+			<number_attributeroll name="agility" source="abilities.agility">
+				<anchored to="toughness" position="right" offset="30,0" width="30" />
+				<statname>Agility</statname>
+				<stat>agility</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="aglabel">
+				<anchored to="agility" offset="0,2" />
+				<static>Ag</static>
+				<tooltip text="Agility" />
+			</label_charfieldtop>
+			
+			<!-- Intelligence -->
+			<number_attributeroll name="intelligence" source="abilities.intelligence">
+				<anchored to="agility" position="right" offset="30,0" width="30" />
+				<statname>Intelligence</statname>
+				<stat>intelligence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="intlabel">
+				<anchored to="intelligence" offset="0,2" />
+				<static>Int</static>
+				<tooltip text="Intelligence" />
+			</label_charfieldtop>
+			
+			<!-- Perception -->
+			<number_attributeroll name="perception" source="abilities.perception">
+				<anchored to="intelligence" position="right" offset="30,0" width="30" />
+				<statname>Perception</statname>
+				<stat>perception</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="perlabel">
+				<anchored to="perception" offset="0,2" />
+				<static>Per</static>
+				<tooltip text="Perception" />
+			</label_charfieldtop>
+			
+			<!-- Willpower -->
+			<number_attributeroll name="willpower" source="abilities.willpower">
+				<anchored to="perception" position="right" offset="30,0" width="30" />
+				<statname>Willpower</statname>
+				<stat>willpower</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wplabel">
+				<anchored to="willpower" offset="0,2" />
+				<static>WP</static>
+				<tooltip text="Will Power" />
+			</label_charfieldtop>
+			
+			<!-- Fellowship -->
+			<number_attributeroll name="fellowship" source="abilities.fellowship">
+				<anchored to="willpower" position="right" offset="30,0" width="30" />
+				<statname>Fellowship</statname>
+				<stat>fellowship</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="fellabel">
+				<anchored to="fellowship" offset="0,2" />
+				<static>Fel</static>
+				<tooltip text="Fellowship" />
+			</label_charfieldtop>
+
+			<!-- Influence -->
+			<number_attributeroll name="influence" source="abilities.influence">
+				<anchored to="fellowship" position="right" offset="30,0" width="30" />
+				<statname>Influence</statname>
+				<stat>influence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="fellabel">
+				<anchored to="influence" offset="0,2" />
+				<static>Inf</static>
+				<tooltip text="Influence" />
+			</label_charfieldtop>
+            
+			<frame_char name="basicnameframe">
+				<anchored height="35">
+					<left offset="15" />
+					<top offset ="65" />
+					<right anchor="center" offset="-3" />
+				</anchored>
+			</frame_char>
+            
+            <button_combatbasicskills>
+                <anchored to="basicnameframe" position="insidebottomright" offset="8, 6" height="23" width="23" />
+			</button_combatbasicskills>
+
+			<label>
+				<anchored to="basicnameframe" position="insidetopleft" offset="115,10" />
+				<static>BASIC SKILLS</static>
+			</label>
+			
+			<frame_char name="advnameframe">
+				<anchored height="35">
+					<left anchor="center" offset="-3" />
+					<top offset = "65" />
+					<right offset="-23" />
+				</anchored>
+			</frame_char>
+            
+            <button_combatadvskills>
+                <anchored to="advnameframe" position="insidebottomright" offset="8, 6" height="23" width="23" />
+			</button_combatadvskills>
+            
+            <label>
+				<anchored to="advnameframe" position="insidetopleft" offset="110,10"/>
+				<static>SPECIALIST SKILLS</static>
+			</label>
+			
+			<!-- Basic Skills -->
+			<frame_char name="basicframe">
+				<anchored to="basicnameframe" position="below" offset="0,-3" height="465" />
+			</frame_char>
+			<label name="basicadv_label">
+				<anchored to="basicframe" position="insidetopleft" offset="150,7" />
+				<static>Adv.</static>
+			</label>
+			<label name="basictotal_label">
+				<anchored to="basicframe" position="insidetopleft" offset="190,7" />
+				<static>Stat</static>
+			</label>
+            <label name="basicstat_label">
+				<anchored to="basicframe" position="insidetopleft" offset="250,7" />
+				<static>Total</static>
+			</label>
+            
+			<list_text name="basicskills">
+				<anchored to="basicframe">
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.basicskills</datasource>
+				<class>skill_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referenceskills" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+									win.name.setTooltipText(DB.getValue(nodeSource, "basicoradvanced", "") .. " skill; " ..
+												DB.getValue(nodeSource, "attribute", ""));
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="basicskills" />
+				<target>basicskills</target>
+			</scrollbar>
+			<button_iedit name="basicskills_iedit">
+				<anchored to="basicskills" position="aboveleft" offset="0,0" />
+				<target>basicskills</target>
+			</button_iedit>
+			<button_iadd name="basicskills_iadd">
+				<anchored to="basicskills_iedit" position="righthigh" offset="2,0" />
+				<target>basicskills</target>
+			</button_iadd>
+			
+			<!-- Advanced Skills -->
+			<frame_char name="advframe">
+				<anchored to="advnameframe" position="below" offset="0,-3" height="465" />
+			</frame_char>
+			<label name="advadv_label">
+				<anchored to="advframe" position="insidetopleft" offset="148,7" />
+				<static>Adv.</static>
+			</label>
+			<label name="advtotal_label">
+				<anchored to="advframe" position="insidetopleft" offset="192,7" />
+				<static>Stat</static>
+			</label>
+            <label name="advstat_label">
+				<anchored to="advframe" position="insidetopleft" offset="250,7" />
+				<static>Total</static>
+			</label>
+			<list_text name="advancedskills">
+				<anchored to="advframe">
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.advancedskills</datasource>
+				<class>skill_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referenceskills" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+									win.name.setTooltipText(DB.getValue(nodeSource, "basicoradvanced", "") .. " skill; " ..
+												DB.getValue(nodeSource, "attribute", ""));
+								end
+							end
+
+							return true;
+						end
+					end
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="advancedskills" />
+				<target>advancedskills</target>
+			</scrollbar>
+			<button_iedit name="advancedskills_iedit">
+				<anchored to="advancedskills" position="aboveleft" offset="0,0" />
+				<target>advancedskills</target>
+			</button_iedit>
+			<button_iadd name="advancedskills_iadd">
+				<anchored to="advancedskills_iedit" position="righthigh" offset="2,0" />
+				<target>advancedskills</target>
+			</button_iadd>
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Skills List Template -->
+	<windowclass name="skill_list">
+		<margins control="0,0,0,2" />
+        <script file="campaign/scripts/char_skill.lua" />
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_skill</class>
+			</linkfield>
+
+			<button_checkbox name="skilltrained">
+				<anchored height="12" width="12">
+					<top offset="3" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="0" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Trained Skill" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+            <basicnumber name="skill_total" source ="skill_total">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+                <invisible />
+                <script>
+                    function getTotal()
+                        local nAB = tonumber(window.stat.getValue());
+                        local nAdv1 = window.skillAdv1.getValue();
+                        local nAdv2 = window.skillAdv2.getValue();
+                        local nAdv3 = window.skillAdv3.getValue();
+                        local nAdv4 = window.skillAdv4.getValue();
+                        local nTR = window.skilltrained.getValue();
+                        local nST = 0;
+                    
+                        if nAdv1  == 1 then
+                            nAdv1 = 10;
+                        else
+                            nAdv1 = 0;
+                        end
+                    
+                        if nAdv2  == 1 then
+                            nAdv2 = 10;
+                        else
+                            nAdv2 = 0;
+                        end
+                        if nAdv3  == 1 then
+                            nAdv3 = 10;
+                        else
+                            nAdv3 = 0;
+                        end
+                        if nAdv4  == 1 then
+                            nAdv4 = 10;
+                        else
+                            nAdv4 = 0;
+                        end
+                        
+                        if nTR == 1 then
+                            nST = nAB + nAdv1 + nAdv2 + nAdv3 + nAdv4;
+                        else
+                            nST = nAB - 20;
+                        end
+                        
+                        if nST &lt;= 0 then 
+                            nST = 1;
+                        end
+                        setValue(nST);
+                    end
+                </script>
+			</basicnumber>
+            <number_skillroll name="skillroll">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+				<skillname>name</skillname>
+				<skillt>skillroll</skillt>
+			</number_skillroll>
+           <number_charskillfield_static name="stat">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<script>
+                    function update(statname)
+                        setValue(DB.getValue(window.getDatabaseNode(), "...abilities." .. statname, 0));
+                    end
+                    
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+				</script>
+			</number_charskillfield_static>
+			<cycler_charskillability name="statname">
+				<anchored width="25" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script>
+					function onValueChanged()
+                        window.onStatUpdate();
+                    end
+				</script>
+			</cycler_charskillability>
+            
+            <button_checkbox name="skillAdv4">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-8" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Mastered" />
+				<tooltip text="Mastered" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+            <button_checkbox name="skillAdv3">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Talented/Other" />
+				<tooltip text="Talented/Other" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>   
+			</button_checkbox>
+            <button_checkbox name="skillAdv2">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+20 Advancement" />
+				<tooltip text="+20 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+			<button_checkbox name="skillAdv1">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+10 Advancement" />
+				<tooltip text="+10 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+	
+</root>

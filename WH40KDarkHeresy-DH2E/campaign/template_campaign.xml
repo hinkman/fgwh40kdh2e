@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="banner_campaign">
+		<genericcontrol>
+			<bounds>8,8,30,177</bounds>
+		</genericcontrol>
+	</template>
+
+	<template name="button_image_folder">
+		<button_text_sm>
+			<anchored position="insidetopright" offset="21,6" width="52" />
+			<state textres="image_button_folder" offset="-3,-2"/>
+			<gmvisibleonly />
+			<script>
+				function onButtonPress()
+					Interface.openCampaignFolder("images");
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_encounter_list">
+		<button_text_sm>
+			<anchored position="insidetopright" offset="21,6" width="84" />
+			<state textres="npc_button_battle" offset="-3,-2"/>
+			<gmvisibleonly />
+			<script>
+				function onButtonPress()
+					Interface.openWindow("battlelist", "battle");
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_parcel_list">
+		<button_text_sm>
+			<anchored position="insidetopright" offset="21,6" width="58" />
+			<state textres="item_button_parcel" offset="-3,-2"/>
+			<script>
+				function onButtonPress()
+					Interface.openWindow("parcellist", "treasureparcels");
+				end
+			</script>
+		</button_text_sm>
+	</template>
+
+	<template name="button_iadd_campaign">
+		<button_iadd name="list_iadd">
+			<anchored to="rightanchor">
+				<top  offset="3"/>
+				<right anchor="left" relation="relative" offset="-5" />
+			</anchored>
+			<target>list</target>
+		</button_iadd>
+	</template>
+	<template name="button_iedit_campaign">
+		<button_iedit name="list_iedit">
+			<anchored to="rightanchor">
+				<top offset = "3"/>
+				<right anchor="left" relation="relative" offset="15" />
+			</anchored>
+			<target>list</target>
+		</button_iedit>
+	</template>
+	<template name="filter_campaign">
+		<filter name="filter">
+			<anchored height="20">
+				<top parent="rightanchor" />
+				<left parent="list" offset="18" />
+				<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+			</anchored>
+		</filter>
+	</template>
+</root>

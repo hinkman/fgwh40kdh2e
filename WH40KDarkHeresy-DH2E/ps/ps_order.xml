@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_order" merge="join">
+		<sheetdata>
+			<windowlist name="list">
+				<anchored width="180" />
+			</windowlist>
+
+			<imagecontrol name="image">
+				<anchored>
+					<left offset="210" />
+				</anchored>
+			</imagecontrol>
+            
+            <label_ps>
+				<anchored to="list" position="above" offset="0,5" />
+				<static textres="ps_label_order" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+            
+            <label_ps>
+				<anchored to="image" position="above" offset="0,5" />
+				<static textres="ps_label_formation" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>	
+		</sheetdata>
+	</windowclass>
+</root>

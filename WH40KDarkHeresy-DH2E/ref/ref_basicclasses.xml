@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencetextsmall">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="300" height="450" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>ref_text_header</class>
+			</sub_record_header>
+
+			<ft_record name="text">
+				<anchored>
+					<top parent="header" anchor="bottom" offset="20" />
+					<left offset="35" />
+					<right offset="-40" />
+					<bottom offset="-35" />
+				</anchored>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<footer>footer_wide</footer>
+			</ft_record>
+			<scrollbar>
+				<anchored to="text" />
+				<target>text</target>
+			</scrollbar>
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+</root>

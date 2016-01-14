@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_inventory" merge="join">
+		<sheetdata>
+			<label_ps name="label_parcelcoin_main">
+				<anchored to="coins" position="above" offset="0,22" />
+				<static textres="ps_label_invmoney" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_parcelcoin_count">
+				<anchored to="coins" position="aboveleft" offset="10,7" width="55" />
+				<static>#</static>
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_parcelcoin_name">
+				<anchored to="coins" position="aboveleft" offset="70,7" width="100" />
+				<static textres="ps_label_desc" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+    
+            <label_ps name="label_parcelitem_main">
+				<anchored to="items" position="above" offset="0,22" />
+				<static textres="ps_label_invitems" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_parcelitem_count">
+				<anchored to="items" position="aboveleft" offset="10,7" width="25" />
+				<static>#</static>
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_parcelitem_name">
+				<anchored to="items" position="aboveleft" offset="40,7">
+					<right offset="-180" />
+				</anchored>
+				<static textres="ps_label_desc" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+            
+            <label_ps name="label_coin_main">
+				<anchored to="coinlist" position="above" offset="0,22" />
+				<static textres="ps_label_partymoney" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_coin_count">
+				<anchored to="coinlist" position="aboveleft" offset="10,7" width="55" />
+				<static>#</static>
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_coin_name">
+				<anchored to="coinlist" position="aboveleft" offset="70,7" width="100" />
+				<static textres="ps_label_desc" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_coin_carried">
+				<anchored to="coinlist" position="aboveright" offset="10,7">
+					<left parent="label_coin_name" anchor="right" offset="5" />
+				</anchored>
+				<static textres="ps_label_partycarried" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+
+			<label_ps name="label_parcelitem_assign">
+				<anchored to="items" position="aboveright" offset="35,7" width="110" />
+				<static textres="ps_label_invassign" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+            
+            <label_ps name="label_inv_main">
+				<anchored to="itemlist" position="above" offset="0,22" />
+				<static textres="ps_label_partyitems" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_inv_count">
+				<anchored to="itemlist" position="aboveleft" offset="10,7" width="25" />
+				<static>#</static>
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+			<label_ps name="label_inv_name">
+				<anchored to="itemlist" position="aboveleft" offset="40,7">
+					<right offset="-180" />
+				</anchored>
+				<static textres="ps_label_invname" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+            
+			<label_ps name="label_inv_carried">
+				<anchored to="itemlist" position="aboveright" offset="30,7" width="145" />
+				<static textres="ps_label_partycarried" />
+                <color>FFFFFF</color>
+				<center />
+			</label_ps>
+            
+            <label_ps name="label_sellpercentage">
+				<anchored to="sellpercentage" position="righthigh" offset="5,0" />
+				<static>%</static>
+                <color>FFFFFF</color>
+				<gmvisibleonly />
+			</label_ps>
+        </sheetdata>
+    </windowclass>
+</root>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<panel name="dicetower" modes="host,client">
+		<class>dicetower</class>
+		<bounds>104,-95,64,57</bounds>
+	</panel>
+</root>

@@ -1,0 +1,3499 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="npc">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="500" height="500" />
+		</placement>
+        <sizelimits>
+            <maximum width="500" height="500" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_npc</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<script file="campaign/scripts/npc.lua" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>npc_header</class>
+			</sub_record_header>
+
+			<genericcontrol name="contentframe">
+				<anchored>
+					<top parent="header" anchor="bottom" offset="15" />
+					<left offset="30" />
+					<right offset="-45" />
+					<bottom offset="-32" />
+				</anchored>
+				<frame name="groupbox" offset="20,17,24,17" />
+			</genericcontrol>
+
+			<subwindow_record name="main">
+				<class>npc_main</class>
+			</subwindow_record>
+			<subwindow_record name="skills">
+				<class>npc_skills</class>
+			</subwindow_record>
+			<subwindow_record name="gear">
+				<class>npc_gear</class>
+			</subwindow_record>
+			<subwindow_record name="psychic">
+				<class>npc_psychic</class>
+			</subwindow_record>
+			<subwindow_record name="notes">
+				<class>npc_notes</class>
+			</subwindow_record>
+			<subwindow_record name="vehicle">
+				<class>npc_vehicle</class>
+			</subwindow_record>
+
+			<scrollbar_record>
+				<target>main</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>skills</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>gear</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>psychic</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>notes</target>
+			</scrollbar_record>
+			<scrollbar_record>
+				<target>vehicle</target>
+			</scrollbar_record>
+
+			<tabs_recordsheet>
+				<tab>
+					<icon>tab_main</icon>
+					<subwindow>main</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_skills</icon>
+					<subwindow>skills</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_gear</icon>
+					<subwindow>gear</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_psychic</icon>
+					<subwindow>psychic</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>notes</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_other</icon>
+					<subwindow>vehicle</subwindow>
+				</tab>
+			</tabs_recordsheet>
+			
+            <resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="npc_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_main.lua" />
+		<sheetdata>
+        
+            <!-- Weapon Skill -->
+			<number_attributeroll name="weapon" source ="abilities.weapon">
+				<anchored position="insidetopleft" offset="7,18" width="30" height="20" />
+				<statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wslabel">
+				<anchored to="weapon" offset="0,2" />
+				<static>WS</static>
+				<tooltip text="Weapon Skill" />
+			</label_charfieldtop>
+			
+			<!-- Ballistic Skill -->
+			<number_attributeroll name="ballistic" source ="abilities.ballistic">
+				<anchored to="weapon" position="right" offset="18,0" width="30" />
+				<statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="bslabel">
+				<anchored to="ballistic" offset="0,2" />
+				<static>BS</static>
+				<tooltip text="Ballistic Skill" />
+			</label_charfieldtop>
+			
+			<!-- Strength -->
+			<number_attributeroll name="strength" source="abilities.strength">
+				<anchored to="ballistic" position="right" offset="18,0" width="30" />
+				<statname>Strength</statname>
+				<stat>strength</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="slabel">
+				<anchored to="strength" offset="0,2" />
+				<static>S</static>
+				<tooltip text="Strength" />
+			</label_charfieldtop>
+			
+			<!-- Toughness -->
+			<number_attributeroll name="toughness" source="abilities.toughness">
+				<anchored to="strength" position="right" offset="18,0" width="30" />
+				<statname>Toughness</statname>
+				<stat>toughness</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="tlabel">
+				<anchored to="toughness" offset="0,2" />
+				<static>T</static>
+				<tooltip text="Toughness" />
+			</label_charfieldtop>
+			
+			<!-- Agility -->
+			<number_attributeroll name="agility" source="abilities.agility">
+				<anchored to="toughness" position="right" offset="18,0" width="30" />
+				<statname>Agility</statname>
+				<stat>agility</stat>
+                <script>
+                    function onValueChanged()
+						window.init_agbonus.calc();
+                    end
+                </script>
+			</number_attributeroll>
+			<label_charfieldtop name="aglabel">
+				<anchored to="agility" offset="0,2" />
+				<static>Ag</static>
+				<tooltip text="Agility" />
+			</label_charfieldtop>
+			
+			<!-- Intelligence -->
+			<number_attributeroll name="intelligence" source="abilities.intelligence">
+				<anchored to="agility" position="right" offset="18,0" width="30" />
+				<statname>Intelligence</statname>
+				<stat>intelligence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="intlabel">
+				<anchored to="intelligence" offset="0,2" />
+				<static>Int</static>
+				<tooltip text="Intelligence" />
+			</label_charfieldtop>
+			
+			<!-- Perception -->
+			<number_attributeroll name="perception" source="abilities.perception">
+				<anchored to="intelligence" position="right" offset="18,0" width="30" />
+				<statname>Perception</statname>
+				<stat>perception</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="perlabel">
+				<anchored to="perception" offset="0,2" />
+				<static>Per</static>
+				<tooltip text="Perception" />
+			</label_charfieldtop>
+
+			<!-- Willpower -->
+			<number_attributeroll name="willpower" source="abilities.willpower">
+				<anchored to="perception" position="right" offset="18,0" width="30" />
+				<statname>Willpower</statname>
+				<stat>willpower</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wplabel">
+				<anchored to="willpower" offset="0,2" />
+				<static>WP</static>
+				<tooltip text="Will Power" />
+			</label_charfieldtop>
+			
+			<!-- Fellowship -->
+			<number_attributeroll name="fellowship" source="abilities.fellowship">
+				<anchored to="willpower" position="right" offset="18,0" width="30" />
+				<statname>Fellowship</statname>
+				<stat>fellowship</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="fellabel">
+				<anchored to="fellowship" offset="0,2" />
+				<static>Fel</static>
+				<tooltip text="Fellowship" />
+			</label_charfieldtop>
+            
+            <simplenumber name="strengthbonus" source = "abilities.strengthbonus">
+				<anchored to="strength" position="lefthigh" width = "10" offset ="4,-2"/>
+                <statname>Strength Bonus</statname>
+				<stat>strengthbonus</stat>
+				<nodrag />
+                <readonly />
+                <invisible />
+			</simplenumber>
+            <simplenumber name="strengthHbonus">
+				<anchored to="strength" position="left" width = "10" offset ="6,0"/>
+				<nodrag />
+                <readonly />
+                <invisible />
+                <script>
+					function recalc()
+						local nStrb = window.getDatabaseNode().getChild("abilities.strength").getValue();
+						setValue(math.floor(nStrb/10));
+                        
+                        local nStrmult = window.getDatabaseNode().getChild("abilities.strmult").getValue();
+  
+						
+						local totalStrb = getValue() * nStrmult;
+						
+						window.getDatabaseNode().getChild("abilities.strengthbonus").setValue(totalStrb);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</simplenumber>
+             <simplenumber name="toughnessbonus" source = "abilities.toughnessbonus">
+				<anchored to="toughness" position="lefthigh" width = "10" offset ="4,-2"/>
+                <statname>Toughness Bonus</statname>
+				<stat>toughnessbonus</stat>
+				<nodrag />
+                <readonly />
+                <invisible />
+			</simplenumber>
+            <simplenumber name="toughnessHbonus">
+				<anchored to="toughness" position="left" width = "10" offset ="6,0"/>
+				<nodrag />
+                <readonly />
+                <invisible />
+                <script>
+					function recalc()
+						local nTnb = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+						setValue(math.floor(nTnb/10));
+                        
+                        local nTnmult = window.getDatabaseNode().getChild("abilities.tnmult").getValue(); 
+						
+						local totalTnb = getValue() * nTnmult;
+						
+						window.getDatabaseNode().getChild("abilities.toughnessbonus").setValue(totalTnb);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</simplenumber>
+            
+            <label name="ucstr_label">
+				<anchored position="insidetopleft" offset="0,55" />
+				<static>UC Str:</static>
+			</label>
+            <basicnumber name="ucstrength" source = "abilities.strmult">
+				<anchored to="ucstr_label" position="right" width = "15" offset ="6,0"/>
+				<nodrag />
+                <default>1</default>
+                <script>
+					function recalc()
+						nStrmult = getValue();
+                        
+                        local totalStrb = nStrmult * window.strengthHbonus.getValue();
+						
+						window.getDatabaseNode().getChild("abilities.strengthbonus").setValue(totalStrb);
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+                </script>    
+			</basicnumber> 
+            <label name="uctn_label">
+				<anchored to="ucstrength" position="right" offset="20,0" />
+				<static>UC Tn:</static>
+			</label>
+            <basicnumber name="uctoughness" source = "abilities.tnmult">
+				<anchored to="uctn_label" position="right" width = "15" offset ="6,0"/>
+				<nodrag />
+                <default>1</default>
+                <script>
+					function recalc()
+						nTnmult = getValue();
+ 
+                        local totalTnb = nTnmult * window.toughnessHbonus.getValue();
+						
+						window.getDatabaseNode().getChild("abilities.toughnessbonus").setValue(totalTnb);
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+                </script>    
+			</basicnumber>
+            
+            <simplenumber name="ammo" source = "abilities.ammo">
+				<anchored to="strength" position="left" width = "10" offset ="6,0"/>
+                <default>1</default>
+                <statname>Ammo</statname>
+				<stat>ammo</stat>
+				<nodrag />
+                <invisible />
+			</simplenumber>
+
+			
+			<!-- Initiative -->
+			<label name="init_label">
+				<anchored position="insidetopleft" offset="0,80" />
+				<static>Initiative</static>
+			</label>
+			<number_initiativeroll name="init_total">
+				<anchored position="insidetopleft" offset="10,105" width="30" height="20" />               
+			</number_initiativeroll>
+			
+			<label name="init_equalsign_label">
+				<anchored to="init_total" position="right" offset="10,0" />
+				<static>=</static>
+			</label>
+			
+			<label name="init_agbonus_label">
+				<anchored to="init_label" position="right" offset="9,0" />
+				<static>A. Bonus</static>
+			</label>
+			<simplenumber name="init_agbonus" source ="init_agbonus">
+				<anchored to="init_equalsign_label" position="right" offset="10,0" width="30" />
+                <frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<script>
+					function calc()
+						local abilityAg = window.getDatabaseNode().getChild("abilities.agility").getValue();
+						setValue(math.floor(abilityAg/10));
+					end
+				</script>
+			</simplenumber>
+
+			<label name="init_plussign_label">
+				<anchored to="init_agbonus" position="right" offset="10,0" />
+				<static>+</static>
+			</label>
+			
+			<label name="init_misc_label">
+				<anchored to="init_agbonus_label" position="right" offset="10,0" />
+				<static>M. Mod</static>
+			</label>
+			<basicnumber name="init_misc" source="init_misc">
+				<anchored to="init_plussign_label" position="right" offset="10,0" width="30" />
+			</basicnumber>
+			
+			
+			<!-- Wounds -->
+			<label name="woundheader_label">
+				<anchored position="insidetopleft" offset="65,145" />
+				<static>WOUNDS</static>
+			</label>
+			
+			<label name="remaining_label">
+				<anchored position="insidetopleft" offset="0,165" />
+				<static>Remaining</static>
+			</label>
+			
+			<label name="fatigue_label">
+				<anchored to="remaining_label" position="right" offset="20,0" />
+				<static>Fatigue</static>
+			</label>
+			
+			<label name="wounds_label">
+				<anchored to="remaining_label" position="below" offset="-6,-4" />
+				<static>Wounds</static>
+			</label>
+			
+			<label name="fatiguemax">
+				<anchored to="wounds_label" position="right" offset="20,4" />
+				<script>
+					function recalc()
+						local abilityTou = tostring(window.getDatabaseNode().
+									getChild("abilities.toughness").getValue());
+						setValue("(max = " .. tostring(math.floor(abilityTou/10)) .. ")");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</label>
+			
+			<label name="critical_label">
+				<anchored to="fatigue_label" position="right" offset="20" width="40" />
+				<static>Critical</static>
+			</label>
+			<label name="criticalwounds_label">
+				<anchored to="critical_label" position="below" offset="3,-4"  />
+				<static>Wounds</static>
+			</label>
+			
+			<stringcontrol name="numberOfWounds_label">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>0,200</offset>
+				</anchored>
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+			
+			<stringcontrol name="woundsslashsymbol">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>20,200</offset>
+				</anchored>
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalwounds">
+				<anchored to="woundsslashsymbol" position="right" offset="8,0" width="25" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 100 then
+							setValue(100);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfWounds_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+			
+			<basicnumber name="fatigue">
+				<anchored to="totalwounds" position="right" offset="30,0" width="30" />
+			</basicnumber>
+			
+			<basicnumber name="criticalwounds" source="attributes.critwounds">
+				<anchored to="fatigue" position="right" offset="28,0" width="30" />
+     
+                <script>
+					function recalc()
+						local critValue = tonumber(getValue());
+						local abilityTou = window.getDatabaseNode().getChild("abilities.toughness").getValue();
+						local maxWounds = window.maxwoundvalue.getValue();
+						local lightwoundedThreshold = math.floor(abilityTou/10)*2;
+						local currWounds = tonumber(window.numberOfWounds_label.getValue());
+						local currDamage = maxWounds - currWounds;
+						
+						local healthState = "UNHARMED";
+						local label_fontcolor = "0000CC00";
+						if critValue > 0 then 
+							healthState = "CRITICALLY DAMAGED";
+							label_fontcolor = "00980000";
+						elseif currDamage > lightwoundedThreshold then 
+							healthState = "HEAVILY DAMAGED";
+							label_fontcolor = "00FF3300";
+						elseif currDamage > 0 then 
+							healthState = "LIGHTLY DAMAGED";
+							label_fontcolor = "00FF9900";
+						end
+
+						window.healthstate_label.setValue(healthState);
+						window.healthstate_label.setColor(label_fontcolor);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<genericcontrol name="woundcounter">
+				<anchored position="insidetopleft" offset="0,220" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>totalwounds</maxwounds>
+				<script file="campaign/scripts/counter_wounds.lua" />
+			</genericcontrol>
+            
+            <label name="healthstate_label">
+				<anchored to="woundcounter"  position="below" offset="0,5" height="20" />
+				<center />
+			</label>
+			
+			<!-- Hidden control in order to make the health state work -->
+			<basicnumber name="maxwoundvalue">
+				<anchored position="insidetopleft"  offset="10,10" width="10" height="10" />
+				<invisible />
+				<script>
+					function recalc()
+						local wds = window.getDatabaseNode().getChild("totalwounds").getValue();
+						setValue(wds);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("totalwounds");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+					end
+				</script>
+			</basicnumber>
+			
+			<!-- Movement -->
+			<buttoncontrol name="overridemovementvalues">
+				<anchored position="insidetopleft" offset="0,280" width="15" height="15" />
+				<state icon="button_edit" tooltip="Override Calculated Values" />
+				<state icon="button_edit_down" tooltip="Exit Override" />
+				<script>
+					function onButtonPress()
+						if getValue() == 1 then
+							window.halfmoveoverride.setVisible(true);
+							window.fullmoveoverride.setVisible(true);
+							window.chargeoverride.setVisible(true);
+							window.runoverride.setVisible(true);
+							window.baseleapoverride.setVisible(true);
+							window.basejumpoverride.setVisible(true);
+						else
+							window.halfmoveoverride.setVisible(false);
+							window.fullmoveoverride.setVisible(false);
+							window.chargeoverride.setVisible(false);
+							window.runoverride.setVisible(false);
+							window.baseleapoverride.setVisible(false);
+							window.basejumpoverride.setVisible(false);
+						end
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="hmove_label">
+				<anchored position="insidetopleft" offset="25,280" />
+				<static>Half Move</static>
+			</label>
+
+			<basicnumber name="halfmove" source="attributes.halfmove">
+				<anchored position="insidetopleft" offset="40,325" width="30" height="15" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityAgility = tostring(window.getDatabaseNode().getChild("abilities.agility").getValue());
+						setValue(math.floor(abilityAgility/10));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.agility");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<stringcontrol name="halfmovestring" source="attributes.halfmovestring">
+				<anchored to="hmove_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lHalfMove = tostring(window.getDatabaseNode().getChild("attributes.halfmove").getValue());
+						if window.halfmoveoverride.getValue() ~= 0 then
+							lHalfMove = window.halfmoveoverride.getValue();
+						end
+						setValue(tostring(lHalfMove) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="halfmoveoverride">
+				<anchored to="halfmovestring" position="belowleft" offset="10,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lHalfMove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						if getValue() ~= 0 then
+							lHalfMove = getValue();
+						end
+						window.halfmovestring.setValue(tostring(lHalfMove) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<label name="fmove_label">
+				<anchored to="hmove_label" position="right" offset="40,0" />
+				<static>Full Move</static>
+			</label>
+			
+			<basicnumber name="fullmove" source="attributes.fullmove">
+				<anchored to="halfmove" position="right" offset="30,0" width="30" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*2);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<stringcontrol name="fullmovestring" source="attributes.fullmovestring">
+				<anchored to="fmove_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lFullMove = tostring(window.getDatabaseNode().getChild("attributes.fullmove").getValue());
+						if window.fullmoveoverride.getValue() ~= 0 then
+							lFullMove = window.fullmoveoverride.getValue();
+						end
+						setValue(tostring(lFullMove) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.fullmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="fullmoveoverride">
+				<anchored to="fullmovestring" position="belowleft" offset="10,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lFullMove = window.getDatabaseNode().getChild("attributes.fullmove").getValue();
+						if getValue() ~= 0 then
+							lFullMove = getValue();
+						end
+						window.fullmovestring.setValue(tostring(lFullMove) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<label name="charge_label">
+				<anchored to="hmove_label" position="below" offset="-5,40" />
+				<static>Charge</static>
+			</label>
+			
+			<basicnumber name="charge" source="attributes.charge">
+				<anchored to="fullmove" position="right" offset="20,0" width="30"  />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*3);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<stringcontrol name="chargestring" source="attributes.chargestring">
+				<anchored to="charge_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lCharge = tostring(window.getDatabaseNode().getChild("attributes.charge").getValue());
+						if window.chargeoverride.getValue() ~= 0 then
+							lCharge = window.chargeoverride.getValue();
+						end
+						setValue(tostring(lCharge) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.charge");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="chargeoverride">
+				<anchored to="chargestring" position="belowleft" offset="10,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lCharge = window.getDatabaseNode().getChild("attributes.charge").getValue();
+						if getValue() ~= 0 then
+							lCharge = getValue();
+						end
+						window.chargestring.setValue(tostring(lCharge) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<label name="run_label">
+				<anchored to="charge_label" position="right" offset="40,0" width="50" />
+				<center />
+				<static>Run</static>
+			</label>
+			
+			<basicnumber name="run" source="attributes.run">
+				<anchored to="charge" position="right" offset="20,0" width="30" />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local halfmove = window.getDatabaseNode().getChild("attributes.halfmove").getValue();
+						setValue(halfmove*6);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.halfmove");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<stringcontrol name="runstring" source="attributes.runstring">
+				<anchored to="run_label" position="below" offset="0,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lRun = tostring(window.getDatabaseNode().getChild("attributes.run").getValue());
+						if window.runoverride.getValue() ~= 0 then
+							lRun = window.runoverride.getValue();
+						end
+						setValue(tostring(lRun) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("attributes.run");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="runoverride">
+				<anchored to="runstring" position="belowleft" offset="10,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local lRun = window.getDatabaseNode().getChild("attributes.run").getValue();
+						if getValue() ~= 0 then
+							lRun = getValue();
+						end
+						window.runstring.setValue(tostring(lRun) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<label name="baseleap_label">
+				<anchored position="insidetopleft" offset="210,330" />
+				<static>Base Leap:</static>
+			</label>
+			
+			<stringcontrol name="baseleap">
+				<anchored to="baseleap_label" position="right" offset="5,0" />
+				<readonly />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseLeap = math.floor(abilityStr/10);
+						if window.baseleapoverride.getValue() ~= 0 then
+							lBaseLeap = window.baseleapoverride.getValue();
+						end
+						setValue(tostring(lBaseLeap) .. " m");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="baseleapoverride">
+				<anchored to="baseleap" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseLeap = math.floor(abilityStr/10);
+						if getValue() ~= 0 then
+							lBaseLeap = getValue();
+						end
+						window.baseleap.setValue(tostring(lBaseLeap) .. " m");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<label name="basejump_label">
+				<anchored to="baseleap" position="right" offset="18,0" />
+				<static>Base Jump:</static>
+			</label>
+			
+			<stringcontrol name="basejump">
+				<anchored to="basejump_label" position="right" offset="5,0" />
+				<readonly />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseJump = math.floor(abilityStr/10)*20;
+						if window.basejumpoverride.getValue() ~= 0 then
+							lBaseJump = window.basejumpoverride.getValue();
+						end
+						setValue(tostring(lBaseJump) .. " cm");
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.strength");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			<basicnumber name="basejumpoverride">
+				<anchored to="basejump" position="belowleft" offset="0,0" width="30" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityStr = tostring(window.getDatabaseNode().getChild("abilities.strength").getValue());
+						local lBaseJump = math.floor(abilityStr/10)*20;
+						if getValue() ~= 0 then
+							lBaseJump = getValue();
+						end
+						window.basejump.setValue(tostring(lBaseJump) .. " cm");
+					end
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			
+			<string_labeled name="handedness">
+				<anchored position="insidetopleft" offset="310,360" height="20" width="100" />
+				<label>handedness</label>
+			</string_labeled>
+        
+
+			<!-- Hit Location -->
+			<genericcontrol name="icon_armordoll">
+				<anchored position="insidetopleft" offset="190,60" width="235" height="267" />
+				<icon>misc_armordoll</icon>
+            
+			</genericcontrol>
+            <basicnumber name="headhitnumber" source="armor.head">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="97,36" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="rightarmhitnumber" source="armor.ra">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="17,80" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="leftarmhitnumber" source="armor.la">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="182,80" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="bodyhitnumber" source="armor.body">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="97,127" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="rightleghitnumber" source="armor.rl">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="42,209" width="12" height="20" />
+			</basicnumber>
+			<basicnumber name="leftleghitnumber" source="armor.ll">
+				<anchored to="icon_armordoll" position="insidetopleft" offset="158,209" width="12" height="20" />
+			</basicnumber>
+            
+            			<stringcontrol name="headtotalarmorstring" source="armor.headtotalarmorstring">
+				<anchored to="headhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lHeadArmor = window.getDatabaseNode().getChild("armor.head").getValue();
+						local lHeadTotalArmor = 0;
+						lHeadTotalArmor = math.floor(lToughnessBonus) + tonumber(lHeadArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lHeadTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.head");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			
+			<stringcontrol name="rightarmtotalarmorstring" source="armor.rightarmtotalarmorstring">
+				<anchored to="rightarmhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lRightArmArmor = window.getDatabaseNode().getChild("armor.ra").getValue();
+						local lRightArmTotalArmor = 0;
+						lRightArmTotalArmor = math.floor(lToughnessBonus) + tonumber(lRightArmArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lRightArmTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.ra");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>
+			
+			<stringcontrol name="leftarmtotalarmorstring" source="armor.leftarmtotalarmorstring">
+				<anchored to="leftarmhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lBodyArmor = window.getDatabaseNode().getChild("armor.la").getValue();
+						local lBodyTotalArmor = 0;
+						lBodyTotalArmor = math.floor(lToughnessBonus) + tonumber(lBodyArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lBodyTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.la");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>				
+			
+			<stringcontrol name="bodytotalarmorstring" source="armor.bodytotalarmorstring">
+				<anchored to="bodyhitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lLeftArmArmor = window.getDatabaseNode().getChild("armor.body").getValue();
+						local lLeftArmTotalArmor = 0;
+						lLeftArmTotalArmor = math.floor(lToughnessBonus) + tonumber(lLeftArmArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lLeftArmTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.body");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>	
+			
+			<stringcontrol name="rightlegtotalarmorstring" source="armor.rightlegtotalarmorstring">
+				<anchored to="rightleghitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lRightLegArmor = window.getDatabaseNode().getChild("armor.rl").getValue();
+						local lRightLegTotalArmor = 0;
+						lRightLegTotalArmor = math.floor(lToughnessBonus) + tonumber(lRightLegArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lRightLegTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.rl");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>	
+
+			<stringcontrol name="leftlegtotalarmorstring" source="armor.leftlegtotalarmorstring">
+				<anchored to="leftleghitnumber" position="right" offset="5,0"  />
+				<center />
+				<readonly />
+				<script>
+					function recalc()
+						local lToughnessBonus = math.floor(tonumber(window.getDatabaseNode().getChild("abilities.toughness").getValue())/10);
+						local lLeftLegArmor = window.getDatabaseNode().getChild("armor.ll").getValue();
+						local lLeftLegTotalArmor = 0;
+						lLeftLegTotalArmor = math.floor(lToughnessBonus) + tonumber(lLeftLegArmor);
+						setValue('+'.. tostring(lToughnessBonus) .. '=' .. tostring(lLeftLegTotalArmor));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("armor.ll");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						defnode = window.getDatabaseNode().getChild("abilities.toughness");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</stringcontrol>		
+
+            
+            <basicnumber name="cover" source="cover">
+				<anchored position="insidetopleft" offset="194,55" width="30" height="20" />
+			</basicnumber>
+			<label name="coverlabel">
+				<anchored to="cover" position="below" offset="1,1" />
+				<static>Cover</static>
+			</label>
+
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="npc_skills">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_skills.lua" />
+		<sheetdata>
+                    <!-- Weapon Skill -->
+			<number_attributeroll name="weapon" source ="abilities.weapon">
+				<anchored position="insidetopleft" offset="7,15" width="30" height="20" />
+				<statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wslabel">
+				<anchored to="weapon" offset="0,2" />
+				<static>WS</static>
+				<tooltip text="Weapon Skill" />
+			</label_charfieldtop>
+			
+			<!-- Ballistic Skill -->
+			<number_attributeroll name="ballistic" source ="abilities.ballistic">
+				<anchored to="weapon" position="right" offset="18,0" width="30" />
+				<statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="bslabel">
+				<anchored to="ballistic" offset="0,2" />
+				<static>BS</static>
+				<tooltip text="Ballistic Skill" />
+			</label_charfieldtop>
+			
+			<!-- Strength -->
+			<number_attributeroll name="strength" source="abilities.strength">
+				<anchored to="ballistic" position="right" offset="18,0" width="30" />
+				<statname>Strength</statname>
+				<stat>strength</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="slabel">
+				<anchored to="strength" offset="0,2" />
+				<static>S</static>
+				<tooltip text="Strength" />
+			</label_charfieldtop>
+			
+			<!-- Toughness -->
+			<number_attributeroll name="toughness" source="abilities.toughness">
+				<anchored to="strength" position="right" offset="18,0" width="30" />
+				<statname>Toughness</statname>
+				<stat>toughness</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="tlabel">
+				<anchored to="toughness" offset="0,2" />
+				<static>T</static>
+				<tooltip text="Toughness" />
+			</label_charfieldtop>
+			
+			<!-- Agility -->
+			<number_attributeroll name="agility" source="abilities.agility">
+				<anchored to="toughness" position="right" offset="18,0" width="30" />
+				<statname>Agility</statname>
+				<stat>agility</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="aglabel">
+				<anchored to="agility" offset="0,2" />
+				<static>Ag</static>
+				<tooltip text="Agility" />
+			</label_charfieldtop>
+			
+			<!-- Intelligence -->
+			<number_attributeroll name="intelligence" source="abilities.intelligence">
+				<anchored to="agility" position="right" offset="18,0" width="30" />
+				<statname>Intelligence</statname>
+				<stat>intelligence</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="intlabel">
+				<anchored to="intelligence" offset="0,2" />
+				<static>Int</static>
+				<tooltip text="Intelligence" />
+			</label_charfieldtop>
+			
+			<!-- Perception -->
+			<number_attributeroll name="perception" source="abilities.perception">
+				<anchored to="intelligence" position="right" offset="18,0" width="30" />
+				<statname>Perception</statname>
+				<stat>perception</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="perlabel">
+				<anchored to="perception" offset="0,2" />
+				<static>Per</static>
+				<tooltip text="Perception" />
+			</label_charfieldtop>
+
+			<!-- Willpower -->
+			<number_attributeroll name="willpower" source="abilities.willpower">
+				<anchored to="perception" position="right" offset="18,0" width="30" />
+				<statname>Willpower</statname>
+				<stat>willpower</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="wplabel">
+				<anchored to="willpower" offset="0,2" />
+				<static>WP</static>
+				<tooltip text="Will Power" />
+			</label_charfieldtop>
+			
+			<!-- Fellowship -->
+			<number_attributeroll name="fellowship" source="abilities.fellowship">
+				<anchored to="willpower" position="right" offset="18,0" width="30" />
+				<statname>Fellowship</statname>
+				<stat>fellowship</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="fellabel">
+				<anchored to="fellowship" offset="0,2" />
+				<static>Fel</static>
+				<tooltip text="Fellowship" />
+			</label_charfieldtop>
+			
+            <!-- Skills -->
+			<label name="npcskill_label">
+				<anchored position="insidetopleft" offset="40,53" />
+				<static>Skill</static>
+			</label>
+			<label name="npctotal_label">
+				<anchored position="insidetopleft" offset="203,53" />
+				<static>Total</static>
+			</label>
+			<list_text name="npcskills">
+				<anchored position="insidetopleft" offset="5,70" width="250" height="305" />
+				<datasource>.npcskills</datasource>
+				<class>npc_skill_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+					
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referenceskills" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+									win.name.setTooltipText(DB.getValue(nodeSource, "basicoradvanced", "") .. " skill; " ..
+												DB.getValue(nodeSource, "attribute", ""));
+								end
+							end
+
+							return true;
+						end
+					end
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npcskills" />
+				<target>npcskills</target>
+			</scrollbar>
+			<button_iedit name="npcskills_iedit">
+				<anchored to="npcskills" position="aboveleft" offset="-5,0" />
+				<target>npcskills</target>
+			</button_iedit>
+			<button_iadd name="npcskills_iadd">
+				<anchored to="npcskills_iedit" position="righthigh" offset="2,0" />
+				<target>npcskills</target>
+			</button_iadd>
+			
+			<!-- Talents -->
+			<label name="npctalent_label">
+				<anchored position="insidetopleft" offset="305,53" />
+				<static>Talent/Trait</static>
+			</label>
+			<list_text name="npctalents">
+				<anchored position="insidetopleft" offset="260,70" width="170" height="305" />
+				<datasource>.npctalents</datasource>
+				<class>talent_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+					
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencetalent" or draginfo.getShortcutData() == "referencetrait" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npctalents" />
+				<target>npctalents</target>
+			</scrollbar>
+			<button_iedit name="npctalents_iedit">
+				<anchored to="npctalents" position="aboveleft" offset="0,0" />
+				<target>npctalents</target>
+			</button_iedit>
+			<button_iadd name="npctalents_iadd">
+				<anchored to="npctalents_iedit" position="righthigh" offset="2,0" />
+				<target>npctalents</target>
+			</button_iadd>
+			
+			
+			
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="npc_gear">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_gear.lua" />
+		<sheetdata>
+			<!-- Weapons -->
+			<label name="weapon_label">
+				<anchored position="insidetopleft" offset="185,2" />
+				<static>WEAPONS</static>
+			</label>
+			<label name="weaponname_label">
+				<anchored position="insidetopleft" offset="5,24" />
+				<static>Weapon Name</static>
+			</label>
+			<label name="weapondamage_label">
+				<anchored position="insidetopleft" offset="115,24" />
+				<static>Dmg</static>
+			</label>
+            <label name="weaponpen_label">
+				<anchored position="insidetopleft" offset="168,24" />
+				<static>Pen</static>
+			</label>
+            <label name="weaponpen_label">
+				<anchored position="insidetopleft" offset="200,24" />
+				<static>Class</static>
+			</label>
+			<label name="weaponrof_label">
+				<anchored position="insidetopleft" offset="246,24" />
+				<static>RoF</static>
+			</label>
+			<label name="weaponrange_label">
+				<anchored position="insidetopleft" offset="284,24" />
+				<static>Rng</static>
+			</label>
+			<label name="weaponreload_label">
+				<anchored position="insidetopleft" offset="316,24" />
+				<static>Reload</static>
+			</label>
+            <label name="weaponclip_label">
+				<anchored position="insidetopleft" offset="364,24" />
+				<static>Clip</static>
+			</label>
+			
+			<list_text name="npcweapon">
+				<anchored position="insidetopleft" offset="0,40" width="410" height="129" />
+				<datasource>.weaponlist</datasource>
+				<class>npc_weapon</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+						
+						local sDropClass, sDropNodeName = draginfo.getShortcutData();
+						if draginfo.isType("shortcut") then
+							if StringManager.contains({"item","referencerangedweapons", "referencemeleeweapons"}, sDropClass) or 
+								draginfo.getShortcutData() == "referencerangedweapons" or 
+								draginfo.getShortcutData() == "referencemeleeweapons" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.damagedice.setValue(DB.getValue(nodeSource, "damagedice", ""));
+									win.damagetype.setValue(DB.getValue(nodeSource, "damagetype", ""));
+									win.damagebonus.setValue(DB.getValue(nodeSource, "damagebonus", ""));
+									if draginfo.getShortcutData() == "referencerangedweapons" then
+									
+										win.rof.setValue(DB.getValue(nodeSource, "rof", ""));
+										win.reload.setValue(DB.getValue(nodeSource, "reload", ""));
+										win.clipsize.setValue(DB.getValue(nodeSource, "clipsize", ""));
+									end
+									
+									win.range.setValue(DB.getValue(nodeSource, "range", ""));
+									win.pen.setValue(DB.getValue(nodeSource, "pen", ""));
+									win.class.setValue(DB.getValue(nodeSource, "class", ""));
+									win.special.setValue(DB.getValue(nodeSource, "special", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npcweapon" />
+				<target>npcweapon</target>
+			</scrollbar>
+			<button_iedit name="npcweapon_iedit">
+				<anchored to="npcweapon" position="aboveleft" offset="0,20" />
+				<target>npcweapon</target>
+			</button_iedit>
+			<button_iadd name="npcweapon_iadd">
+				<anchored to="npcweapon_iedit" position="righthigh" offset="2,0" />
+				<target>npcweapon</target>
+			</button_iadd>	
+			
+			<!-- Ammo -->
+			<label name="ammotypes_label">
+				<anchored position="insidetopleft" offset="73,185" />
+				<static>AMMUNITION</static>
+			</label>
+			<list_text name="npcammotypes">
+				<anchored position="insidetopleft" offset="5,205" width="195" height="185" />
+				<datasource>.npcammotypes</datasource>
+				<class>npcammotypes_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+					
+						local sDropClass, sDropNodeName = draginfo.getShortcutData();
+						
+						if draginfo.isType("shortcut") then
+							if StringManager.contains({"item","referenceequipment"}, sDropClass) or 
+								draginfo.getShortcutData() == "referenceammo" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npcammotypes" />
+				<target>npcammotypes</target>
+			</scrollbar>
+			<button_iedit name="npcammotypes_iedit">
+				<anchored to="npcammotypes" position="aboveleft" offset="0,0" />
+				<target>npcammotypes</target>
+			</button_iedit>
+			<button_iadd name="npcammotypes_iadd">
+				<anchored to="npcammotypes_iedit" position="righthigh" offset="2,0" />
+				<target>npcammotypes</target>
+			</button_iadd>
+			
+			<!-- Gear -->
+			<label name="gear_label">
+				<anchored position="insidetopleft" offset="300,185" />
+				<static>GEAR</static>
+			</label>
+			<list_text name="npcgear">
+				<anchored position="insidetopleft" offset="215,205" width="195" height="185" />
+				<datasource>.npcgear</datasource>
+				<class>npcgear_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+						
+						local sDropClass, sDropNodeName = draginfo.getShortcutData();
+						
+						if draginfo.isType("shortcut") then
+							if StringManager.contains({"item","referenceequipment"}, sDropClass) or 
+								draginfo.getShortcutData() == "referenceequipment" or 
+								draginfo.getShortcutData() == "referencearmor" or
+								draginfo.getShortcutData() == "referenceweaponupgrade" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npcgear" />
+				<target>npcgear</target>
+			</scrollbar>
+			<button_iedit name="npcgear_iedit">
+				<anchored to="npcgear" position="aboveleft" offset="0,0" />
+				<target>npcgear</target>
+			</button_iedit>
+			<button_iadd name="npcgear_iadd">
+				<anchored to="npcgear_iedit" position="righthigh" offset="2,0" />
+				<target>npcgear</target>
+			</button_iadd>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="npc_psychic">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_psychic.lua" />
+		<sheetdata>
+			
+			<label name="powerlevel_label">
+				<anchored position="insidetopleft" offset="20,5" />
+				<static>Power Level:</static>
+			</label>
+			<basicnumber name="npcpowerlevel">
+				<anchored to="powerlevel_label" position="right" offset="10,0" width="30" />
+				<script>
+					function onInit()
+						hideRollButton();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 6 then
+							setValue(6);
+						end
+						hideRollButton();
+					end
+					function hideRollButton()
+						if getValue() == 0 then
+							window.npcpsyroll.setVisible(false);
+							window.powerlevellevelsused_label.setVisible(false);
+						else
+							window.npcpsyroll.setVisible(true);
+							window.powerlevellevelsused_label.setVisible(true);
+						end
+					end
+				</script>
+			</basicnumber>
+			
+			<basicnumber name="psy_npcwpbonus">
+				<anchored to="powerlevel_label" position="right" offset="3,0" width="5"  />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityWp = window.getDatabaseNode().getChild("abilities.willpower").getValue();
+						setValue(math.floor(abilityWp/10));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.willpower");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<basicnumber name="psy_npcpsyusedinvcounter">
+				<anchored to="powerlevel_label" position="right" offset="6,0" width="5"  />
+				<readonly />
+				<nodrag />
+				<invisible />
+			</basicnumber>
+			
+			<label name="powerlevellevelsused_label">
+				<anchored to="npcpowerlevel" position="right" offset="15,0" />
+				<static>Power Levels Used for Roll:</static>
+			</label>
+			<genericcontrol name="npcpsypowerlevelsused">
+				<anchored position="insidetopleft" offset="305,5" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>npcpowerlevel</maxwounds>
+				<script file="campaign/scripts/counter_npcpsypowerused.lua" />
+			</genericcontrol>
+			
+			<button_psypowerroll name="npcpsyroll">
+				<anchored position="insidetopleft" offset="370,4" />
+				<modifier>psy_npcpsyusedinvcounter</modifier>
+				<wpbonus>psy_npcwpbonus</wpbonus>
+				<tooltip text="Roll a Psychic Power level check; roll for a psychic phenomenon for each 9 die result" />
+			</button_psypowerroll>
+			
+
+			<label name="psychic_label">
+				<anchored position="insidetopleft" offset="170,40" />
+				<static>PSYCHIC POWERS</static>
+			</label>
+			<label name="ppname_label">
+				<anchored position="insidetopleft" offset="45,62" />
+				<static>Name</static>
+			</label>
+			<label name="ppthreshold_label">
+				<anchored position="insidetopleft" offset="133,62" />
+				<static>Thresh</static>
+			</label>
+			<label name="ppfocustime_label">
+				<anchored position="insidetopleft" offset="182,62" />
+				<static>Focus Time</static>
+			</label>
+			<label name="pprange_label">
+				<anchored position="insidetopleft" offset="292,62" />
+				<static>Range</static>
+			</label>
+			<label name="ppsustain_label">
+				<anchored position="insidetopleft" offset="365,62" />
+				<static>S</static>
+				<tooltip text="Sustain?" />
+			</label>
+			<label name="ppoverbleed_label">
+				<anchored position="insidetopleft" offset="382,62" />
+				<static>O</static>
+				<tooltip text="Overbleed?" />
+			</label>
+
+			<list_text name="npcpsychic">
+				<anchored position="insidetopleft" offset="5,80" width="410" height="300" />
+				<datasource>.npcpsychic</datasource>
+				<class>npcpsychic_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if isReadOnly() then
+							return;
+						end
+					
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencepsychic" then
+								local nodeSource = draginfo.getDatabaseNode();
+								
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.range.setValue(DB.getValue(nodeSource, "range", ""));
+									win.focustime.setValue(DB.getValue(nodeSource, "focustime", ""));
+									win.threshold.setValue(tonumber(DB.getValue(nodeSource, "threshold", "")));
+									if DB.getValue(nodeSource, "sustained", "") == "Yes" then
+										win.sustain.setValue(1);
+									else
+										win.sustain.setValue(0);
+									end
+									if DB.getValue(nodeSource, "overbleedyn", "") == "Yes" then
+										win.overbleed.setValue(1);
+									else
+										win.overbleed.setValue(0);
+									end
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="npcpsychic" />
+				<target>npcpsychic</target>
+			</scrollbar>
+			<button_iedit name="npcpsychic_iedit">
+				<anchored to="npcpsychic" position="aboveleft" offset="0,20" />
+				<target>npcpsychic</target>
+			</button_iedit>
+			<button_iadd name="npcpsychic_iadd">
+				<anchored to="npcpsychic_iedit" position="righthigh" offset="2,0" />
+				<target>npcpsychic</target>
+			</button_iadd>
+
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="npc_notes">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_notes.lua" />
+		<sheetdata>
+			
+			<anchor_column name="columnanchor" />
+			<ft_columnh name="text" />
+
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Skills List Template -->
+	<windowclass name="npc_skill_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_skill</class>
+			</linkfield>
+			
+			<button_checkbox name="skilltrained">
+				<anchored height="12" width="12">
+					<top offset="3" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="0" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Trained Skill" />
+				<tooltip text="Trained Skill" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+            <basicnumber name="skill_total">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+                <invisible />
+                <script>
+                    function getTotal()
+                        local nAB = tonumber(window.stat.getValue());
+                        local nAdv1 = window.skillAdv1.getValue();
+                        local nAdv2 = window.skillAdv2.getValue();
+                        local nAdv3 = window.skillAdv3.getValue();
+                        local nAdv4 = window.skillAdv4.getValue();
+                        local nTR = window.skilltrained.getValue();
+                        local nST = 0;
+                    
+                        if nAdv1  == 1 then
+                            nAdv1 = 10;
+                        else
+                            nAdv1 = 0;
+                        end
+                    
+                        if nAdv2  == 1 then
+                            nAdv2 = 10;
+                        else
+                            nAdv2 = 0;
+                        end
+                        if nAdv3  == 1 then
+                            nAdv3 = 10;
+                        else
+                            nAdv3 = 0;
+                        end
+                        if nAdv4  == 1 then
+                            nAdv4 = 10;
+                        else
+                            nAdv4 = 0;
+                        end
+                    
+                        if nTR == 1 then
+                            nST = nAB + nAdv1 + nAdv2 + nAdv3 + nAdv4;
+                        else
+                            nST = nAB - 20;						
+                        end
+						
+                        if nST &lt;= 0 then 
+                            nST = 1;
+                        end
+                        
+                        setValue(nST);
+                    end
+                </script>
+			</basicnumber>
+            <number_skillroll name="skillroll">
+				<anchored width="25">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <readonly />
+				<skillname>name</skillname>
+				<skillt>skillroll</skillt>
+			</number_skillroll>
+            
+           <number_charskillfield_static name="stat">
+				<anchored width="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<script>
+                    function updatevalue()
+                    local sVal = 0;
+                    local sStatin = window.statname.getValue(labelres);
+                    
+                        if sStatin == "Ws" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.weapon",0);
+                        end
+                        if sStatin == "Bs" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.ballistic",0);
+                        end
+                        if sStatin == "Str" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.strength",0);
+                        end
+                        if sStatin == "Tn" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.toughness",0);
+                        end
+                        if sStatin == "Ag" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.agility",0);
+                        end
+                        if sStatin == "Int" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.intelligence",0);
+                        end
+                        if sStatin == "Per" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.perception",0);
+                        end
+                        if sStatin == "Wp" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.willpower",0);
+                        end
+                        if sStatin == "Fel" then
+                            sVal = DB.getValue(window.getDatabaseNode(), "...abilities.fellowship",0);
+                        end    
+                        
+                    setValue(sVal);    
+                        
+                    end
+                    
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+		
+				</script>
+			</number_charskillfield_static>
+			<cycler_charskillability name="statname">
+				<anchored width="25" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <script>
+                    function findLabel()
+                        return lableres;
+                    end
+                
+                    function onValueChanged()
+                        window.stat.updatevalue();
+                    end
+                </script>
+			</cycler_charskillability>
+
+            <button_checkbox name="skillAdv4">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Mastered" />
+				<tooltip text="Mastered" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+            <button_checkbox name="skillAdv3">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="Talented/Other" />
+				<tooltip text="Talented/Other" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+            <button_checkbox name="skillAdv2">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+20 Advancement" />
+				<tooltip text="+20 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>
+			</button_checkbox>
+			<button_checkbox name="skillAdv1">
+				<anchored width="12" height="12">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<tooltip text="+10 Advancement" />
+				<tooltip text="+10 Advancement" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.getTotal();
+                    end
+                </script>                
+			</button_checkbox>
+   
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+			
+		</sheetdata>
+	</windowclass>
+
+	<!-- Talent List Template -->
+	<windowclass name="talent_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				updateRO();
+			end
+			function updateRO()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<readonly />
+				<class>ref_talent</class>
+			</linkfield>
+
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-5" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+			
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Weapons List Template -->
+	<windowclass name="npc_weapon">
+		<margins control="0,0,0,2" />
+        <script file="campaign/scripts/weapon_npcutility.lua" />
+		<script>
+			function onInit()
+				updateRO();
+			end
+			function updateRO()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+				<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<string_textlistitem name="name">
+				<anchored width="85" height="15">
+					<top offset="4" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="6" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+			</string_textlistitem>
+			
+            <string_textlistitem name="damagedice" source="damagedice">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="name" anchor="right" relation="relative" offset="12" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+				<rollable />
+                <script>
+                function onInit()
+                    showDieGraphic();
+                end
+					
+                function onValueChanged()
+                    showDieGraphic();
+                end
+					
+                function showDieGraphic()
+                    if StringManager.isDiceString(getValue()) then
+                        w = addBitmapWidget("field_rollable");
+                        w.setPosition("bottomleft", -2, -3);
+                            setHoverCursor("hand");
+                    else
+                            setHoverCursor("pointer");
+                    end
+                end
+
+                function onMenuSelection(selection)
+                    if selection == 4 then
+                    reset();
+                    end
+                end
+
+                function action(draginfo)
+                    local rActor, rDamage = CharManager.getWeaponDamageRollStructures(window.getDatabaseNode());
+                  
+                ActionDamage.performRoll(draginfo, rActor, rDamage);
+                    return true;
+                end
+
+                function onDragStart(button, x, y, draginfo)
+                    return action(draginfo);
+                end
+
+                function onDoubleClick(x,y)
+                    return action();
+                end		
+                </script>
+			</string_textlistitem>
+            
+            <string_textlistitem  name="damagebonus" source="damagebonus">
+				<anchored width="10" height="15">
+					<top offset="4" />
+					<left parent="damagedice" anchor="right" relation="relative" offset="1" />
+				</anchored>
+                <default>0</default>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem >
+			
+			<string_textlistitem name="damagetype" source="damagetype">
+				<anchored width="10" height="15">
+					<top offset="4" />
+					<left parent="damagebonus" anchor="right" relation="relative" offset="4" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <string_textlistitem name="pen">
+				<anchored width="20" height="15">
+					<top offset="4" />
+					<left parent="damagetype" anchor="right"  offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="class" source="class">
+				<anchored width="40" height="15">
+					<top offset="4" />
+					<left parent="pen" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+                <default>Basic</default>
+                <script>
+					function onValueChanged(values)
+                        window.location.addLocation(values);
+                        window.update();
+                    end
+				</script>
+			</string_textlistitem>
+			
+			<string_textlistitem name="rof">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="class" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="range">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="rof" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<string_textlistitem name="reload">
+				<anchored width="35" height="15">
+					<top offset="4" />
+					<left parent="range" anchor="right" relation="relative" offset="5" />
+				</anchored>
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+			
+			<number_charinv name="clipsize">
+				<anchored width="22" height="15">
+					<top offset="4" />
+					<left parent="reload" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 50 then
+							setValue(50);
+						end
+					end
+				</script>
+			</number_charinv>
+            
+            <button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="4" />
+                    <right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="15">
+					<top offset="4" />
+                    <right parent="rightanchor" anchor="left" relation="relative" offset="-1" />
+				</anchored>
+				<readonly />
+				<class>ref_weapon</class>
+			</linkfield>
+			
+            <label name="attack_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,25" />
+				<static>->> Atk:</static>
+			</label>
+            
+            <label name="melee_label">
+				<anchored to="attack_label" position="right" relation="relative" offset="8,0"/>
+				<static>WS:</static>
+			</label>
+            <basicnumber name="meleeattack">
+                <anchored to="melee_label" position="right" relation="relative" offset="8,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setWS();
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+            </basicnumber>
+            <basicnumber name="attack_meleetotal" source="attack_meleetotal">
+                <anchored to="melee_label" position="right" relation="relative" offset="11,0" width="25" />
+                <nodrag />
+                <script>
+                function sVal()
+					local nCurrentScore = window.meleeattack.getValue();
+                    local B = window.bestcheck.getValue();
+                    local G = window.goodcheck.getValue();
+                    local P = window.poorcheck.getValue();
+                        
+                        if B == 1 and G == 0 and P == 0 then
+                            setValue(nCurrentScore + 10);
+                        elseif B == 0 and G == 1 and P == 0 then
+                            setValue(nCurrentScore + 5);
+                        elseif B == 0 and G == 0 and P == 1 then
+                            setValue(nCurrentScore - 10);
+                        else
+                            setValue(nCurrentScore);
+                        end
+                end
+                
+                function onValueChanged()
+                    window.meleeattack.onInit();
+                end
+                </script>
+            </basicnumber>
+            <number_meleeattackroll name="meleeattackroll" source="attack.weapon">
+                <anchored to="melee_label" position="right" relation="relative" offset="11,0" width="25" />
+                <nodrag />
+                <statname>Weapon Skill</statname>
+				<stat>weapon</stat>
+            </number_meleeattackroll>
+            
+            <label name="range_label">
+				<anchored to="attack_label" position="right" relation="relative" offset="8,0"/>
+				<static>BS:</static>
+			</label>
+            <basicnumber name="rangedattack" >
+                <anchored to="range_label" position="right" relation="relative" offset="8,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setBS();
+                    window.attack_rangedtotal.sVal();
+                end
+                </script>
+            </basicnumber>
+            <basicnumber name="attack_rangedtotal" source="attack_rangedtotal">
+               <anchored to="range_label" position="right" relation="relative" offset="11,0" width="25" />
+               <nodrag/>
+                <statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+                <script>
+                function sVal()
+					local nCurrentScore = window.rangedattack.getValue();
+                        
+                        if window.sights.getValue() == 1 then
+                            setValue(nCurrentScore + 10);
+                        else
+                            setValue(nCurrentScore);
+                        end
+                end
+                
+                function onValueChanged()
+                    window.rangedattack.onInit();
+                end
+                </script>
+            </basicnumber>
+            <number_rangedattackroll name="rangedattackroll" source="attack.ballistic">
+               <anchored to="range_label" position="right" relation="relative" offset="11,0" width="25" />
+               <rollable />
+               <nodrag/>
+                <statname>Ballistic Skill</statname>
+				<stat>ballistic</stat>
+            </number_rangedattackroll>
+            
+            <label name="location_label">
+                <anchored to="leftanchor" position="insidetopleft" offset="135,25" />
+				<static>->> H. Loc:</static>
+			</label>
+            <simplestring name="location" source ="location">
+                <anchored to="location_label" position="right" relation="relative" offset="5,0" />
+                <nodrag />
+                <invisible />
+                <script>
+                function addLocation(values)
+                    local sLocation = tostring(window.locationcheck.getValue(values));
+                    
+                    if sLocation == "Head" then
+                        setValue("HD");
+                  
+                    elseif sLocation == "R Arm" then
+                        setValue("RA");
+                 
+                    elseif sLocation == "L Arm" then
+                        setValue("LA");
+                 
+                    elseif sLocation == "Body" then
+                        setValue("BD");
+                  
+                    elseif sLocation == "R Leg" then
+                        setValue("RL");
+                   
+                    elseif sLocation == "L Leg" then
+                        setValue("LL");
+                  
+                    else 
+                        setValue("NA");
+                    end
+                end
+                </script>
+            </simplestring>
+            <cycler_hitlocation name="locationcheck">
+                <anchored to="location_label" position="right" width="38" relation="relative" offset="10,0" />
+                <script>
+					function onValueChanged(values)
+                        window.location.addLocation(values);
+                    end
+				</script>
+			</cycler_hitlocation>
+            <label name="l_cover">
+				<anchored to="locationcheck" position="right" relation="relative" offset="15,0" />
+				<static>->> Cover</static>
+			</label>
+            <button_checkbox name="cover">
+                <anchored to="l_cover" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Cover" />
+				<tooltip text="Cover" />
+			</button_checkbox>
+            
+            <label name="parry_label">
+				<anchored to="cover" position="right" relation="relative" offset="12,0" width="30"/>
+				<static>Parry:</static>
+			</label>
+            
+            <number_parryroll name="parryroll">
+               <anchored to="parry_label" position="right" relation="relative" offset="13,0" width="25" />
+                <rollable />
+                <nodrag />
+            </number_parryroll>
+            <basicnumber name="skill_total" source="skill_total">
+               <anchored to="parry_label" position="right" relation="relative" offset="13,0" width="25" />
+                <rollable />
+                <nodrag />
+                <invisible />
+                <script>
+                function sVal()
+					local nCurrentScore = window.weaponlistparry.getValue();
+                    local B = window.balancedcheck.getValue();
+                    local uB = window.unbalanced.getValue();
+                        
+                        if uB == 1 and B == 0 then
+                            setValue(nCurrentScore - 10);
+                        elseif B == 1 and uB == 0 then
+                            setValue(nCurrentScore + 10);
+                        else 
+                            setValue(nCurrentScore);
+                        end
+                end
+                
+                function onValueChanged()
+                    window.weaponlistparry.onInit();
+                end
+                </script>
+            </basicnumber>
+            
+            <basicnumber name="weaponlistparry">
+               <anchored to="parryroll" position="right" relation="relative" offset="15,0" width="25" />
+                <nodrag />
+                <script>
+                function onInit()
+                    window.setPRNPC();
+                    window.skill_total.sVal();
+                end
+                </script>
+            </basicnumber>
+
+            <label name="tearing_label">
+                <anchored to="leftanchor" position="insidetopleft" offset="7,47" />
+				<static>Tearing</static>
+			</label>
+            <button_checkbox name="tearing">
+                <anchored to="tearing_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Tearing" />
+				<tooltip text="Tearing" />
+			</button_checkbox>
+            
+            <label name="felling_label">
+                <anchored to="tearing" position="right" relation="relative" offset="12,0" />
+				<static>Felling:</static>
+			</label>
+			
+            <string_textlistitem name="felling">
+				<anchored to="felling_label" position="right" relation="relative" offset="5,0" width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <center />
+                <default>0</default>
+			</string_textlistitem>
+			
+			<label name="proven_label">
+                <anchored to="felling" position="right" relation="relative" offset="12,0" />
+				<static>Proven:</static>
+			</label>
+			
+			<string_textlistitem name="proven">
+				<anchored to="proven_label" position="right" relation="relative" offset="5,0" width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <center />
+                <default>0</default>
+			</string_textlistitem>
+            
+            <label name="force_label">
+				<anchored to="proven" position="right" relation="relative" offset="12,0" />
+				<static>Force</static>
+			</label>
+            <button_checkbox name="forcecheck">
+                <anchored to="force_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Force Weapon" />
+				<tooltip text="Force Weapon" />
+			</button_checkbox> 
+            <string_textlistitem name="force">
+                <anchored to="forcecheck" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+                <tooltip text="Add Psy Value Here" />
+				<center />
+                <default>0</default>
+			</string_textlistitem>
+
+            <label name="l_fireselector">
+				<anchored to="leftanchor" position="insidetopleft" offset="220,47" />
+				<static></static>
+			</label>
+            <label name="l_ammoone">
+				<anchored to="l_fireselector" position="right" relation="relative" offset="0,0" />
+				<static>FS 1:</static>
+			</label>
+            <button_checkbox name="ammoone">
+                <anchored to="l_ammoone" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Ammo 1" />
+				<tooltip text="Ammo 1" />
+			</button_checkbox>
+            <string_textlistitem name="ammoonedam">
+                <anchored to="ammoone" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammoonepen">
+                <anchored to="ammoonedam" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammoonedmgtype">
+                <anchored to="ammoonepen" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <label name="l_ammotwo">
+				<anchored to="ammoonedmgtype" position="right" relation="relative" offset="8,0" />
+				<static>FS 2:</static>
+			</label>
+            <button_checkbox name="ammotwo">
+                <anchored to="l_ammotwo" position="right" relation="relative" offset="2,0"  width="12" />
+                <default>0</default>
+				<tooltip text="Ammo 2" />
+				<tooltip text="Ammo 2" />
+			</button_checkbox>
+            <string_textlistitem name="ammotwodam">
+                <anchored to="ammotwo" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammotwopen">
+                <anchored to="ammotwodam" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            <string_textlistitem name="ammotwodmgtype">
+                <anchored to="ammotwopen" position="right" relation="relative" offset="2,0"  width="12" />
+				<backcolor>F2F2F2</backcolor>
+				<center />
+			</string_textlistitem>
+            
+            <label name="balanced_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="290,47" />
+				<static>Bal</static>
+			</label>
+            <button_checkbox name="balancedcheck">
+                <anchored to="balanced_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Balanced" />
+				<tooltip text="Balanced" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.sVal();
+                    end
+                </script>
+			</button_checkbox> 
+             <label name="unbalanced_label">
+				<anchored to="balancedcheck" position="right" relation="relative" offset="8,0" />
+				<static>Unbal</static>
+			</label>
+            <button_checkbox name="unbalanced">
+                <anchored to="unbalanced_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Unbalanced" />
+				<tooltip text="Unbalanced" />
+                <script>
+                    function onValueChanged()
+                        window.skill_total.sVal();
+                    end
+                </script>
+			</button_checkbox>
+            
+            <label name="other_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,65" width="35"/>
+				<static>Mods:</static>
+			</label>
+            <label name="primitive_label">
+				<anchored to="other_label" position="right" relation="relative" offset="8,0" />
+				<static>Prim</static>
+			</label>
+            <button_checkbox name="primitive">
+                <anchored to="primitive_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Primitive" />
+				<tooltip text="Primitive" />
+			</button_checkbox>
+ 
+            <label name="holy_label">
+				<anchored to="primitive" position="right" relation="relative" offset="8,0" />
+				<static>Holy</static>
+			</label>
+            <button_checkbox name="holy">
+                <anchored to="holy_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Holy Damage" />
+				<tooltip text="Holy Damage" />
+			</button_checkbox>
+             <label name="sanc_label">
+				<anchored to="holy" position="right" relation="relative" offset="8,0" />
+				<static>Sanc</static>
+			</label>
+            <button_checkbox name="sanc">
+                <anchored to="sanc_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Sanctified Damage" />
+				<tooltip text="Sanctified Damage" />
+			</button_checkbox>  
+            <label name="mightyshot_label">
+				<anchored to="primitive" position="right" relation="relative" offset="8,0" />
+				<static>Mighty Shot</static>
+			</label>
+            <button_checkbox name="mightyshot">
+                <anchored to="mightyshot_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Mighty Shot" />
+				<tooltip text="Mighty Shot" />
+			</button_checkbox>
+            <label name="sights_label">
+				<anchored to="mightyshot" position="right" relation="relative" offset="8,0" />
+				<static>Sights</static>
+			</label>
+            <button_checkbox name="sights">
+                <anchored to="sights_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Gear:Sights" />
+				<tooltip text="Gear:Sights" />
+                <script>
+                function onValueChanged()
+                    window.attack_rangedtotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="crushingblow_label">
+				<anchored to="sanc" position="right" relation="relative" offset="8,0" />
+				<static>Crushing Blow</static>
+			</label>
+            <button_checkbox name="crushingblow">
+                <anchored to="crushingblow_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Crushing Blow" />
+				<tooltip text="Crushing Blow" />
+			</button_checkbox> 
+             
+            <label name="mono_label">
+				<anchored to="crushingblow" position="right" relation="relative" offset="8,0" />
+				<static>Mono</static>
+			</label>
+            <button_checkbox name="mono">
+                <anchored to="mono_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Mono Upgrade" />
+				<tooltip text="Mono Upgrade" />
+			</button_checkbox>             
+         
+            <label name="quality_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="7,85" />
+				<static>Quality:</static>
+			</label>
+            <label name="best_label">
+				<anchored to="quality_label" position="right" relation="relative" offset="8,0" />
+				<static>Best</static>
+			</label>
+            <button_checkbox name="bestcheck">
+                <anchored to="best_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Best Quality" />
+				<tooltip text="Best Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="good_label">
+				<anchored to="bestcheck" position="right" relation="relative" offset="8,0" />
+				<static>Good</static>
+			</label>
+            <button_checkbox name="goodcheck">
+                <anchored to="good_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Good Quality" />
+				<tooltip text="Good Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            <label name="poor_label">
+				<anchored to="goodcheck" position="right" relation="relative" offset="8,0" />
+				<static>Poor</static>
+			</label>
+            <button_checkbox name="poorcheck">
+                <anchored to="poor_label" position="right" relation="relative" offset="2,0" width="12" />
+                <default>0</default>
+				<tooltip text="Poor Quality" />
+				<tooltip text="Poor Quality" />
+                <script>
+                function onValueChanged()
+                    window.attack_meleetotal.sVal();
+                end
+                </script>
+			</button_checkbox>
+            
+            <label name="special_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="207,85" />
+				<static>Special:</static>
+			</label>
+			
+			<string_textlistitem name="special" source="special">
+				<anchored to="special_label" position="right" relation="relative" offset="5,0" width="150" />
+				<backcolor>F2F2F2</backcolor>
+			</string_textlistitem>
+            
+            <genericcontrol name="ammocounter">
+				<anchored to="leftanchor" position="insidetopleft" offset="8,100" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>clipsize</maxwounds>
+				<script file="campaign/scripts/counter_ammo.lua" />
+			</genericcontrol>
+
+			<label name="divider_label">
+				<anchored to="leftanchor" position="insidetopleft" offset="185,110" />
+				<static>*****</static>
+			</label>
+			
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Ammo List Template -->
+	<windowclass name="npcammotypes_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				updateRO();
+			end
+			function updateRO()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-1" />
+				</anchored>
+				<readonly />
+				<class>item</class>
+			</linkfield>
+			
+			<number_charinv name="numberofitems">
+				<anchored width="20" height="15">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+				</anchored>
+			</number_charinv>
+
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-7" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+			
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Gear List Template -->
+	<windowclass name="npcgear_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				updateRO();
+			end
+			function updateRO()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="15">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="14">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-1" />
+				</anchored>
+				<readonly />
+				<class>item</class>
+			</linkfield>
+			
+			<number_charinv name="numberofitems">
+				<anchored width="20" height="15">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+				</anchored>
+			</number_charinv>
+
+			<string_textlistitem name="name">
+				<anchored>
+					<top offset="1" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="7" />
+					<right parent="rightanchor" anchor="left" relation="current" offset="-7" />
+				</anchored>
+				<multilinespacing>15</multilinespacing>
+				<font>smalltext</font>
+			</string_textlistitem>
+			
+		</sheetdata>
+	</windowclass>
+	
+	<!-- Psychic List Template -->
+	<windowclass name="npcpsychic_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			
+			<button_idelete name="idelete">
+				<anchored width="15" height="17">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="17">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_psychic</class>
+			</linkfield>
+			<buttonfield name="overbleed">
+				<anchored width="12" height="12">
+					<top offset="4" />
+					<right parent="shortcut" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<state icon="button_checkoff" tooltip="Overbleed?" />
+				<state icon="button_checkon" tooltip="Overbleed?" />
+			</buttonfield>
+			<buttonfield name="sustain">
+				<anchored width="12" height="12">
+					<top offset="4" />
+					<right parent="overbleed" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<state icon="button_checkoff" tooltip="Sustain?" />
+				<state icon="button_checkon" tooltip="Sustain?" />
+			</buttonfield>
+			<string_textlistitem name="range">
+				<anchored width="100" height="17">
+					<top offset="2" />
+					<right parent="sustain" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<tabtarget prev="focustime" />
+			</string_textlistitem>
+			<string_textlistitem name="focustime">
+				<anchored width="70" height="17">
+					<top offset="2" />
+					<right parent="range" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="range" prev="threshold" />
+			</string_textlistitem>
+			<number_charinv name="threshold">
+				<anchored width="30" height="17">
+					<top offset="4" />
+					<right parent="focustime" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="focustime" prev="name" />
+			</number_charinv>
+			<string_textlistitem name="name">
+				<anchored height="17">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="5" />
+					<right parent="threshold" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="threshold" />
+			</string_textlistitem>
+
+		</sheetdata>
+	</windowclass>
+
+	<!-- Vechicle -->
+	<windowclass name="npc_vehicle">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/npc_vehicle.lua" />
+		<sheetdata>
+			
+			<!-- Gunnery Skill -->
+			<number_attributeroll name="gunneryskill" source ="abilities.gunneryskill">
+				<anchored position="insidetopleft" offset="5,12" width="30" height="20" />
+				<statname>Gunnery Skill (GS)</statname>
+				<stat>gunneryskill</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="glabel">
+				<anchored to="gunneryskill" offset="0,0" />
+				<static>GS</static>
+				<tooltip text="Gunnery Skill" />
+			</label_charfieldtop>						
+			
+			
+			<!-- Piloting -->
+			<number_attributeroll name="pilotingskill" source ="abilities.pilotingskill">
+				<anchored to="gunneryskill" position="right" offset="18,0" width="30" />
+				<statname>Piloting Check (P)</statname>
+				<stat>pilotingskill</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="plabel">
+				<anchored to="pilotingskill" offset="0,0" />
+				<static>PS</static>
+				<tooltip text="Piloting Skill" />
+			</label_charfieldtop>
+			
+			<!-- Technical Base -->
+			<number_attributeroll name="technicalbase" source ="abilities.technicalbase"> 
+				<anchored to="pilotingskill" position="right" offset="18,0" width="30" />
+				<statname>Technical Base (TB)</statname>
+				<stat>technicalbase</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="tblabel">
+				<anchored to="technicalbase" offset="0,0" />
+				<static>TB</static>
+				<tooltip text="Technical Base" />
+			</label_charfieldtop>
+			
+			<!-- Evaluation -->
+			<number_attributeroll name="evaluation" source ="abilities.evaluation">
+				<anchored to="technicalbase" position="right" offset="18,0" width="30" />
+				<statname>Evaluation (EV)</statname>
+				<stat>evaluation</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="eclabel">
+				<anchored to="evaluation" offset="0,0" />
+				<static>EV</static>
+				<tooltip text="Evaluation" />
+			</label_charfieldtop>
+			
+			<!-- Command -->
+			<number_attributeroll name="command" source ="abilities.command">
+				<anchored to="evaluation" position="right" offset="18,0" width="30" />
+				<statname>Command (CMD)</statname>
+				<stat>command</stat>
+			</number_attributeroll>
+			<label_charfieldtop name="clabel">
+				<anchored to="command" offset="0,0" />
+				<static>CM</static>
+				<tooltip text="Command" />
+			</label_charfieldtop>
+
+
+			<simplenumber name="vehicledetect">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="command" position="right" offset="34,0" width="30" /> 
+				<displaysign />
+				<script>
+				function ModactionDrag(draginfo)
+					local label= ("Detect Mod");
+						draginfo.setType("number");
+						draginfo.setDescription(label);
+						draginfo.setStringData(label);
+						draginfo.setNumberData(self.getValue());
+	
+					return true;
+				end
+			
+				function Modaction()
+					local label= ("Detect Mod");
+				
+					ModifierStack.addSlot(label, self.getValue());
+					return true;
+				end
+
+			
+				function onDragStart(button, x, y, draginfo)
+					return ModactionDrag(draginfo);
+				end
+
+				function onDoubleClick(x, y)
+					return Modaction();
+				end
+
+				</script>
+			</simplenumber>
+			<label_fieldtop name="detectlabel">
+				<anchored to="vehicledetect" offset="8,0" />
+				<static>Detect</static>
+			</label_fieldtop>
+
+			<simplenumber name="vehiclemanuv">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="vehicledetect" position="right" offset="32,0" width="30" /> 
+				<displaysign />
+				<script>
+				function ModactionDrag(draginfo)
+					local label= ("Maneuver Mod");
+						draginfo.setType("number");
+						draginfo.setDescription(label);
+						draginfo.setStringData(label);
+						draginfo.setNumberData(self.getValue());
+	
+					return true;
+				end
+			
+				function Modaction()
+					local label= ("Maneuver Mod");
+				
+					ModifierStack.addSlot(label, self.getValue());
+					return true;
+				end
+
+			
+				function onDragStart(button, x, y, draginfo)
+					return ModactionDrag(draginfo);
+				end
+
+				function onDoubleClick(x, y)
+					return Modaction();
+				end
+
+				</script>
+			</simplenumber>
+			<label_fieldtop name="manuvlabel">
+				<anchored to="vehiclemanuv" offset="17,0" />
+				<static>Maneuver</static>
+			</label_fieldtop>
+
+			<simplenumber name="miscmod">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="vehiclemanuv" position="right" offset="32,0" width="30" />
+				<displaysign />
+				<script>
+				function ModactionDrag(draginfo)
+					local label= ("Misc Mod");
+						draginfo.setType("number");
+						draginfo.setDescription(label);
+						draginfo.setStringData(label);
+						draginfo.setNumberData(self.getValue());
+	
+					return true;
+				end
+			
+				function Modaction()
+					local label= ("Misc Mod");
+				
+					ModifierStack.addSlot(label, self.getValue());
+					return true;
+				end
+
+			
+				function onDragStart(button, x, y, draginfo)
+					return ModactionDrag(draginfo);
+				end
+
+				function onDoubleClick(x, y)
+					return Modaction();
+				end
+
+				</script> 
+			</simplenumber>
+			<label_fieldtop name="miscmodlabel">
+				<anchored to="miscmod" offset="3,0" />
+				<static>Misc</static>
+			</label_fieldtop>
+
+			<simplenumber name="vehiclearmor">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored position="insidetopleft" offset="220,59" width="30" height="20" /> 
+			</simplenumber>
+			<label_fieldtop name="vehiclearmorlabel">
+				<anchored to="vehiclearmor" offset="3,0" />
+				<static>Armor</static>
+			</label_fieldtop>
+			<simplenumber name="shield">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="vehiclearmor" position="right" offset="25,0" width="30" /> 
+			</simplenumber>
+			<label_fieldtop name="shieldlabel">
+				<anchored to="shield" offset="5,0" />
+				<static>Shields</static>
+			</label_fieldtop>
+			<simplenumber name="turret">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="shield" position="right" offset="25,0" width="30" /> 
+			</simplenumber>
+			<label_fieldtop name="turretlabel">
+				<anchored to="turret" offset="3,0"/>
+				<static>Turrets</static>
+			</label_fieldtop>
+			<simplenumber name="vehiclespeed">
+			<frame name="fielddark" offset="7,5,7,5" />
+				<anchored to="turret" position="right" offset="25,0" width="30" /> 
+			</simplenumber>
+			<label_fieldtop name="speedlabel">
+				<anchored to="vehiclespeed" offset="3,0" />
+				<static>Speed</static>
+			</label_fieldtop>
+			
+			<!-- Initiative -->
+			<label name="init_shiplabel">
+				<anchored position="insidetopleft" offset="0,44" />
+				<static>Initiative</static>
+			</label>
+			<number_shipinitiativeroll name="init_shiptotal">
+				<anchored position="insidetopleft" offset="10,59" width="30" height="20" />	
+			</number_shipinitiativeroll>
+			
+			<label name="init_shipequalsign_label">
+				<anchored to="init_shiptotal" position="right" offset="10,0" />
+				<static>=</static>
+			</label>
+
+			<label name="init_shipvabonus_label">
+				<anchored to="init_shiplabel" position="right" offset="15,0" />
+				<static>Bonus</static>
+			</label>
+			<simplenumber name="init_shipvabonus" source="init_shipvabonus">
+				<anchored to="init_shipequalsign_label" position="right" offset="10,0" width="30" />
+                <frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+				<script>
+					function calc()
+						local sabilityVA = window.getDatabaseNode().getChild("abilities.vehicleagility").getValue();
+						setValue(math.floor(sabilityVA/10));
+					end
+				</script>
+			</simplenumber>
+
+			<label name="init_shipplussign_label">
+				<anchored to="init_shipvabonus" position="right" offset="10,0" />
+				<static>+</static>
+			</label>
+			
+			<label name="init_shipmisc_label">
+				<anchored to="init_shipvabonus_label" position="right" offset="23,0" />
+				<static>Mods</static>
+			</label>
+			<basicnumber name="init_shipmisc" source="init_shipmisc">
+				<anchored to="init_shipplussign_label" position="right" offset="10,0" width="30" />
+			</basicnumber>
+            
+            <label name="va_label">
+				<anchored to="init_shipmisc_label" position="right" offset="27,0" />
+				<static>VA</static>
+                <tooltip text="Vech. Agility" />
+			</label>
+            <number_attributeroll name="vehicleagility" source="abilities.vehicleagility">
+				<anchored to="init_shipmisc" position="right" offset="18,0" width="30" />
+				<statname>Vechicle Agility (VA)</statname>
+				<stat>vehicleagility</stat>
+                <script>
+                    function onValueChanged()
+						window.init_shipvabonus.calc();
+                    end
+                </script>
+			</number_attributeroll>
+			
+			
+			<!-- Wounds -->
+			<label name="hullheader_label">
+				<anchored position="insidetopleft" offset="0,91" />
+				<static>Hull Integrity</static>
+			</label>
+			
+			<label name="remaining_label">
+				<anchored position="insidetopleft" offset="0,101" />
+				<static>Remaining</static>
+			</label>
+				
+			<label name="criticalhull_label">
+				<anchored to="remaining_label" position="right" offset="97" width="44" />
+				<static>Critical</static>
+			</label>
+			
+			<stringcontrol name="numberOfHull_label">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>0,121</offset>
+				</anchored>
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+			
+			<stringcontrol name="hullslashsymbol">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>20,121</offset>
+				</anchored>
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalhull">
+				<anchored to="hullslashsymbol" position="right" offset="8,0" width="25" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 100 then
+							setValue(100);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfHull_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+			
+			
+			<basicnumber name="criticalhull" source="attributes.crithull">
+				<anchored to="totalhull" position="right" offset="105,0" width="30" />
+			</basicnumber>
+			
+			<genericcontrol name="hullwoundcounter">
+				<anchored position="insidetopleft" offset="0,141" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxhull>totalhull</maxhull>
+				<script file="campaign/scripts/counter_hull.lua" />
+			</genericcontrol>
+            
+            
+            <basicnumber name="maxhullvalue">
+				<anchored position="insidetopleft"  offset="10,10" width="10" height="10" />
+				<invisible />
+				<script>
+					function recalc()
+						local wds = window.getDatabaseNode().getChild("totalhull").getValue();
+						setValue(wds);
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("totalhull");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+					end
+				</script>
+			</basicnumber>
+			
+
+			<!-- Crew -->
+			<label name="crewheader_label">
+				<anchored position="insidetopleft" offset="0,191" />
+				<static>Crew</static>
+			</label>
+			
+			<label name="crewremaining_label">
+				<anchored position="insidetopleft" offset="0,201" />
+				<static>Remaining</static>
+			</label>
+				
+			
+			<stringcontrol name="numberOfCrew_label">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>0,221</offset>
+				</anchored>
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+			
+			<stringcontrol name="crewslashsymbol">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>20,221</offset>
+				</anchored>
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalcrew">
+				<anchored to="crewslashsymbol" position="right" offset="8,0" width="25" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 100 then
+							setValue(100);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfCrew_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+			
+			
+			<genericcontrol name="crewcounter">
+				<anchored position="insidetopleft" offset="0,241" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxcrew>totalcrew</maxcrew>
+				<script file="campaign/scripts/counter_npccrew.lua" />
+			</genericcontrol>
+
+			<!-- Morale -->
+			<label name="moraleheader_label">
+				<anchored position="insidetopleft" offset="0,291" />
+				<static>Morale</static>
+			</label>
+			
+			<label name="moraleremaining_label">
+				<anchored position="insidetopleft" offset="0,301" />
+				<static>Remaining</static>
+			</label>
+				
+			
+			<stringcontrol name="numberOfMorale_label">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>0,321</offset>
+				</anchored>
+				<readonly />
+				<nodrag />
+			</stringcontrol>
+			
+			<stringcontrol name="moraleslashsymbol">
+				<anchored>
+					<position>insidetopleft</position>
+					<offset>20,321</offset>
+				</anchored>
+				<static>/</static>
+			</stringcontrol>
+
+			<basicnumber name="totalmorale">
+				<anchored to="moraleslashsymbol" position="right" offset="8,0" width="25" />
+				<script>
+					function onInit()
+						recalc();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 100 then
+							setValue(100);
+						end
+						recalc();
+					end
+					function recalc()
+						window.numberOfMorale_label.setValue(getValue());
+					end
+				</script>
+			</basicnumber>
+			
+			
+			<genericcontrol name="moralecounter">
+				<anchored position="insidetopleft" offset="0,341" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxmorale>totalmorale</maxmorale>
+				<script file="campaign/scripts/counter_npcmorale.lua" />
+			</genericcontrol>
+
+			<stringfield name="hulltext">
+				<frame name="fielddark" offset="7,5,7,5" /> 
+				<bounds>220,120,195,68</bounds>
+				<multilinespacing>17</multilinespacing>
+				<font>reference-r</font>
+			</stringfield>
+			<label name="hulltext_label">
+				<anchored position="insidetopleft" offset="217,101" />
+				<static>Hull Damage Effects</static>
+			</label>
+
+			<stringfield name="crewtext">
+				<frame name="fielddark" offset="7,5,7,5" /> 
+				<bounds>220,220,195,68</bounds>
+				<multilinespacing>17</multilinespacing>
+				<font>reference-r</font>
+			</stringfield>
+			<label name="crewtext_label">
+				<anchored position="insidetopleft" offset="217,201" />
+				<static>Crew Loss Effects</static>
+			</label>
+
+			<stringfield name="moraletext">
+				<frame name="fielddark" offset="7,5,7,5" /> 
+				<bounds>220,320,195,68</bounds>
+				<multilinespacing>17</multilinespacing>
+				<font>reference-r</font>
+			</stringfield>
+			<label name="moraletext_label">
+				<anchored position="insidetopleft" offset="217,301" />
+				<static>Morale Loss Effects</static>
+			</label>
+
+		</sheetdata>
+	</windowclass>
+</root>

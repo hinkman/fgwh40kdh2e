@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referenceweapon">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_weapon_header</class>
+			</sub_ref_header>
+
+			<sub_ref_content name="content">
+				<class>ref_weapon_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_weapon_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceweapon</class>
+			</link_record_header>
+			<string_record_name name="name">
+				<anchored>
+					<top offset="5"/>
+					<left offset="40" />
+					<right offset="-25" />
+				</anchored>
+				<static />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_weapon_stats">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column name="class_label">
+				<static>Class: </static>
+			</label_column>
+			<string_columnh name="class" />
+			<label_column name="range_label">
+				<static>Range: </static>
+			</label_column>
+			<string_columnh name="range" />
+			<label_column name="rof_label">
+				<static>Rate of Fire: </static>
+			</label_column>
+			<string_columnh name="rof" />
+			<label_column name="damagedice_label">
+				<static>Damage: </static>
+			</label_column>
+            <string_columnh name="damagedice" />
+            <label_column name="damagebonus_label">
+				<static>Damage Bonus: </static>
+			</label_column>
+			<string_columnh name="damagebonus" />
+            <label_column name="damagetype_label">
+				<static>Damage Type: </static>
+			</label_column>
+			<string_columnh name="damagetype" />				
+			<label_column name="pen_label">
+				<static>Penetration: </static>
+			</label_column>
+			<string_columnh name="pen" />
+			<label_column name="clipsize_label">
+				<static>Clip Size: </static>
+			</label_column>
+			<string_columnh name="clipsize" />
+			<label_column name="reload_label">
+				<static>Reload: </static>
+			</label_column>
+			<string_columnh name="reload" />
+			<label_column name="cost_label">
+				<static>Cost: </static>
+			</label_column>
+			<string_columnh name="cost" />
+			<label_column name="availability_label">
+				<static>Availability: </static>
+			</label_column>
+			<string_columnh name="availability" />
+			<label_column name="weight_label">
+				<static>Weight: </static>
+			</label_column>
+			<number_columnh name="weight" />
+			<label_column name="special_label">
+				<static>Special: </static>
+			</label_column>
+			<string_columnh name="special" />
+			
+			<ft_columnh name="text" />
+		</sheetdata>
+	</windowclass>
+</root>

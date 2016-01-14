@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_psychic">
+		<sheetdata>
+			<frame_char name="psychicframe">
+                <bounds>15,5,-23,310</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="psychicframe" />
+				<static>PSYCHIC POWERS</static>
+			</label_frametop>
+
+			<label name="ppname_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="15,30" />
+				<static>Name</static>
+			</label>
+			<label name="ppthreshold_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="270,30" />
+				<static>Thresh</static>
+			</label>
+			<label name="ppfocustime_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="317,30" />
+				<static>Focus Time</static>
+			</label>
+			<label name="pprange_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="420,30" />
+				<static>Range</static>
+			</label>
+			<label name="ppsustain_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="502,30" />
+				<static>S</static>
+				<tooltip text="Sustain?" />
+			</label>
+			<label name="ppoverbleed_label">
+				<anchored to="psychicframe" position="insidetopleft" offset="518,30" />
+				<static>O</static>
+				<tooltip text="Overbleed?" />
+			</label>
+
+			<list_text name="psychic">
+				<anchored to="psychicframe">
+					<top offset="50" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-27" />
+				</anchored>
+				<datasource>.psychic</datasource>
+				<class>psychic_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencepsychic" then
+								local nodeSource = draginfo.getDatabaseNode();
+
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.range.setValue(DB.getValue(nodeSource, "range", ""));
+									win.focustime.setValue(DB.getValue(nodeSource, "focustime", ""));
+									win.threshold.setValue(tonumber(DB.getValue(nodeSource, "threshold", "")));
+									if DB.getValue(nodeSource, "sustained", "") == "Yes" then
+										win.sustain.setValue(1);
+									else
+										win.sustain.setValue(0);
+									end
+									if DB.getValue(nodeSource, "overbleedyn", "") == "Yes" then
+										win.overbleed.setValue(1);
+									else
+										win.overbleed.setValue(0);
+									end
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="psychic" />
+				<target>psychic</target>
+			</scrollbar>
+			<button_iedit name="psychic_iedit">
+				<anchored to="psychic" position="aboveleft" offset="0,20" />
+				<target>psychic</target>
+			</button_iedit>
+			<button_iadd name="psychic_iadd">
+				<anchored to="psychic_iedit" position="righthigh" offset="2,0" />
+				<target>psychic</target>
+			</button_iadd>
+
+			<!-- Power Level and Discipline -->
+			<frame_char name="psydisciplineframe">
+            <bounds>15,315,-23,50</bounds>
+			</frame_char>
+
+			<label name="powerlevel_label">
+				<anchored to="psydisciplineframe" position="insidetopleft" offset="20,15" />
+				<static>Psy Rating:</static>
+			</label>
+			<basicnumber name="powerlevel">
+				<anchored to="powerlevel_label" position="right" offset="10,0" width="30"  />
+				<script>
+					function onInit()
+						hideRollButton();
+					end
+					function onValueChanged()
+						if getValue() &lt; 0 then
+							setValue(0);
+						elseif getValue() &gt; 10 then
+							setValue(10);
+						end
+						hideRollButton();
+					end
+					function hideRollButton()
+						if getValue() == 0 then
+							window.psyroll.setVisible(false);
+							window.powerlevellevelsused_label.setVisible(false);
+						else
+							window.psyroll.setVisible(true);
+							window.powerlevellevelsused_label.setVisible(true);
+						end
+					end
+				</script>
+			</basicnumber>
+			<basicnumber name="psy_wpbonus">
+				<anchored to="powerlevel_label" position="right" offset="3,0" width="5"  />
+				<readonly />
+				<nodrag />
+				<invisible />
+				<script>
+					function recalc()
+						local abilityWp = window.getDatabaseNode().getChild("abilities.willpower").getValue();
+						setValue(math.floor(abilityWp/10));
+					end
+					function onInit()
+						local defnode = window.getDatabaseNode().getChild("abilities.willpower");
+						if defnode then
+							defnode.onUpdate = recalc;
+						end
+						recalc();
+					end
+				</script>
+			</basicnumber>
+			<basicnumber name="psy_psyusedinvcounter">
+				<anchored to="powerlevel_label" position="right" offset="6,0" width="5" />
+				<readonly />
+				<nodrag />
+				<invisible />
+			</basicnumber>
+
+			<label name="powerlevellevelsused_label">
+				<anchored to="powerlevel" position="right" offset="15,0" />
+				<static>Power Levels Used for Roll:</static>
+			</label>
+			<genericcontrol name="psypowerlevelsused">
+            <anchored to="psydisciplineframe" position="insidetopleft" offset="307,15" />
+				<stateicons>
+					<on>button_checkon</on>
+					<off>button_checkoff</off>
+				</stateicons>
+				<maxwounds>powerlevel</maxwounds>
+				<script file="campaign/scripts/counter_psypowerused.lua" />
+			</genericcontrol>
+
+			<button_psypowerroll name="psyroll">
+            <anchored to="psydisciplineframe" position="insidetopleft" offset="370,12" />
+				<modifier>psy_psyusedinvcounter</modifier>
+				<wpbonus>psy_wpbonus</wpbonus>
+				<tooltip text="Roll a Psychic Power level check; roll for a psychic phenomenon for each 9 die result" />
+			</button_psypowerroll>
+
+			<string_labeled name="psychicdiscipline">
+				<anchored to="psydisciplineframe" position="insidetopleft" offset="400,12" height="20" width="145" />
+				<label>psychic discipline</label>
+			</string_labeled>
+
+			<!-- Insanity -->
+			<frame_char name="insanityframe">
+				<bounds>15,365,220,200</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="insanityframe" />
+				<static>INSANITY</static>
+			</label_frametop>
+			<label name="insanitypoints_label">
+				<anchored to="insanityframe" position="insidetopleft" offset="40,30" />
+				<static>Insanity Points:</static>
+			</label>
+			<basicnumber name="insanitypoints">
+				<anchored to="insanityframe" position="insidetopleft" offset="135,34" width="30" height="12" />
+			</basicnumber>
+			<string_labeled name="degreeofmadness">
+				<anchored to="insanityframe" position="insidetopleft" offset="40,50" height="20" width="125" />
+				<label>degree of madness</label>
+			</string_labeled>
+
+			<label name="mdname_label">
+				<anchored to="insanityframe" position="insidetopleft" offset="15,90" />
+				<static>Mental Disorder</static>
+			</label>
+			<label name="mdseverity_label">
+				<anchored to="insanityframe" position="insidetopleft" offset="145,90" />
+				<static>Severity</static>
+			</label>
+
+			<list_text name="mentaldisorders">
+				<anchored to="insanityframe">
+					<top offset="110" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.mentaldisorders</datasource>
+				<class>mentaldisorders_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencementaldisorder" then
+								local nodeSource = draginfo.getDatabaseNode();
+
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="mentaldisorders" />
+				<target>mentaldisorders</target>
+			</scrollbar>
+
+			<!-- Corruption -->
+			<frame_char name="corruptionframe">
+				<bounds>230,365,205,200</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="corruptionframe" />
+				<static>CORRUPTION</static>
+			</label_frametop>
+			<label name="corruption_label">
+				<anchored to="corruptionframe" position="insidetopleft" offset="35,30" />
+				<static>Corruption Points:</static>
+			</label>
+			<basicnumber name="corruptionpoints">
+				<anchored to="corruptionframe" position="insidetopleft" offset="125,34" width="30" height="12" />
+			</basicnumber>
+			<string_labeled name="degreeofcorruption">
+				<anchored to="corruptionframe" position="insidetopleft" offset="35,50" height="20" width="125" />
+				<label>degree of corruption</label>
+			</string_labeled>
+
+			<label name="malname_label">
+				<anchored to="corruptionframe" position="insidetopleft" offset="60,90" />
+				<static>Malignancies</static>
+			</label>
+
+			<list_text name="malignancies">
+				<anchored to="corruptionframe">
+					<top offset="110" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.malignancies</datasource>
+				<class>malignancies_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencemalignancies" then
+								local nodeSource = draginfo.getDatabaseNode();
+
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="malignancies" />
+				<target>malignancies</target>
+			</scrollbar>
+
+			<!-- Mutations -->
+			<frame_char name="mutationsframe">
+				<bounds>430,365,205,200</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="mutationsframe" />
+				<static>MUTATIONS</static>
+			</label_frametop>
+
+			<list_text name="mutations">
+				<anchored to="mutationsframe">
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-10" />
+					<bottom offset="-15" />
+				</anchored>
+				<datasource>.mutations</datasource>
+				<class>mutations_list</class>
+				<allowcreate />
+				<allowdelete />
+				<sortby><control>name</control></sortby>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("shortcut") then
+							if draginfo.getShortcutData() == "referencemutation" then
+								local nodeSource = draginfo.getDatabaseNode();
+
+								local win = addEntry(true);
+								if win then
+									win.name.setValue(DB.getValue(nodeSource, "name", ""));
+									win.shortcut.setValue(draginfo.getShortcutData());
+								end
+							end
+
+							return true;
+						end
+					end
+
+				</script>
+			</list_text>
+			<scrollbar>
+				<anchored to="mutations" />
+				<target>mutations</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Psychic List Template -->
+	<windowclass name="psychic_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<button_idelete name="idelete">
+				<anchored width="15" height="17">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+			<linkfield name="shortcut">
+				<anchored width="15" height="17">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_psychic</class>
+			</linkfield>
+			<buttonfield name="overbleed">
+				<anchored width="12" height="12">
+					<top offset="4" />
+					<right parent="shortcut" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<state icon="button_checkoff" tooltip="Overbleed?" />
+				<state icon="button_checkon" tooltip="Overbleed?" />
+			</buttonfield>
+			<buttonfield name="sustain">
+				<anchored width="12" height="12">
+					<top offset="4" />
+					<right parent="overbleed" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<state icon="button_checkoff" tooltip="Sustain?" />
+				<state icon="button_checkon" tooltip="Sustain?" />
+			</buttonfield>
+			<string_textlistitem name="range">
+				<anchored width="100" height="17">
+					<top offset="2" />
+					<right parent="sustain" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<tabtarget prev="focustime" />
+			</string_textlistitem>
+			<string_textlistitem name="focustime">
+				<anchored width="70" height="17">
+					<top offset="2" />
+					<right parent="range" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="range" prev="threshold" />
+			</string_textlistitem>
+			<number_charinv name="threshold">
+				<anchored width="30" height="17">
+					<top offset="4" />
+					<right parent="focustime" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="focustime" prev="name" />
+			</number_charinv>
+			<string_textlistitem name="name">
+				<anchored height="17">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="5" />
+					<right parent="threshold" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget next="threshold" />
+			</string_textlistitem>
+
+		</sheetdata>
+	</windowclass>
+
+	<!-- Mental Disorder List Template -->
+	<windowclass name="mentaldisorders_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<linkfield name="shortcut">
+				<anchored width="15" height="17">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_mentaldisorders</class>
+			</linkfield>
+			<string_textlistitem name="severity">
+				<anchored width="40" height="17">
+					<top offset="2" />
+					<right parent="shortcut" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<tabtarget prev="name" />
+				<font>smalltext</font>
+			</string_textlistitem>
+			<string_textlistitem name="name">
+				<anchored width="130" height="17">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="5" />
+					<right parent="severity" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<font>smalltext</font>
+				<tabtarget next="severity" />
+			</string_textlistitem>
+
+		</sheetdata>
+	</windowclass>
+
+	<!-- Malignancy List Template -->
+	<windowclass name="malignancies_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<linkfield name="shortcut">
+				<anchored width="15" height="17">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_malignancies</class>
+			</linkfield>
+			<string_textlistitem name="name">
+				<anchored width="130" height="17">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<font>smalltext</font>
+			</string_textlistitem>
+
+		</sheetdata>
+	</windowclass>
+
+	<!-- Mutation List Template -->
+	<windowclass name="mutations_list">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				ItemManager.onCharRemoveEvent(node);
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<linkfield name="shortcut">
+				<anchored width="15" height="17">
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<readonly />
+				<class>ref_mutations</class>
+			</linkfield>
+			<string_textlistitem name="name">
+				<anchored height="17">
+					<top offset="2" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<font>smalltext</font>
+			</string_textlistitem>
+
+		</sheetdata>
+	</windowclass>
+
+</root>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	
+	<string name="ref_label_ap">AP</string>
+	<string name="ref_label_protects">Protects</string>
+	<string name="ref_label_availability">Availability</string>
+	<string name="ref_label_cost">Cost</string>
+	<string name="ref_label_weight">Weight (kg)</string>
+	<string name="ref_label_range">Range</string>
+	<string name="ref_label_rof">Rate of Fire</string>
+	<string name="ref_label_damagedice">Damage Bonus</string>
+    <string name="ref_label_damagebonus">Damage Type</string>
+	<string name="ref_label_damagetype">Damage Type</string>
+	<string name="ref_label_pen">Penetration</string>
+	<string name="ref_label_clip">Clip Size</string>
+	<string name="ref_label_reload">Reload Time</string>
+	<string name="ref_label_usedwith">Used With</string>
+	<string name="ref_label_upgrades">Upgrades</string>
+	<string name="ref_label_homeworld">Home World</string>
+	<string name="ref_label_focustime">Focus Time</string>
+	<string name="ref_label_threshold">Threshold</string>
+	<string name="ref_label_overbleed">Overbleed</string>
+	<string name="ref_label_sustain">Sustain?</string>
+	<string name="ref_label_skill_categories">Skill Categories</string>
+    <string name="damagedice">Damage</string>
+    <string name="damagetype">Damage Type</string>
+    <string name="pen">Pen</string>
+    <string name="x">Explosive</string>
+    <string name="i">Impact</string>
+    <string name="r">Rending</string>
+    <string name="e">Energy</string>
+    
+    	<!-- Common -->
+	<string name="base">Base</string>
+	<string name="dash">-</string>
+	<string name="str">Str</string>
+	<string name="ag">Ag</string>
+	<string name="tn">Tn</string>
+	<string name="int">Int</string>
+	<string name="wp">Wp</string>
+	<string name="fel">Fel</string>
+	<string name="inf">Inf</string>
+    <string name="ws">Ws</string>
+    <string name="bs">Bs</string>
+    <string name="per">Per</string>
+	<string name="strength">Strength</string>
+	<string name="toughness">Toughness</string>
+	<string name="agility">Agility</string>
+	<string name="intelligence">Intelligence</string>
+	<string name="willpower">Willpower</string>
+	<string name="weapon">Weapon</string>
+    <string name="ballistic">Ballistic</string>
+    <string name="perception">Perception</string>
+    <string name="fellowship">Fellowship</string>
+    <string name="influence">Influence</string>
+    
+    
+    
+
+	<string name="menu_rest">Rest</string>
+	<string name="menu_restshort">Short Rest</string>
+	<string name="menu_restovernight">Overnight Rest</string>
+	<string name="message_restshort">Taking short rest.</string>
+	<string name="message_restovernight">Taking overnight rest.</string>
+
+
+
+	
+
+
+	<!-- Combat Tracker -->
+	<string name="ct_label_wounds">Wnd</string>
+	<string name="ct_label_status">Status</string>
+	<string name="ct_label_specialdef">Special</string>
+	<string name="ct_label_effectappliedby">Applied by:</string>
+	<string name="ct_label_effecttargets">Targets:</string>
+
+	<string name="ct_tooltip_wounds">Wounds</string>
+	<string name="ct_tooltip_offense">Offense</string>
+	<string name="ct_tooltip_effecton">Active</string>
+	<string name="ct_tooltip_effectoff">Inactive</string>
+	<string name="ct_tooltip_effectdragtarget">Drag onto new effect target</string>
+	<string name="ct_tooltip_effectdur">Duration</string>
+	<string name="ct_tooltip_effectinit">Initiative to adjust on</string>
+	
+	<string name="ct_menu_effecttargeting">Targeting</string>
+	<string name="ct_menu_effecttargetingfriend">Target all allies</string>
+	<string name="ct_menu_effecttargetingnonfriend">Target all non-allies</string>
+	
+	<string name="ct_message_rest">Party taking short rest.</string>
+	<string name="ct_message_restovernight">Party taking overnight rest.</string>
+	
+
+
+	<!-- Modifiers -->
+	<string name="modifier_label_damage">Damage</string>
+
+	
+	<!-- Effects -->
+	<string name="effect_label_durunitrnd">RND</string>
+	<string name="effect_label_durunitmin">MIN</string>
+	<string name="effect_label_durunithr">HR</string>
+	<string name="effect_label_durunitday">DAY</string>
+
+	<string name="effect_tooltip_applyone">One Action</string>
+	<string name="effect_tooltip_applyroll">One Roll</string>
+	<string name="effect_tooltip_applysingle">Apply Each Once</string>
+	<string name="effect_tooltip_applyall">All Rolls</string>
+	
+
+
+	<!-- Character - Mini -->
+	<string name="char_label_fullsheet">Full Sheet</string>
+	<string name="char_label_minisheet">Mini Sheet</string>
+	<string name="charmini_label_wounds">Wnd</string>
+	<string name="charmini_label_hptemp">Temp</string>
+	<string name="charmini_label_nonlethal">Subd</string>
+	<string name="charmini_label_dr">DR</string>
+	<string name="charmini_label_abilitybonus">Bonus</string>
+	<string name="charmini_label_abilitydamage">Dmg</string>
+	<string name="charmini_label_melee">Melee</string>
+	<string name="charmini_label_ranged">Rng</string>
+	<string name="charmini_label_speed">Spd</string>
+	<string name="charmini_label_speedspecial">Special Move</string>
+	<string name="charmini_label_weaponrange">Rng</string>
+	<string name="charmini_label_weaponammo">Ammo</string>
+	
+
+	<!-- Character - Actions -->
+	<string name="char_label_weapons">Weapons</string>
+	<string name="char_label_weaponname">Name</string>
+	<string name="char_label_weapontype">M/R</string>
+	<string name="char_label_weaponnumatt">#att</string>
+	<string name="char_label_weaponattacks">Attacks</string>
+	<string name="char_label_weapondamage">Damage</string>
+	<string name="char_label_weaponatkdetail">Attack</string>
+	<string name="char_label_weaponcritrange">Crit Rng</string>
+	<string name="char_label_weapondmgdetail">Damage</string>
+	<string name="char_label_weaponcritmult">Crit Mult</string>
+	<string name="char_label_weapondmgtype">Dmg Type</string>
+	<string name="char_label_weaponproperties">Properties</string>
+	<string name="char_label_weaponrange">Range</string>
+	<string name="char_label_weaponammo">Ammo</string>
+	<string name="char_label_spells">Spells</string>
+	
+	
+	
+	<string name="npc_header_effects">EFFECTS</string>
+	<string name="npc_label_trigger">Trigger</string>
+	<string name="npc_label_reset">Reset</string>
+	<string name="npc_label_effect">Effect</string>
+	<string name="npc_label_effect2">Effect 2</string>
+	<string name="npc_label_destruction">Destruction</string>
+	
+	<string name="npc_label_squares">Squares</string>
+	<string name="npc_label_basesave">Base Save</string>
+	<string name="npc_label_cm">CM</string>
+	<string name="npc_header_desc">DESCRIPTION</string>
+	<string name="npc_label_propulsion">Propulsion</string>
+	<string name="npc_label_drivecheck">Driving Check</string>
+	<string name="npc_label_forwardface">Forward Face</string>
+	<string name="npc_label_drivedevice">Driving Dev.</string>
+	<string name="npc_label_drivespace">Driving Space</string>
+	<string name="npc_label_crew">Crew</string>
+	<string name="npc_label_decks">Decks</string>
+	<string name="npc_label_weapons">Weapons</string>
+    
+   	<!-- Options -->
+	<string name="option_label_RMMT">Target: Remove on miss</string>
+    <string name="option_label_DCLK">Mouse: Double Click Action</string>
+	<string name="option_label_SHRR">Chat: Show results to client</string>
+	<string name="option_label_INIT">Add: Auto NPC initiative</string>
+	<string name="option_label_ANPC">Chat: Anonymize NPC attacks</string>
+	<string name="option_label_SHPH">View: Show health to clients</string>
+	<string name="option_label_WNDC">View: Wound Categories</string>
+	<string name="option_label_TNPCE">Token: Show Enemy effects</string>
+	<string name="option_label_TNPCH">Token: Show Enemy health</string>
+	<string name="option_label_TPCE">Token: Show Ally effects</string>
+	<string name="option_label_TPCH">Token: Show Ally health</string>
+	<string name="option_val_all">All</string>
+	<string name="option_val_friendly">Friendly</string>
+	<string name="option_val_multi">Multi</string>
+	<string name="option_val_pc">PC</string>
+	<string name="option_val_npc">NPC</string>
+	<string name="option_val_group">Group</string>
+	<string name="option_val_detailed">Detailed</string>
+	<string name="option_val_simple">Simple</string>
+	<string name="option_val_icons">Icons</string>
+	<string name="option_val_iconshover">Icons Hover</string>
+	<string name="option_val_mark">Mark</string>
+	<string name="option_val_markhover">Mark Hover</string>
+	<string name="option_val_bar">Bar</string>
+	<string name="option_val_barhover">Bar Hover</string>
+	<string name="option_val_dot">Dot</string>
+	<string name="option_val_dothover">Dot Hover</string>
+	<string name="option_val_max">Max</string>
+	<string name="option_val_random">Random</string>
+	<string name="option_val_standard">Standard</string>
+	<string name="option_val_fumbleandcrit">Fumble and Crit</string>
+	<string name="option_val_fumble">Fumble</string>
+	<string name="option_val_crit">Crit</string>
+</root>
